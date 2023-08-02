@@ -456,8 +456,10 @@ Thumbs.db
 # Markdown Navigator plugin
 # https://plugins.jetbrains.com/plugin/7896-markdown-navigator-enhanced
 
-# Cache file creation bug
+# Cache file creation b
 # See https://youtrack.jetbrains.com/issue/JBR-2257
 
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
+
+config.js
