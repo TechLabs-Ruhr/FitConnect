@@ -1,4 +1,4 @@
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
+/* import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete";
 import {
   Combobox,
   ComboboxInput,
@@ -53,4 +53,4 @@ const Search = ({ panTo }) => {
         </div>);
 }
 
-export default Search; 
+export default Search; */
