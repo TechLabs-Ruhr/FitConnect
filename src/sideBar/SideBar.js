@@ -4,13 +4,21 @@ import SideBarData from './SideBarData';
 
 const SideBar = () => {
     return (
+            
             <div className="sidebar">
-                <ul>
+                <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
+                <p className="user-name">Arnold Schwarznegger</p>
+                <ul className="SideBarList">
                 {SideBarData.map((val, key)=> {
-                    return (<li onClick={()=> {window.location.pathname = val.link}}>
+                    return (<li
+                        className='row'
+                        id={window.location.pathname == val.link ? "active" : ""} 
+                        onClick={()=> 
+                        {window.location.pathname = val.link;
+                        }}>
                         {" "}
-                        <div>{val.icon}</div>{" "}
-                        <div>
+                        <div id="icon">{val.icon}</div>{" "}
+                        <div id="title">
                             {val.title}
                         </div>
                         </li>
