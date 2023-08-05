@@ -1,10 +1,31 @@
 import React from 'react';
-import './sidebar.scss'
+import './sidebar.scss';
+import SideBarData from './SideBarData';
 
 const SideBar = () => {
     return (
-        <div className="sidebar">
-            <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
+            <div className="sidebar">
+                <ul>
+                {SideBarData.map((val, key)=> {
+                    return (<li onClick={()=> {window.location.pathname = val.link}}>
+                        {" "}
+                        <div>{val.icon}</div>{" "}
+                        <div>
+                            {val.title}
+                        </div>
+                        </li>
+                
+                    );
+            })}
+            </ul> 
+            </div>
+            );
+}
+
+export default SideBar;
+
+
+ {/* <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
             <p className="user-name">Arnold Schwarznegger</p>
 
             <nav className="nav">
@@ -36,9 +57,4 @@ const SideBar = () => {
                 </ul>
             </nav>
 
-            <button className="btn btn-red log-out">Ausloggen</button>
-        </div>
-    )
-}
-
-export default SideBar;
+            <button className="btn btn-red log-out">Ausloggen</button> */}
