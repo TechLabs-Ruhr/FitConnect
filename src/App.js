@@ -6,6 +6,12 @@ import 'normalize.css';
 function App() {
   return (
     <>
+    {/* <Router>
+      <Navbar />
+      <Switch>
+
+      </Switch>
+    </Router> */}
       <SideBar />
       <Map />
     </>

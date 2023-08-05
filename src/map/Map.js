@@ -10,10 +10,13 @@ import { formatRelative } from "date-fns";
 import GeoLocation from './geoLocation/GeoLocation';
 import Spinner from '../spinner/Spinner';
 import { MapForm } from "./mapForm/MapForm";
-import { GOOGLE_MAPS_API_KEY } from '../config';
+// import { GOOGLE_MAPS_API_KEY } from '../config';
 import './map.scss';
 
 const libraries = ["places"];
+
+const GOOGLE_MAPS_API_KEY = "AIzaSyBr_wwGdk3q4BnZVdWpmeg2TyPss7CIZjA";
+
 
 const mapContainerStyle = {
     width: "100vw",
@@ -25,6 +28,7 @@ const options = {
     disableDefaultUI: true,
     zoomControl: true
 }
+
 
 const Map = () => {
     const [center, setCenter] = useState({
