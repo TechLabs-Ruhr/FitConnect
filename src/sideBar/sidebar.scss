@@ -4,6 +4,8 @@ body {
   
 
 .sidebar {
+
+    
     position: fixed;
     z-index: 3;
     background-color: white;
@@ -12,6 +14,11 @@ body {
     padding: 60px 0 0;
     padding-left: 0;
     font-weight: bold;
+
+    
+    
+        
+    
 
     @media (max-width: 1427px) {
         padding-left: 0;

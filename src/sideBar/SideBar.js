@@ -4,6 +4,8 @@ import SideBarData from './SideBarData';
 
 const SideBar = () => {
     return (
+
+        
             
             <div className="sidebar">
                 <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
