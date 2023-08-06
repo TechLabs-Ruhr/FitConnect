@@ -17,9 +17,9 @@ export const MapForm = ({ onSubmit, onClose }) => {
             <Form className="map-form">
                 <button type="button" className="close-button" onClick={onClose}>&times;</button>
 
-                <Field id="time" name="time" type="datetime-local" />
-
                 <Field id="activityType" name="activityType" placeholder="Activity" />
+
+                <Field id="time" name="time" type="datetime-local" />
 
                 <Field id="maxPeople" name="maxPeople" type="number" placeholder="Max number of people" />
                 

@@ -1,7 +1,7 @@
 .sidebar {
     position: fixed;
     z-index: 3;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 25%;
     height: 100vh;
     padding: 60px 0 60px;
@@ -14,7 +14,6 @@
     }
 
     .user-name {
-        color: #000000;
         font-size: 20px;
         font-weight: bold;
         margin-top: 10px;
