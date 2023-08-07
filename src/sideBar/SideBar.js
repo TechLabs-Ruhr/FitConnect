@@ -1,5 +1,7 @@
 import React from 'react';
-import './sidebar.scss'
+import './sidebar.scss';
+import {signOut} from "firebase/auth"; 
+import { auth } from '../firebase'; 
 
 const SideBar = () => {
     return (
@@ -36,7 +38,7 @@ const SideBar = () => {
                 </ul>
             </nav>
 
-            <button className="btn btn-red log-out">Ausloggen</button>
+            <button className="btn btn-red log-out" onClick={()=>signOut(auth)}>Ausloggen</button>
         </div>
     )
 }

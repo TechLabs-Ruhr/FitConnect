@@ -28,7 +28,7 @@ const Register = () => {
         email,
       });
 
-      // await setDoc(doc(db, "userMarkers", res.user.uid), {});
+      await setDoc(doc(db, "userMarkers", res.user.uid), {});
       navigate("/");
     } catch (err) {
       console.log(err);
