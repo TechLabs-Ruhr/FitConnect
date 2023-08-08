@@ -1,7 +1,7 @@
 import React from 'react';
 import './sidebar.scss';
 import {signOut} from "firebase/auth"; 
-import { auth } from '../firebase'; 
+import { auth } from '../../firebase'; 
 
 const SideBar = () => {
     return (

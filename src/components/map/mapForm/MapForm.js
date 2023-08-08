@@ -5,7 +5,7 @@ export const MapForm = ({ onSubmit, onClose }) => {
     return (
         <Formik
             initialValues={{
-                time: '',
+                trainingTime : '',
                 activityType: '',
                 maxPeople: '',
                 description: ''
@@ -19,7 +19,7 @@ export const MapForm = ({ onSubmit, onClose }) => {
 
                 <Field id="activityType" name="activityType" placeholder="Activity" />
 
-                <Field id="time" name="time" type="datetime-local" />
+                <Field id="trainingTime" name="trainingTime" type="datetime-local" />
 
                 <Field id="maxPeople" name="maxPeople" type="number" placeholder="Max number of people" />
                 

@@ -1,6 +1,6 @@
 import React from 'react'
-import Map from "../map/Map";
-import SideBar from "../sideBar/SideBar";
+import Map from "../components/map/Map";
+import SideBar from "../components/sideBar/SideBar";
 
 const Search = () => {
   return (

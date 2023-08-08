@@ -3,30 +3,34 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: rgb(0, 0, 0);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 400px;
     z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .map-form input,
 .map-form textarea {
     display: block;
-    width: 100%;
+    width: 80%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
+    background-color: white;
 }
 
 .addTrainingBtn {
     display: block;
-    width: 100%;
+    width: 86%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #f3ae2d;
     color: white;
     border: none;
     border-radius: 5px;
@@ -36,7 +40,7 @@
 }
 
 .map-form button:hover {
-    background-color: #0056b3;
+    background-color: #da8910;
 }
 
 .close-button {
@@ -47,7 +51,7 @@
     border: none;
     font-size: 20px;
     line-height: 1;
-    color: #333;
+    color: #ffffff;
     cursor: pointer;
   }
   
