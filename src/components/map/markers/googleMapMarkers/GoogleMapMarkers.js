@@ -7,9 +7,9 @@ import {
   arrayUnion,
   doc,
   updateDoc,
-  collection, 
+  collection,
   getDocs,
-  getDoc, 
+  getDoc,
   arrayRemove
 } from "firebase/firestore";
 import { Marker } from "@react-google-maps/api";
@@ -77,16 +77,41 @@ const GoogleMapMarkers = ({ mapClick }) => {
   const deleteMarker = async (markerId) => {
     const userMarkersDoc = await getDoc(doc(db, "userMarkers", currentUser.uid));
     const userMarkers = userMarkersDoc.data().markers;
-  
+
     const markerToDelete = userMarkers.find(marker => marker.id === markerId);
-  
+
     await updateDoc(doc(db, "userMarkers", currentUser.uid), {
       markers: arrayRemove(markerToDelete),
     });
-  
+
     setMarkers((markers) => markers.filter(marker => marker.id !== markerId));
   };
-  
+
+  const updateMarker = async (values, id) => {
+    const markerRef = doc(db, "userMarkers", currentUser.uid);
+    const docSnapshot = await getDoc(markerRef);
+    const markers = docSnapshot.data().markers;
+    const indexToUpdate = markers.findIndex(marker => marker.id === id);
+
+    const updatedMarker = {
+      ...markers[indexToUpdate],
+      trainingTime: Timestamp.fromDate(new Date(values.trainingTime)),
+      maxPeople: values.maxPeople,
+      description: values.description,
+      activityType: values.activityType
+    };
+
+    markers[indexToUpdate] = updatedMarker;
+
+    await updateDoc(markerRef, { markers });
+
+    setMarkers(currentMarkers => {
+      const updatedMarkers = [...currentMarkers];
+      const localIndexToUpdate = updatedMarkers.findIndex(marker => marker.id === id);
+      updatedMarkers[localIndexToUpdate] = updatedMarker;
+      return updatedMarkers;
+    });
+  };
 
   const onMapClick = useCallback(() => {
     (plusBtn) && (
@@ -119,6 +144,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
         selected={selected}
         setSelected={setSelected}
         deleteMarker={deleteMarker}
+        updateMarker={updateMarker}
       />}
 
       {showForm && <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />}
