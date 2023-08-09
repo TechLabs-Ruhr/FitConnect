@@ -7,11 +7,14 @@ import {
   arrayUnion,
   doc,
   updateDoc,
+  collection, 
+  getDocs,
+  getDoc, 
+  arrayRemove
 } from "firebase/firestore";
 import { Marker } from "@react-google-maps/api";
 import { MapForm } from "../../mapForm/MapForm";
 import { db } from "../../../../firebase";
-import { collection, getDocs } from "firebase/firestore";
 import '../../map.scss';
 
 const GoogleMapMarkers = ({ mapClick }) => {
@@ -71,6 +74,20 @@ const GoogleMapMarkers = ({ mapClick }) => {
     });
   }
 
+  const deleteMarker = async (markerId) => {
+    const userMarkersDoc = await getDoc(doc(db, "userMarkers", currentUser.uid));
+    const userMarkers = userMarkersDoc.data().markers;
+  
+    const markerToDelete = userMarkers.find(marker => marker.id === markerId);
+  
+    await updateDoc(doc(db, "userMarkers", currentUser.uid), {
+      markers: arrayRemove(markerToDelete),
+    });
+  
+    setMarkers((markers) => markers.filter(marker => marker.id !== markerId));
+  };
+  
+
   const onMapClick = useCallback(() => {
     (plusBtn) && (
       setTempMarker({ lat: mapClick.latLng.lat(), lng: mapClick.latLng.lng() }),
@@ -101,6 +118,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
       {selected && <MarkerInfo
         selected={selected}
         setSelected={setSelected}
+        deleteMarker={deleteMarker}
       />}
 
       {showForm && <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />}

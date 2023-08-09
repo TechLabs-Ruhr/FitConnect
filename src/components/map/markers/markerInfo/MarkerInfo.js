@@ -7,17 +7,20 @@ import { formatRelative } from "date-fns";
 import { InfoWindow } from "@react-google-maps/api";
 import './markerInfoView.scss';
 import './optionWindow.scss';
+import './сonfirmationModal.scss';
 
 
-const MarkerInfo = ({ selected, setSelected }) => {
+const MarkerInfo = ({ selected, setSelected, deleteMarker }) => {
     const [showView, setShowView] = useState(false);
     const [showOptions, setShowOptions] = useState(true);
+    const [confirmationModal, setConfirmationModal] = useState(false);
     const { lat, lng } = selected;
 
     useEffect(() => {
-        console.log(1);
+        console.log(selected);
         selected !== null && (
             setShowView(false),
+            setConfirmationModal(false),
             setShowOptions(true)
         )
     }, [selected]);
@@ -33,8 +36,22 @@ const MarkerInfo = ({ selected, setSelected }) => {
                 position={{ lat: lat, lng: lng }}
                 onCloseClick={() => { setSelected(null) }}>
                 <>
-                    {(selected && showOptions) && (<OptionWindow onViewBtnClick={onViewBtnClick} />)}
+                    {showOptions &&
+                        (<OptionWindow
+                            onViewBtnClick={onViewBtnClick}
+                            setConfirmationModal={setConfirmationModal}
+                            setShowOptions={setShowOptions}
+                        />)}
+
                     {showView && (<MarkerView selected={selected} />)}
+
+                    {confirmationModal &&
+                        (<ConfirmationModal
+                            onDeleteBtnClick={deleteMarker}
+                            selected={selected}
+                            setSelected={setSelected}
+                            setConfirmationModal={setConfirmationModal}
+                            setShowOptions={setShowOptions} />)}
                 </>
             </InfoWindow>)}
         </>
@@ -43,17 +60,46 @@ const MarkerInfo = ({ selected, setSelected }) => {
 
 export default MarkerInfo;
 
-const OptionWindow = ({ onViewBtnClick }) => {
+const OptionWindow = ({ onViewBtnClick, setConfirmationModal, setShowOptions }) => {
+    const onDeleteBtn = () => {
+        setConfirmationModal(true);
+        setShowOptions(false);
+    }
+
     return (
         <>
             <div className='edit-marker'>
                 <button className='btn btn-view' onClick={onViewBtnClick}>View</button>
                 <button className='btn btn-edit'>Edit</button>
-                <button className='btn btn-delete'>Delete</button>
+                <button className='btn btn-delete' onClick={onDeleteBtn}>Delete</button>
             </div>
         </>
     )
 }
+
+const ConfirmationModal = ({ onDeleteBtnClick, setSelected, selected, setConfirmationModal, setShowOptions }) => {
+    const onConfirm = () => {
+        onDeleteBtnClick(selected.id);
+        setSelected(null);
+    }
+
+    const onCancel = () => {
+        setConfirmationModal(false);
+        setShowOptions(true);
+    }
+
+    return (
+        <div className='confirmation-modal'>
+            <div className="confirmation-modal__content">
+                <p className="confirmation-modal__text">Möchten Sie das Training wirklich löschen?</p>
+                <div className="confirmation-modal__buttons">
+                    <button className="confirmation-modal__button confirm" onClick={onConfirm}>Bestätigen</button>
+                    <button className="confirmation-modal__button cancel" onClick={onCancel}>Abbrechen</button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const MarkerView = ({ selected }) => {
     const { activityType, maxPeople, description, time, trainingTime } = selected;
