@@ -1,38 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './sidebar.scss';
 import SideBarData from './SideBarData';
+import IconButton from '@mui/material/IconButton'; // Material-UI IconButton
+import MenuIcon from '@mui/icons-material/Menu';
+import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 
 const SideBar = () => {
-    return (
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-        
-            
-            <div className="sidebar">
-                <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
-                <p className="user-name">Arnold Schwarznegger</p>
-                <ul className="SideBarList">
-                {SideBarData.map((val, key)=> {
-                    return (<li
-                        className='row'
-                        id={window.location.pathname == val.link ? "active" : ""} 
-                        onClick={()=> 
-                        {window.location.pathname = val.link;
-                        }}>
-                        {" "}
-                        <div id="icon">{val.icon}</div>{" "}
-                        <div id="title">
-                            {val.title}
-                        </div>
-                        </li>
-                
-                    );
-            })}
-            </ul> 
-            </div>
-            );
-}
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    return (
+        <div className={`sidebar ${isSidebarOpen ? '' : 'closed'}`}>
+            <IconButton
+                className={`toggle-button ${isSidebarOpen ? '' : 'closed'}`}
+                onClick={toggleSidebar}
+            >
+                <ViewSidebarIcon /> 
+            </IconButton>
+            {isSidebarOpen && (
+                <>
+                    <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
+                    <p className="user-name">Arnold Schwarznegger</p>
+                    <ul className="SideBarList">
+                        {SideBarData.map((val, key) => (
+                            <li
+                                key={key}
+                                className={`row ${window.location.pathname === val.link ? 'active' : ''}`}
+                                onClick={() => {
+                                    window.location.pathname = val.link;
+                                }}
+                            >
+                                <div id="icon">{val.icon}</div>
+                                <div id="title">{val.title}</div>
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            )}
+        </div>
+    );
+};
 
 export default SideBar;
+
 
 
  {/* <img src="img/arnold.png" alt="userPhoto" className="user-photo" />

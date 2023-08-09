@@ -15,6 +15,10 @@ body {
     padding-left: 0;
     font-weight: bold;
 
+    &.closed {
+        width: 5%; /* Kleinere Breite, wenn die Sidebar geschlossen ist */
+    }
+
     
     
         
@@ -37,6 +41,7 @@ body {
 
         .user-name {
             display: none;
+            margin-bottom: 50px;
         }
 
         .icon-container {
@@ -71,9 +76,8 @@ body {
     
     .SideBarList .row{
         width: 100%;
-        height: 40px;
+        height: 60px;
         align-items: center;
-        justify-content: center;
         padding: 10px 0;
         display: flex;
     }
@@ -83,6 +87,7 @@ body {
         font-size: 20px;
         font-weight: bold;
         margin-top: 10px;
+        margin-bottom: 60px;
         text-align: center;
     }
 
@@ -137,5 +142,12 @@ body {
     .SideBarList .row:hover {
         cursor: pointer;
         background-color: #ff880051;
+    }
+
+    .toggle-button {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+
     }
 }
