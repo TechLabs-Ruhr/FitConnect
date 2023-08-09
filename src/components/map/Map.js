@@ -7,7 +7,7 @@ import GeoLocation from './geoLocation/GeoLocation';
 import Spinner from '../spinner/Spinner'
 import { GOOGLE_MAPS_API_KEY, libraries, mapContainerStyle, options } from '../../config';
 import './map.scss';
-import GoogleMapMarkers from "./markers/googleMapMarkers/GoogleMapMarkers";
+import GoogleMapMarkers from "./markers/GoogleMapMarkers";
 
 const Map = () => {
     const [center, setCenter] = useState({

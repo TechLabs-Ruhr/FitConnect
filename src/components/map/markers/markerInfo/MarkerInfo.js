@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {
-    CircularProgressbar,
-    buildStyles
-} from "react-circular-progressbar";
-import { formatRelative } from "date-fns";
 import { InfoWindow } from "@react-google-maps/api";
-import './markerInfoView.scss';
-import './optionWindow.scss';
-import './сonfirmationModal.scss';
 import { MapForm } from '../../mapForm/MapForm';
+import OptionWindow from './optionWindow/OptionWindow';
+import ConfirmationModal from './confirmationModal/ConfirmationModal';
+import MarkerView from './markerView/MarkerView';
 
 
 const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
@@ -70,87 +65,3 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
 }
 
 export default MarkerInfo;
-
-const OptionWindow = ({ onViewBtnClick, setConfirmationModal, setShowOptions, setForm }) => {
-    const onDeleteBtn = () => {
-        setConfirmationModal(true);
-        setShowOptions(false);
-    }
-
-    const onEditBtn = () => {
-        setForm(true);
-        setShowOptions(false);
-    }
-
-    return (
-        <>
-            <div className='edit-marker'>
-                <button className='btn btn-view' onClick={onViewBtnClick}>View</button>
-                <button className='btn btn-edit' onClick={onEditBtn}>Edit</button>
-                <button className='btn btn-delete' onClick={onDeleteBtn}>Delete</button>
-            </div>
-        </>
-    )
-}
-
-const ConfirmationModal = ({ onDeleteBtnClick, setSelected, selected, setConfirmationModal, setShowOptions }) => {
-    const onConfirm = () => {
-        onDeleteBtnClick(selected.id);
-        setSelected(null);
-    }
-
-    const onCancel = () => {
-        setConfirmationModal(false);
-        setShowOptions(true);
-    }
-
-    return (
-        <div className='confirmation-modal'>
-            <div className="confirmation-modal__content">
-                <p className="confirmation-modal__text">Möchten Sie das Training wirklich löschen?</p>
-                <div className="confirmation-modal__buttons">
-                    <button className="confirmation-modal__button cancel" onClick={onCancel}>Abbrechen</button>
-                    <button className="confirmation-modal__button confirm" onClick={onConfirm}>Bestätigen</button>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const MarkerView = ({ selected }) => {
-    const { activityType, maxPeople, description, time, trainingTime } = selected;
-
-    const startTime = new Date(time.toDate());
-    const endTime = new Date(trainingTime.toDate());
-    const currentTime = new Date();
-    const totalTime = endTime - startTime;
-    const elapsedTime = currentTime - startTime;
-    const percentage = (elapsedTime / totalTime) * 100;
-
-    return (
-        <div className='marker-info'>
-            <p className='info-activity'>{activityType}</p>
-            <div className="info">
-                <div className="info__block-left">
-                    <p className='info-description'>{description}</p>
-                </div>
-                <div className="info__block-right">
-                    <CircularProgressbar
-                        className='info-progress'
-                        value={percentage}
-                        strokeWidth={50}
-                        styles={buildStyles({
-                            strokeLinecap: "butt",
-                            pathColor: "orange",
-                            trailColor: "grey",
-                        })}
-                    />
-                    <p className='info-time'>{formatRelative(new Date(trainingTime.seconds * 1000), new Date())}</p>
-                </div>
-            </div>
-            <p className='info-people'>People: 0/{maxPeople}</p>
-            <button className="btn btn-join">Join</button>
-            <button className='btn btn-close'> &times;</button>
-        </div>
-    )
-}

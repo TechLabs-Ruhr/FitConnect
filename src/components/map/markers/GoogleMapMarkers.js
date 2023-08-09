@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
-import MarkerInfo from "../markerInfo/MarkerInfo";
+import MarkerInfo from "./markerInfo/MarkerInfo";
 import { Timestamp } from 'firebase/firestore';
-import { AuthContext } from "../../../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import { v4 as uuid } from "uuid";
 import {
   arrayUnion,
@@ -13,9 +13,9 @@ import {
   arrayRemove
 } from "firebase/firestore";
 import { Marker } from "@react-google-maps/api";
-import { MapForm } from "../../mapForm/MapForm";
-import { db } from "../../../../firebase";
-import '../../map.scss';
+import { MapForm } from "../mapForm/MapForm";
+import { db } from "../../../firebase";
+import '../map.scss';
 
 const GoogleMapMarkers = ({ mapClick }) => {
   const [markers, setMarkers] = useState([]);
