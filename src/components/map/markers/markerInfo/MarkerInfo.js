@@ -1,34 +1,61 @@
-import React, { useContext } from 'react';
-import { InfoWindow } from "@react-google-maps/api";
-import { formatRelative } from "date-fns";
-import { AuthContext } from "../../../../context/AuthContext";
-import './markerInfoWindow.scss';
+import React, { useState, useEffect } from 'react';
 import {
     CircularProgressbar,
     buildStyles
 } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import EditWindow from '../editWindow/EditWindow';
+import { formatRelative } from "date-fns";
+import { InfoWindow } from "@react-google-maps/api";
+import './markerInfoView.scss';
+import './optionWindow.scss';
 
 
+const MarkerInfo = ({ selected, setSelected }) => {
+    const [showView, setShowView] = useState(false);
+    const [showOptions, setShowOptions] = useState(true);
+    const { lat, lng } = selected;
 
-const MarkerInfoWindow = ({ selected, setSelected }) => {
-    const { currentUser } = useContext(AuthContext);
-    const { lat, lng, owner } = selected;
+    useEffect(() => {
+        console.log(1);
+        selected !== null && (
+            setShowView(false),
+            setShowOptions(true)
+        )
+    }, [selected]);
+
+    const onViewBtnClick = () => {
+        setShowView(true);
+        setShowOptions(false);
+    }
 
     return (
-        /* <InfoWindow
-             position={{ lat: lat, lng: lng }}
-             onCloseClick={() => { setSelected(null) }}>
-             <View selected={selected} />
-         </InfoWindow> */
-        <EditWindow selected={selected}
-            setSelected={setSelected}
-         />
+        <>
+            {selected && (<InfoWindow
+                position={{ lat: lat, lng: lng }}
+                onCloseClick={() => { setSelected(null) }}>
+                <>
+                    {(selected && showOptions) && (<OptionWindow onViewBtnClick={onViewBtnClick} />)}
+                    {showView && (<MarkerView selected={selected} />)}
+                </>
+            </InfoWindow>)}
+        </>
     )
 }
 
-const View = ({ selected }) => {
+export default MarkerInfo;
+
+const OptionWindow = ({ onViewBtnClick }) => {
+    return (
+        <>
+            <div className='edit-marker'>
+                <button className='btn btn-view' onClick={onViewBtnClick}>View</button>
+                <button className='btn btn-edit'>Edit</button>
+                <button className='btn btn-delete'>Delete</button>
+            </div>
+        </>
+    )
+}
+
+const MarkerView = ({ selected }) => {
     const { activityType, maxPeople, description, time, trainingTime } = selected;
 
     const startTime = new Date(time.toDate());
@@ -39,7 +66,7 @@ const View = ({ selected }) => {
     const percentage = (elapsedTime / totalTime) * 100;
 
     return (
-        <div>
+        <div className='marker-info'>
             <p className='info-activity'>{activityType}</p>
             <div className="info">
                 <div className="info__block-left">
@@ -65,5 +92,3 @@ const View = ({ selected }) => {
         </div>
     )
 }
-
-export default MarkerInfoWindow

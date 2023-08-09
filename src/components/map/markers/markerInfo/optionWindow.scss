@@ -1,27 +1,27 @@
 .edit-marker{
+    position: relative;
     width: 70px;
     height: 70px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: black; 
     padding: 20px;
-    border-radius: 5px;
+    z-index: 20;
 }
 
 .btn-view, .btn-edit, .btn-delete {
-    background-color: orange; 
+    background-color: rgb(255, 176, 30); 
     color: white; 
     font-size: 14px;
     border-radius: 5px;
     cursor: pointer;
     display: block;
     width: 50px;
+}
+
+.btn-view:hover, .btn-edit:hover, .btn-delete:hover {
+    background-color: rgb(217, 143, 5); 
 }
 
 .btn-edit, .btn-delete{

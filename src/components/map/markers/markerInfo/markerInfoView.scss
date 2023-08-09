@@ -1,56 +1,64 @@
 .gm-style .gm-style-iw-c {
+    z-index: 10;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.gm-style .gm-style-iw-tc::after,
+.gm-style .gm-style-iw-c {
+    background-color: black;
+}
+
+.marker-info {
     color: white;
     width: 500px;
     height: 250px;
     padding: 20px;
-    z-index: 10;
-    border-radius: 5px;
 }
 
-.gm-style .gm-style-iw-tc::after, .gm-style .gm-style-iw-c  {
-    background-color: black;
-}
-
-.btn-join{
-    background-color: orange; 
+.btn-join {
+    background-color: orange;
     padding: 5px 20px;
-    color: white; 
+    color: white;
     font-size: 20px;
     border-radius: 10px;
     margin-top: 15px;
     cursor: pointer;
 }
 
-.info{
+.info {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 
     &__block-right {
         width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &__block-left {
         width: 70%;
     }
 
-    &-activity{
+    &-activity {
         font-size: 20px;
         font-weight: bold;
     }
 
-    &-progress{
+    &-progress {
         width: 30px;
         height: 30px;
         display: block;
     }
 
-    &-time{
+    &-time {
         margin-top: 10px;
         text-align: center;
     }
 
-    &-people{
+    &-people {
         margin-top: 20px;
     }
 }
@@ -65,6 +73,3 @@
     font-size: 20px;
     color: white;
 }
-
-
-

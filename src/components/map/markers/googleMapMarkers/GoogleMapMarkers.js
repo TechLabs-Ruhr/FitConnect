@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext, useCallback } from 'react';
-import MarkerInfoWindow from "../markerInfoWindow/MarkerInfoWindow";
+import MarkerInfo from "../markerInfo/MarkerInfo";
 import { Timestamp } from 'firebase/firestore';
 import { AuthContext } from "../../../../context/AuthContext";
 import { v4 as uuid } from "uuid";
@@ -98,7 +98,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
         />
       ))}
 
-      {selected && <MarkerInfoWindow
+      {selected && <MarkerInfo
         selected={selected}
         setSelected={setSelected}
       />}
