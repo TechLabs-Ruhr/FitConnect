@@ -136,6 +136,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
           }}
           onClick={() => {
             setSelected(!selected || selected.id !== marker.id ? marker : null);
+            console.log(1);
           }}
         />
       ))}

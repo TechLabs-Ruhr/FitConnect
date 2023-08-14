@@ -11,16 +11,20 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     const [showOptions, setShowOptions] = useState(true);
     const [confirmationModal, setConfirmationModal] = useState(false);
     const [form, setForm] = useState(false);
+    const [showInfoWindow, setShowInfoWindow] = useState(false); 
     const { lat, lng } = selected;
 
+    
     useEffect(() => {
-        console.log(selected);
-        selected !== null && (
-            setShowView(false),
-            setConfirmationModal(false),
-            setShowOptions(true),
-            setForm(false)
-        )
+        if (selected !== null){
+            setShowView(false);
+            setConfirmationModal(false);
+            setShowOptions(true);
+            setForm(false);
+            setShowInfoWindow(true); 
+        } else {
+            setShowInfoWindow(false); 
+        }
     }, [selected]);
 
     const onViewBtnClick = () => {
@@ -30,7 +34,7 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
 
     return (
         <>
-            {selected && (<InfoWindow
+            {showInfoWindow && (<InfoWindow
                 position={{ lat: lat, lng: lng }}
                 onCloseClick={() => { setSelected(null) }}>
                 <>
