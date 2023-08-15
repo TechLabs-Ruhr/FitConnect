@@ -1,8 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import {
-    GoogleMap,
-    useLoadScript,
-} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import GeoLocation from './geoLocation/GeoLocation';
 import Spinner from '../spinner/Spinner'
 import { GOOGLE_MAPS_API_KEY, libraries, mapContainerStyle, options } from '../../config';
@@ -16,6 +13,8 @@ const Map = () => {
     });
     const [isLoading, setLoading] = useState(true);
     const [mapClick, setMapClick] = useState(null);
+    const [userLocation, setUserLocation] = useState(null);
+    const [mapReady, setMapReady] = useState(false);
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
         libraries,
@@ -27,17 +26,24 @@ const Map = () => {
     const panTo = useCallback(({ lat, lng }) => {
         mapRef.current.panTo({ lat, lng });
         mapRef.current.setZoom(14);
-    }, [])
-
-
+    }, []) 
     useEffect(() => {
         getGeoLocation();
-    }, []);
+    }, []); 
+    useEffect(() => {
+        if (userLocation) {
+            setMapReady(true);
+        }
+    }, [userLocation]);
 
     const getGeoLocation = () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 setCenter({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                });
+                setUserLocation({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 });
@@ -60,19 +66,24 @@ const Map = () => {
 
     return (
         <>
-            <GoogleMap
+            {mapReady && <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 zoom={14}
                 center={center}
                 options={options}
-                onClick={(event) => {setMapClick(event)}}
+                onClick={(event) => { setMapClick(event) }}
                 onLoad={onMapLoad}
             >
-                
                 <GeoLocation panTo={panTo} />
-                <GoogleMapMarkers mapClick={mapClick}/>
-
-            </GoogleMap>
+                <GoogleMapMarkers mapClick={mapClick} />
+                {userLocation && <Marker
+                    position={userLocation}
+                    icon={{
+                        url: "img/geolocation.png", 
+                        scaledSize: new window.google.maps.Size(30, 30)
+                    }}
+                />}
+            </GoogleMap>}
         </>
     );
 }
