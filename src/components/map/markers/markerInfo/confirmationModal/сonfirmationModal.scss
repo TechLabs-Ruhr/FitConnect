@@ -41,4 +41,19 @@
         background-color: grey;
         color: #fff;
     }
+
+    .btn-close {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        color: white;
+    }
+    
+    .btn-close:hover {
+        color: #999;
+    }
 }

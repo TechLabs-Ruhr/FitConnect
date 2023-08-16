@@ -44,6 +44,7 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
                             setConfirmationModal={setConfirmationModal}
                             setShowOptions={setShowOptions}
                             setForm={setForm}
+                            setSelected={setSelected}
                         />)}
 
                     {showView && (<MarkerView selected={selected} />)}

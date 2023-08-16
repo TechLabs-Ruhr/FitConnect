@@ -38,3 +38,15 @@
     font-size: 20px;
     color: white;
 }
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    color: #ffffff;
+    cursor: pointer;
+}
