@@ -1,6 +1,6 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import './confirmationPopup.scss'; 
+import './confirmationPopup.scss';
 import greenCheck from '../../ressources/img/check-green.png';
 
 const ConfirmationPopup = ({ id, setShowPopup }) => {
@@ -8,12 +8,12 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-        setIsVisible(false);
-        setShowPopup(false); 
+      setIsVisible(false);
+      setShowPopup(false);
     }, 1000);
 
     return () => clearTimeout(timer);
-}, [isVisible]);
+  }, [isVisible]);
 
   const popups = [
     {
@@ -37,11 +37,11 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
 
   return isVisible ? ReactDOM.createPortal(
     <div className={`popup ${isVisible ? '' : 'hidden'}`} onClick={() => setIsVisible(false)}>
-        <img src={pop.src} alt={pop.id} className='popup-img'/>
-        <p className="popup-text">{pop.text}</p>
+      <img src={pop.src} alt={pop.id} className='popup-img' />
+      <p className="popup-text">{pop.text}</p>
     </div>,
     document.getElementById('root')
-) : null;
+  ) : null;
 }
 
 export default ConfirmationPopup
