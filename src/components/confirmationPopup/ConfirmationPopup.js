@@ -44,4 +44,4 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
   ) : null;
 }
 
-export default ConfirmationPopup
+ export default ConfirmationPopup
