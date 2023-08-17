@@ -33,7 +33,7 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
     }
   ];
 
-  const pop = popups.find(popup => popup.id === id);
+   const pop = popups.find(popup => popup.id === id);
 
   return isVisible ? ReactDOM.createPortal(
     <div className={`popup ${isVisible ? '' : 'hidden'}`} onClick={() => setIsVisible(false)}>
