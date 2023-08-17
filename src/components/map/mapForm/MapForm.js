@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import './mapForm.scss';
 
 export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
-    
+
     const validationSchema = yup.object().shape({
         trainingTime: yup.date()
             .min(new Date(), 'Die Zeit kann nicht in der Vergangenheit liegen')
@@ -50,40 +50,40 @@ export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
     const buttonText = selected ? 'Update training' : 'Add training';
 
     const closeForm = () => {
-        if(selected){
-            setSelected(null); 
+        if (selected) {
+            setSelected(null);
         } else {
-            onClose(); 
+            onClose();
         }
     }
 
     return (
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-            {({ errors, touched }) => (
-                <Form className={`map-form ${selected ? '' : 'new-training-form'}`}>
-                    <button type="button" className="close-button" onClick={closeForm}>&times;</button>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                {({ errors, touched }) => (
+                    <Form className={`map-form ${selected ? '' : 'new-training-form'}`}>
+                        <button type="button" className="close-button" onClick={closeForm}>&times;</button>
 
-                    <Field id="activityType" name="activityType" placeholder="Activity" />
-                    {touched.activityType && errors.activityType ? <div className="error-message">{errors.activityType}</div> : null}
+                        <Field id="activityType" name="activityType" placeholder="Activity" />
+                        {touched.activityType && errors.activityType ? <div className="error-message">{errors.activityType}</div> : null}
 
-                    <div className="form-date">
-                        <label htmlFor="trainingTime">Date :</label>
-                        <Field id="trainingTime" name="trainingTime" type="datetime-local" />
-                    </div>
-                    {touched.trainingTime && errors.trainingTime ? <div className="error-message">{errors.trainingTime}</div> : null}
+                        <div className="form-date">
+                            <label htmlFor="trainingTime">Date :</label>
+                            <Field id="trainingTime" name="trainingTime" type="datetime-local" />
+                        </div>
+                        {touched.trainingTime && errors.trainingTime ? <div className="error-message">{errors.trainingTime}</div> : null}
 
-                    <div className="form-people">
-                        <label htmlFor="maxPeople">Number of participants : </label>
-                        <Field id="maxPeople" name="maxPeople" type="number" />
-                    </div>
-                    {touched.maxPeople && errors.maxPeople ? <div className="error-message">{errors.maxPeople}</div> : null}
+                        <div className="form-people">
+                            <label htmlFor="maxPeople">Number of participants : </label>
+                            <Field id="maxPeople" name="maxPeople" type="number" />
+                        </div>
+                        {touched.maxPeople && errors.maxPeople ? <div className="error-message">{errors.maxPeople}</div> : null}
 
-                    <Field as="textarea" id="description" name="description" placeholder="Description" />
-                    {touched.description && errors.description ? <div className="error-message">{errors.description}</div> : null}
+                        <Field as="textarea" id="description" name="description" placeholder="Description" />
+                        {touched.description && errors.description ? <div className="error-message">{errors.description}</div> : null}
 
-                    <button className='addTrainingBtn' type="submit">{buttonText}</button>
-                </Form>
-            )}
-        </Formik>
+                        <button className='addTrainingBtn' type="submit">{buttonText}</button>
+                    </Form>
+                )}
+            </Formik>
     );
 };

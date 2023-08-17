@@ -15,6 +15,7 @@ import {
 import { Marker } from "@react-google-maps/api";
 import { MapForm } from "../mapForm/MapForm";
 import { db } from "../../../firebase";
+import ConfirmationPopup from '../../confirmationPopup/ConfirmationPopup';
 import '../map.scss';
 
 const GoogleMapMarkers = ({ mapClick }) => {
@@ -24,6 +25,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
   const { currentUser } = useContext(AuthContext);
   const [tempMarker, setTempMarker] = useState(null);
   const [plusBtn, setPlusBtn] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     loadAllMarkers();
@@ -60,6 +62,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
 
     setShowForm(false);
     setPlusBtn(false);
+    setShowPopup('create');
   };
 
   const save = (marker) => {
@@ -85,6 +88,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
     });
 
     setMarkers((markers) => markers.filter(marker => marker.id !== markerId));
+    setShowPopup('delete');
   };
 
   const updateMarker = async (values, id) => {
@@ -111,6 +115,8 @@ const GoogleMapMarkers = ({ mapClick }) => {
       updatedMarkers[localIndexToUpdate] = updatedMarker;
       return updatedMarkers;
     });
+
+    setShowPopup('update'); 
   };
 
   const onMapClick = useCallback(() => {
@@ -148,6 +154,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
       />}
 
       {showForm && <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />}
+      {showPopup ? <ConfirmationPopup id={showPopup} setShowPopup={setShowPopup} /> : null}
     </>
   )
 }

@@ -1,0 +1,29 @@
+.popup{
+    position: absolute;
+    z-index: 10;
+    width: 360px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    background-color: black;
+    display: flex;
+    padding: 10px 20px;
+    color: white;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
+    border-radius: 10px;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.popup-img {
+    width: 50px;
+    height: 50px;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none; 
+}
