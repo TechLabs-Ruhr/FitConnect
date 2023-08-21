@@ -10,6 +10,7 @@ import {
   collection,
   getDocs,
   getDoc,
+  setDoc,
   arrayRemove
 } from "firebase/firestore";
 import { Marker } from "@react-google-maps/api";
@@ -45,7 +46,10 @@ const GoogleMapMarkers = ({ mapClick }) => {
   };
 
   const onFormSubmit = (values) => {
+    const markerId = uuid(); 
+
     const newMarker = {
+      id: markerId,
       ...tempMarker,
       ...values,
       owner: currentUser.uid,
@@ -65,16 +69,18 @@ const GoogleMapMarkers = ({ mapClick }) => {
     setShowPopup('create');
   };
 
-  const save = (marker) => {
-    updateDoc(doc(db, "userMarkers", currentUser.uid), {
+  const save = async (marker) => {
+    
+    await updateDoc(doc(db, "userMarkers", currentUser.uid), {
       markers: arrayUnion({
-        id: uuid(),
         owner: currentUser.uid,
         people: [],
         time: new Date(),
         ...marker,
       }),
     });
+
+    await setDoc(doc(db, "userRequests", marker.id), { requests : [] });
   }
 
   const deleteMarker = async (markerId) => {

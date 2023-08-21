@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { InfoWindow } from "@react-google-maps/api";
 import { MapForm } from '../../mapForm/MapForm';
 import OptionWindow from './optionWindow/OptionWindow';
 import ConfirmationModal from './confirmationModal/ConfirmationModal';
 import MarkerView from './markerView/MarkerView';
+import { AuthContext } from "../../../../context/AuthContext";
 
 
 const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
@@ -11,19 +12,20 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     const [showOptions, setShowOptions] = useState(true);
     const [confirmationModal, setConfirmationModal] = useState(false);
     const [form, setForm] = useState(false);
-    const [showInfoWindow, setShowInfoWindow] = useState(false); 
+    const [showInfoWindow, setShowInfoWindow] = useState(false);
+    const { currentUser } = useContext(AuthContext);
     const { lat, lng } = selected;
 
-    
+
     useEffect(() => {
-        if (selected !== null){
+        if (selected !== null) {
             setShowView(false);
             setConfirmationModal(false);
             setShowOptions(true);
             setForm(false);
-            setShowInfoWindow(true); 
+            setShowInfoWindow(true);
         } else {
-            setShowInfoWindow(false); 
+            setShowInfoWindow(false);
         }
     }, [selected]);
 
@@ -34,39 +36,54 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
 
     return (
         <>
-            {showInfoWindow && (<InfoWindow
-                position={{ lat: lat, lng: lng }}
-                onCloseClick={() => { setSelected(null) }}>
-                <>
-                    {showOptions &&
-                        (<OptionWindow
-                            onViewBtnClick={onViewBtnClick}
-                            setConfirmationModal={setConfirmationModal}
-                            setShowOptions={setShowOptions}
-                            setForm={setForm}
-                            setSelected={setSelected}
-                        />)}
+            {showInfoWindow && (
+                <InfoWindow
+                    position={{ lat: lat, lng: lng }}
+                    onCloseClick={() => { setSelected(null) }}>
+                    <>
+                        {currentUser.uid !== selected.owner ? (
 
-                    {showView && (<MarkerView selected={selected} />)}
+                            <MarkerView selected={selected} currentUser={currentUser}/>
 
-                    {confirmationModal &&
-                        (<ConfirmationModal
-                            onDeleteBtnClick={deleteMarker}
-                            selected={selected}
-                            setSelected={setSelected}
-                            setConfirmationModal={setConfirmationModal}
-                            setShowOptions={setShowOptions} />)}
+                        ) : (
 
-                    {form &&
-                        (<MapForm onSubmit={updateMarker}
-                            onClose={() => setShowForm(false)}
-                            selected={selected}
-                            setSelected={setSelected}
-                        />)}
-                </>
-            </InfoWindow>)}
+                            <>
+                                {showOptions && (
+                                    <OptionWindow
+                                        onViewBtnClick={onViewBtnClick}
+                                        setConfirmationModal={setConfirmationModal}
+                                        setShowOptions={setShowOptions}
+                                        setForm={setForm}
+                                        setSelected={setSelected}
+                                    />
+                                )}
+    
+                                {showView && (<MarkerView selected={selected} />)}
+    
+                                {confirmationModal && (
+                                    <ConfirmationModal
+                                        onDeleteBtnClick={deleteMarker}
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                        setConfirmationModal={setConfirmationModal}
+                                        setShowOptions={setShowOptions} />
+                                )}
+    
+                                {form && (
+                                    <MapForm onSubmit={updateMarker}
+                                        onClose={() => setShowForm(false)}
+                                        selected={selected}
+                                        setSelected={setSelected}
+                                    />
+                                )}
+                            </>
+                        )}
+                    </>
+                </InfoWindow>
+            )}
         </>
     )
+    
 }
 
 export default MarkerInfo;
