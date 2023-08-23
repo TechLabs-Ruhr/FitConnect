@@ -33,11 +33,13 @@ const Notifications = () => {
         setNotifications(notifications);
     };
 
+    const sortedNotifications = notifications.sort((a, b) => b.time.seconds - a.time.seconds);
+
     return (
         <div className='requests'>
-            {notifications.length === 0 ?
+            {sortedNotifications.length === 0 ?
                 <p className="no-requests">You do not have any updates</p> :
-                notifications.map((request, index) => (
+                sortedNotifications.map((request, index) => (
                     <Notification key={index} request={request} />
                 ))
             }
