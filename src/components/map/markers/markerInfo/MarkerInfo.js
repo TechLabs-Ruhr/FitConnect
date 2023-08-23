@@ -41,9 +41,9 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
                     position={{ lat: lat, lng: lng }}
                     onCloseClick={() => { setSelected(null) }}>
                     <>
-                        {currentUser.uid !== selected.owner ? (
+                        {currentUser.uid !== selected.owner.id ? (
 
-                            <MarkerView selected={selected} currentUser={currentUser}/>
+                            <MarkerView selected={selected}/>
 
                         ) : (
 

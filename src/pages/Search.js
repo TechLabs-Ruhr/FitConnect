@@ -5,9 +5,9 @@ import SideBar from "../components/sideBar/SideBar";
 const Search = () => {
   return (
     <>
-    <SideBar />
-    <Map />
-  </>
+      <SideBar />
+      <Map />
+    </>
   )
 }
 

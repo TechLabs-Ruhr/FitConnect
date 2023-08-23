@@ -11,7 +11,8 @@ import {
   getDocs,
   getDoc,
   setDoc,
-  arrayRemove
+  arrayRemove,
+  deleteDoc
 } from "firebase/firestore";
 import { Marker } from "@react-google-maps/api";
 import { MapForm } from "../mapForm/MapForm";
@@ -46,13 +47,16 @@ const GoogleMapMarkers = ({ mapClick }) => {
   };
 
   const onFormSubmit = (values) => {
-    const markerId = uuid(); 
+    const markerId = uuid();
 
     const newMarker = {
       id: markerId,
       ...tempMarker,
       ...values,
-      owner: currentUser.uid,
+      owner: {
+        id: currentUser.uid,
+        name: currentUser.displayName,
+      },
       time: Timestamp.fromDate(new Date()),
       trainingTime: Timestamp.fromDate(new Date(values.trainingTime))
     };
@@ -70,17 +74,22 @@ const GoogleMapMarkers = ({ mapClick }) => {
   };
 
   const save = async (marker) => {
-    
     await updateDoc(doc(db, "userMarkers", currentUser.uid), {
       markers: arrayUnion({
-        owner: currentUser.uid,
-        people: [],
+        owner: {
+          id: currentUser.uid,
+          name: currentUser.displayName,
+        },
+        people: [{
+          id: currentUser.uid,
+          name: currentUser.displayName,
+        }],
         time: new Date(),
         ...marker,
       }),
     });
 
-    await setDoc(doc(db, "userRequests", marker.id), { requests : [] });
+    await setDoc(doc(db, "userRequests", marker.id), { requests: [] });
   }
 
   const deleteMarker = async (markerId) => {
@@ -92,6 +101,8 @@ const GoogleMapMarkers = ({ mapClick }) => {
     await updateDoc(doc(db, "userMarkers", currentUser.uid), {
       markers: arrayRemove(markerToDelete),
     });
+
+    await deleteDoc(doc(db, "userRequests", markerId));
 
     setMarkers((markers) => markers.filter(marker => marker.id !== markerId));
     setShowPopup('delete');
@@ -122,7 +133,7 @@ const GoogleMapMarkers = ({ mapClick }) => {
       return updatedMarkers;
     });
 
-    setShowPopup('update'); 
+    setShowPopup('update');
   };
 
   const onMapClick = useCallback(() => {

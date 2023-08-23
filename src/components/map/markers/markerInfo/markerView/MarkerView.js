@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './markerView.scss';
 import {
     CircularProgressbar,
@@ -12,32 +12,38 @@ import {
     doc,
     updateDoc,
     getDoc,
+    setDoc
 } from "firebase/firestore";
 import { db } from '../../../../../firebase';
 import Spinner from '../../../../spinner/Spinner';
+import { AuthContext } from '../../../../../context/AuthContext';
 
-const MarkerView = ({ selected, currentUser }) => {
+const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
-    const [isLoading, setLoading] = useState(true);
+    const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
-        setRequestStatus(null); 
-        const fetchRequestStatus = async () => {
-            const existingRequest = await checkRequestExists();
-            if (existingRequest) {
-                setRequestStatus(existingRequest.status);
+        setRequestStatus(null);
+        if (currentUser.uid === selected.owner.id) {
+            setRequestStatus('view-only');
+        } else {
+            const fetchRequestStatus = async () => {
+                const existingRequest = await checkRequestExists();
+                if (existingRequest) {
+                    setRequestStatus(existingRequest.status);
+                } else {
+                    setRequestStatus('classic');
+                }
             }
-            setLoading(false);
+            fetchRequestStatus();
         }
-
-        fetchRequestStatus();
     }, [selected]);
 
-    const { activityType, maxPeople, description, time, trainingTime } = selected;
+    const { people, activityType, maxPeople, description, time, trainingTime } = selected;
     const percentage = findPercentage(time, trainingTime);
 
     const join = async () => {
-        await addRequestToDB(selected.uid, currentUser.uid);
+        await addRequestToDB();
         setRequestStatus('active');
     }
 
@@ -45,12 +51,17 @@ const MarkerView = ({ selected, currentUser }) => {
         updateDoc(doc(db, "userRequests", selected.id), {
             requests: arrayUnion({
                 id: uuid(),
-                user: currentUser.uid,
+                user: {
+                    id: currentUser.uid,
+                    name: currentUser.displayName,
+                },
                 marker: selected,
                 status: 'active',
-                Time: new Date()
+                time: new Date()
             }),
         });
+
+        await setDoc(doc(db, "userNotifications", currentUser.uid), { notifications: [] });
     }
 
     const checkRequestExists = async () => {
@@ -61,10 +72,8 @@ const MarkerView = ({ selected, currentUser }) => {
             return false;
         }
 
-        console.log(selected.id);
-
         const requests = docSnap.data().requests;
-        const matchingRequest = requests.find(request => request.user === currentUser.uid);
+        const matchingRequest = requests.find(request => request.user.id === currentUser.uid);
 
         return matchingRequest || null;
     }
@@ -90,30 +99,33 @@ const MarkerView = ({ selected, currentUser }) => {
                     <p className='info-time'>{formatRelative(new Date(trainingTime.seconds * 1000), new Date())}</p>
                 </div>
             </div>
-            <p className='info-people'>People: 0/{maxPeople}</p>
-            {isLoading ?
-                (<div className="spinner-container">
-                    <Spinner />
-                </div>) :
-                (() => {
-                    switch (requestStatus) {
-                        case null:
-                            return <button className="btn btn-join" onClick={join}>Join</button>;
-                        case 'active':
-                            return <p>Thank you. Your request is waiting for confirmation</p>;
-                        case 'rejected':
-                            return <p>Sorry. Your request was rejected</p>;
-                        case 'confirmed':
-                            return <p>Nice! Your request was accepted</p>;
-                        default:
-                            return null;
-                    }
-                })()
-            }
-
+            <p className='info-people'>People: {people.length}/{maxPeople + 1}</p>
+            {(() => {
+                switch (requestStatus) {
+                    case null:
+                        return (
+                            <div className="spinner-container">
+                                <Spinner />
+                            </div>
+                        );
+                    case 'classic':
+                        return <button className="btn btn-join" onClick={join}>Join</button>;
+                    case 'view-only':
+                        return <button className="btn btn-join">Join</button>;
+                    case 'active':
+                        return <p>Thank you. Your request is waiting for confirmation</p>;
+                    case 'rejected':
+                        return <p>Sorry. Your request was rejected</p>;
+                    case 'confirmed':
+                        return <p>Nice! Your request was accepted</p>;
+                    default:
+                        return null;
+                }
+            })()}
             <button className='btn btn-close'> &times;</button>
         </div>
     )
+
 }
 
 export default MarkerView
