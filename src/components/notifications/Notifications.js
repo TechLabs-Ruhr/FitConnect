@@ -7,9 +7,11 @@ import {
 import { db } from '../../firebase';
 import { AuthContext } from "../../context/AuthContext";
 import Notification from './notification/Notification';
+import Spinner from '../spinner/Spinner';
 
-const Notifications = () => {
+const Notifications = ({ onClose }) => {
     const [notifications, setNotifications] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         loadAllNotifications();
@@ -31,9 +33,18 @@ const Notifications = () => {
             });
         });
         setNotifications(notifications);
+        setLoading(false); 
     };
 
     const sortedNotifications = notifications.sort((a, b) => b.time.seconds - a.time.seconds);
+
+    if (isLoading) {
+        return (
+            <div className="spinner-container">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div className='requests'>
@@ -43,6 +54,7 @@ const Notifications = () => {
                     <Notification key={index} request={request} />
                 ))
             }
+            <button className='btn btn-close' onClick={() => onClose()}> &times;</button>
         </div>
     )
 

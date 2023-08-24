@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './sidebar.scss';
 import { signOut } from "firebase/auth";
 import { auth } from '../../firebase';
 import Notifications from '../notifications/Notifications';
+import event from '../.././ressources/img/notificationBtn.png';
 
 const SideBar = () => {
+    const [showNotifications, setShowNotifications] = useState(false);
+
+    const onClose = () => {
+        setShowNotifications(false); 
+    }
+
     return (
-        <>
-            <Notifications />
+        <>  
+            {showNotifications && <Notifications onClose={onClose}/>}
             <div className="sidebar">
                 <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
                 <p className="user-name">Arnold Schwarznegger</p>
+
+                <img className="notifications" src={event} onClick={() => setShowNotifications(!showNotifications)} alt="notifications" />
 
                 <nav className="nav">
                     <ul className="sidebar-menu">
