@@ -17,6 +17,7 @@ import {
 import { db } from '../../../../../firebase';
 import Spinner from '../../../../spinner/Spinner';
 import { AuthContext } from '../../../../../context/AuthContext';
+import { changeNewNotifications } from '../../../../../utils/notifications';
 
 const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
@@ -61,7 +62,7 @@ const MarkerView = ({ selected }) => {
             }),
         });
 
-        await setDoc(doc(db, "userNotifications", currentUser.uid), { notifications: [] });
+        changeNewNotifications(1, selected.owner.id); 
     }
 
     const checkRequestExists = async () => {

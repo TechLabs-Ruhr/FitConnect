@@ -38,12 +38,12 @@ const Notifications = ({ onClose }) => {
 
     const sortedNotifications = notifications.sort((a, b) => b.time.seconds - a.time.seconds);
 
-    if (isLoading) {
+    if(isLoading){
         return (
-            <div className="spinner-container">
-                <Spinner />
+            <div className="notifications-spinner">
+                <Spinner/>
             </div>
-        );
+        )
     }
 
     return (

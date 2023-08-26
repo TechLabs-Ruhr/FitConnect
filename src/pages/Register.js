@@ -29,7 +29,11 @@ const Register = () => {
       });
 
       await setDoc(doc(db, "userMarkers", res.user.uid), { markers: [] });
-
+      await setDoc(doc(db, "userNotifications", res.user.uid), {
+        notifications: {
+          newNotifications: 0
+        }
+      });
       navigate("/");
     } catch (err) {
       console.log(err);
