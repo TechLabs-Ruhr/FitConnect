@@ -30,6 +30,8 @@ const SideBar = () => {
                                 key={key}
                                 className={`row ${window.location.pathname === val.link ? 'active' : ''}`}
                                 onClick={() => {
+                                    console.log(window.location.pathname)
+                                    console.log(val.link);
                                     window.location.pathname = val.link;
                                 }}
                             >
