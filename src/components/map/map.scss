@@ -1,0 +1,49 @@
+.locate {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    z-index: 10;
+}
+
+.locate img {
+    width: 30px;
+    cursor: pointer;
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.btn-add {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    color: black;
+    border: none;
+    z-index: 5;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-add.btn-active {
+    background-color: orange;
+    color: white;
+}
+
+.map-cursor {
+    width: 20%;
+}

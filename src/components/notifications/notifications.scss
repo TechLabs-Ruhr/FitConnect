@@ -1,0 +1,21 @@
+.requests{
+    position: absolute;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    background: black; 
+    color: white; 
+    padding: 20px;
+    margin-left: 28%;
+    border-radius: 10px;
+}
+
+.notifications-spinner{
+    position: absolute;
+    z-index: 25;
+    left: 0;
+    top: 0;
+    margin-left: 28%;
+    width: 30px;
+    height: 30px;
+}
