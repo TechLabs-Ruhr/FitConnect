@@ -19,7 +19,7 @@
     height: 100vh;
 }
 
-.btn-plus {
+.btn-add {
     position: fixed;
     bottom: 50px;
     left: 50%;
@@ -29,18 +29,21 @@
     border: none;
     z-index: 5;
     font-weight: bold;
-    font-size: 30px;
-    border-radius: 100%;
-    border: 1px solid black;
-    width: 30px;
-    height: 30px;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
 }
 
-.btn-plus.btn-active {
+.btn-add.btn-active {
     background-color: orange;
     color: white;
+}
+
+.map-cursor {
+    width: 20%;
 }

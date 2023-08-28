@@ -17,7 +17,8 @@ import {
 import { db } from '../../../../../firebase';
 import Spinner from '../../../../spinner/Spinner';
 import { AuthContext } from '../../../../../context/AuthContext';
-import { changeNewNotifications } from '../../../../../utils/notifications';
+import { changeNewNotifications } from '../../../../../utils/notifications'; 
+import { capitalizeFirstLetter } from '../../../../../utils/utils';
 
 const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
@@ -81,7 +82,7 @@ const MarkerView = ({ selected }) => {
 
     return (
         <div className='marker-info'>
-            <p className='info-activity'>{activityType}</p>
+            <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
             <div className="info">
                 <div className="info__block-left">
                     <p className='info-description'>{description}</p>

@@ -29,7 +29,8 @@
 }
 
 .form-date,
-.form-people{
+.form-people,
+.form-activity {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -37,28 +38,32 @@
     width: 320px;
 }
 
-label{
+label {
     font-size: 16px;
     color: white;
 }
 
-#trainingTime{
+#trainingTime {
     width: 70%;
 }
 
-#maxPeople{
+#activityType{
+    width: 77%;
+}
+
+#maxPeople {
     width: 40px;
 }
 
-#description{
+#description {
     height: 115px;
 }
 
-#activityType{
+#activityType {
     margin-bottom: 10px;
 }
 
-#description{
+#description {
     margin-bottom: 20px;
 }
 

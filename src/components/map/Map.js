@@ -15,6 +15,7 @@ const Map = () => {
     const [mapClick, setMapClick] = useState(null);
     const [userLocation, setUserLocation] = useState(null);
     const [mapReady, setMapReady] = useState(false);
+    const [plusBtn, setPlusBtn] = useState(false);
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: GOOGLE_MAPS_API_KEY,
         libraries,
@@ -26,10 +27,10 @@ const Map = () => {
     const panTo = useCallback(({ lat, lng }) => {
         mapRef.current.panTo({ lat, lng });
         mapRef.current.setZoom(14);
-    }, []) 
+    }, [])
     useEffect(() => {
         getGeoLocation();
-    }, []); 
+    }, []);
     useEffect(() => {
         if (userLocation) {
             setMapReady(true);
@@ -75,14 +76,15 @@ const Map = () => {
                 onLoad={onMapLoad}
             >
                 <GeoLocation panTo={panTo} />
-                <GoogleMapMarkers mapClick={mapClick} />
+                <GoogleMapMarkers mapClick={mapClick} plusBtn={plusBtn} setPlusBtn={setPlusBtn}/>
                 {userLocation && <Marker
                     position={userLocation}
                     icon={{
-                        url: "img/geolocation.png", 
+                        url: "img/geolocation.png",
                         scaledSize: new window.google.maps.Size(30, 30)
                     }}
                 />}
+                <button className={`btn btn-add ${plusBtn ? 'btn-active' : ''}`} onClick={() => setPlusBtn(!plusBtn)}>Add Training</button>
             </GoogleMap>}
         </>
     );
