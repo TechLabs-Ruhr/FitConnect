@@ -463,3 +463,4 @@ Thumbs.db
 # https://plugins.jetbrains.com/plugin/12206-codestream
 
 config.js
+src/firebase.js
