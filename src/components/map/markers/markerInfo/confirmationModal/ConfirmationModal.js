@@ -2,15 +2,14 @@ import React from 'react';
 import './сonfirmationModal.scss';
 
 
-const ConfirmationModal = ({ onDeleteBtnClick, setSelected, selected, setConfirmationModal, setShowOptions }) => {
+const ConfirmationModal = ({ onDeleteBtnClick, setSelected, selected, setView }) => {
     const onConfirm = () => {
         onDeleteBtnClick(selected.id);
         setSelected(null);
     }
 
     const onCancel = () => {
-        setConfirmationModal(false);
-        setShowOptions(true);
+        setView('options');
     }
 
     return (

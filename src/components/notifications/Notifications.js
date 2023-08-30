@@ -4,7 +4,7 @@ import {
     getDocs,
     collection
 } from "firebase/firestore";
-import { db } from '../../firebase';
+import { db } from '../../Firebase';
 import { AuthContext } from "../../context/AuthContext";
 import Notification from './notification/Notification';
 import Spinner from '../spinner/Spinner';
@@ -33,15 +33,15 @@ const Notifications = ({ onClose }) => {
             });
         });
         setNotifications(notifications);
-        setLoading(false); 
+        setLoading(false);
     };
 
     const sortedNotifications = notifications.sort((a, b) => b.time.seconds - a.time.seconds);
 
-    if(isLoading){
+    if (isLoading) {
         return (
             <div className="notifications-spinner">
-                <Spinner/>
+                <Spinner />
             </div>
         )
     }

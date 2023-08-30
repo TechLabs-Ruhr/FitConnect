@@ -14,10 +14,10 @@ import {
     getDoc,
     setDoc
 } from "firebase/firestore";
-import { db } from '../../../../../firebase';
+import { db } from '../../../../../Firebase';
 import Spinner from '../../../../spinner/Spinner';
 import { AuthContext } from '../../../../../context/AuthContext';
-import { changeNewNotifications } from '../../../../../utils/notifications'; 
+import { changeNewNotifications } from '../../../../../utils/notifications';
 import { capitalizeFirstLetter } from '../../../../../utils/utils';
 
 const MarkerView = ({ selected }) => {
@@ -63,7 +63,7 @@ const MarkerView = ({ selected }) => {
             }),
         });
 
-        changeNewNotifications(1, selected.owner.id); 
+        changeNewNotifications(1, selected.owner.id);
     }
 
     const checkRequestExists = async () => {
