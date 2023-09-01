@@ -51,12 +51,13 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     
                                 {view === 'view-only' && (<MarkerView selected={selected} />)}
     
-                                {view === 'confirmation-modal' && (
+                                {view === 'delete confirmation' && (
                                     <ConfirmationModal
                                         onDeleteBtnClick={deleteMarker}
                                         selected={selected}
                                         setSelected={setSelected}
-                                        setView={setView} />
+                                        setView={setView}
+                                        type={'delete'} />
                                 )}
     
                                 {view === 'edit-form' && (

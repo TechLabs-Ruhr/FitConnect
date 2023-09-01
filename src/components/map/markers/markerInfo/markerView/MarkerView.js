@@ -19,9 +19,11 @@ import Spinner from '../../../../spinner/Spinner';
 import { AuthContext } from '../../../../../context/AuthContext';
 import { changeNewNotifications } from '../../../../../utils/notifications';
 import { capitalizeFirstLetter } from '../../../../../utils/utils';
+import ConfirmationModal from '../../markerInfo/confirmationModal/ConfirmationModal';
 
 const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
@@ -81,6 +83,8 @@ const MarkerView = ({ selected }) => {
     }
 
     return (
+        showConfirmModal ? (<ConfirmationModal setShowConfirmModal={setShowConfirmModal} join={join} type={'join'} />) :
+    
         <div className='marker-info'>
             <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
             <div className="info">
@@ -111,7 +115,7 @@ const MarkerView = ({ selected }) => {
                             </div>
                         );
                     case 'classic':
-                        return <button className="btn btn-join" onClick={join}>Join</button>;
+                        return <button className="btn btn-join" onClick={() => setShowConfirmModal(true)}>Join</button>;
                     case 'view-only':
                         return <button className="btn btn-join">Join</button>;
                     case 'active':
@@ -124,8 +128,9 @@ const MarkerView = ({ selected }) => {
                         return null;
                 }
             })()}
+
             <button className='btn btn-close'> &times;</button>
-        </div>
+        </div >
     )
 
 }

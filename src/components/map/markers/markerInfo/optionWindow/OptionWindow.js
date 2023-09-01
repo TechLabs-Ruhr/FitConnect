@@ -3,7 +3,7 @@ import './optionWindow.scss';
 
 const OptionWindow = ({ onViewBtnClick, setSelected, setView }) => {
     const onDeleteBtn = () => {
-        setView('confirmation-modal');
+        setView('delete confirmation');
     }
 
     const onEditBtn = () => {
