@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './sidebar.scss';
-import { signOut } from "firebase/auth";
-import { auth } from '../../Firebase';
+import { signOut, updateProfile } from "firebase/auth";
+import { auth, storage } from '../../firebase';
 import Notifications from '../notifications/Notifications';
 import event from '../.././ressources/img/notificationBtn.png';
 import { changeNewNotifications } from '../../utils/notifications';
@@ -10,19 +10,38 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../Firebase";
 import SideBarData from './SideBarData';
 import IconButton from '@mui/material/IconButton'; // Material-UI IconButton
-import MenuIcon from '@mui/icons-material/Menu';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
+import { ref } from "firebase/storage";
+import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
-const SideBar = () => {
+
+
+   
+
+    const SideBar = () => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [newNotifications, setNewNotifications] = useState(null);
     const { currentUser } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState("/img/arnold.png");
+
+    const handleImageChange = async (e) => {
+        if (e.target.files[0]) {
+            setSelectedImage(e.target.files[0]);
+            const storageRef = ref(storage, `avatars/${currentUser.uid}`);
+            const uploadTask = await uploadBytesResumable(storageRef, e.target.files[0]);
+            const downloadURL = await getDownloadURL(uploadTask.ref);
+            await updateProfile(auth.currentUser, {photoURL: downloadURL});
+            setImageUrl(downloadURL);
+        }
+    }
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
+
 
     useEffect(() => {
         if (currentUser && currentUser.uid) {
@@ -36,6 +55,10 @@ const SideBar = () => {
 
             return () => { };
         }
+
+        if (currentUser?.photoURL) {
+            setImageUrl(currentUser.photoURL);
+          }
     }, [currentUser]);
 
     const onClose = () => {
@@ -49,27 +72,29 @@ const SideBar = () => {
         }
     }
 
+
     return (
         <>
             {showNotifications && <Notifications onClose={onClose} />}
             <div className={`sidebar ${isSidebarOpen ? '' : 'closed'}`}>
-                <IconButton
-                    className={`toggle-button ${isSidebarOpen ? '' : 'closed'}`}
-                    onClick={toggleSidebar}
-                >
-                    <ViewSidebarIcon />
-                </IconButton>
-                {isSidebarOpen && (
-                    <>
-                        <img src="img/arnold.png" alt="userPhoto" className="user-photo" />
-                        <p className="user-name">Arnold Schwarznegger</p>
-                        <div className="notifications">
-                            <img className="notifications" src={event} onClick={onNotificationsClick} alt="notifications" />
-                            {(newNotifications !== null && newNotifications > 0) && (
-                                <div className='new_notifications'>
-                                    <p className='new_notifications-value'>{newNotifications < 9 ? newNotifications : '9+'}</p>
-                                </div>
-                            )}
+            <IconButton
+                className={`toggle-button ${isSidebarOpen ? '' : 'closed'}`}
+                onClick={toggleSidebar}
+            >
+                <ViewSidebarIcon /> 
+            </IconButton>
+            {isSidebarOpen && (
+                <>
+                    <input style={{ display:"none" }} type="file" id="file" onChange={handleImageChange}/>
+                    <label id="lable" htmlFor="file">
+                        <img src={imageUrl} alt="/img/arnold.png" type="file" className="user-photo" />
+                    </label>
+                    <p className="user-name">Arnold Schwarznegger</p>
+                    <div className="notifications">
+                    <img className="notifications" src={event} onClick={onNotificationsClick} alt="notifications" />
+                    {(newNotifications !== null && newNotifications > 0) && (
+                        <div className='new_notifications'>
+                            <p className='new_notifications-value'>{newNotifications < 9 ? newNotifications : '9+'}</p>
                         </div>
                         <ul className="SideBarList">
                             {SideBarData.map((val, key) => (
@@ -99,5 +124,6 @@ const SideBar = () => {
         </>
     )
 }
+    
 
-export default SideBar;
+export default SideBar
