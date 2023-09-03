@@ -8,7 +8,7 @@ import {
     getDoc,
     Timestamp
 } from "firebase/firestore";
-import { db } from "../../../Firebase";
+import { db } from "../../../firebase";
 import { changeNewNotifications } from "../../../utils/notifications";
 
 const Notification = ({ request: { id, marker, time, user, status, isRequest } }) => {

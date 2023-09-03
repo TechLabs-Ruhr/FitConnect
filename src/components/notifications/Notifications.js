@@ -4,7 +4,7 @@ import {
     getDocs,
     collection
 } from "firebase/firestore";
-import { db } from '../../Firebase';
+import { db } from '../../firebase';
 import { AuthContext } from "../../context/AuthContext";
 import Notification from './notification/Notification';
 import Spinner from '../spinner/Spinner';

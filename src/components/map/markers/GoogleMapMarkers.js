@@ -16,7 +16,7 @@ import {
 } from "firebase/firestore";
 import { Marker } from "@react-google-maps/api";
 import { MapForm } from "../mapForm/MapForm";
-import { db } from "../../../Firebase";
+import { db } from "../../../firebase";
 import ConfirmationPopup from '../../confirmationPopup/ConfirmationPopup';
 import { trainings } from '../../../utils/trainings';
 import '../map.scss';
