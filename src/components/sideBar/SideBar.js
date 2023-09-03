@@ -13,6 +13,7 @@ import IconButton from '@mui/material/IconButton'; // Material-UI IconButton
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 import { ref } from "firebase/storage";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import userPhoto from '../../ressources/img/user.png'
 
 
 const SideBar = () => {
@@ -20,7 +21,7 @@ const SideBar = () => {
     const [newNotifications, setNewNotifications] = useState(null);
     const { currentUser } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const [imageUrl, setImageUrl] = useState("/img/arnold.png");
+    const [imageUrl, setImageUrl] = useState(userPhoto);
 
     const handleImageChange = async (e) => {
         if (e.target.files[0]) {
