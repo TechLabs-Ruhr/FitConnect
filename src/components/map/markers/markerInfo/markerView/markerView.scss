@@ -61,6 +61,31 @@
     &-people {
         margin-top: 10px;
     }
+
+    &-people-imgs{
+        margin-top: 10px;
+    }
+
+    &-people-img{
+        width: 30px;
+        height: 30px;
+    }
+
+    &-status{
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+
+        &-img{
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    &-message {
+        font-size: 14px;
+        margin-right: 5px;
+    }
 }
 
 .btn-close {

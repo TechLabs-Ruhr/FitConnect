@@ -56,10 +56,12 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
       owner: {
         id: currentUser.uid,
         name: currentUser.displayName,
+        photo: currentUser.photoURL
       },
       people: [{
         id: currentUser.uid,
         name: currentUser.displayName,
+        photo: currentUser.photoURL
       }],
       time: Timestamp.fromDate(new Date()),
       trainingTime: Timestamp.fromDate(new Date(values.trainingTime))

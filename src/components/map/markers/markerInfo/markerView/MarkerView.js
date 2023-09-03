@@ -20,6 +20,10 @@ import { AuthContext } from '../../../../../context/AuthContext';
 import { changeNewNotifications } from '../../../../../utils/notifications';
 import { capitalizeFirstLetter } from '../../../../../utils/utils';
 import ConfirmationModal from '../../markerInfo/confirmationModal/ConfirmationModal';
+import defaultUserPhoto from '../../../../../ressources/img/user.png'
+import waiting from '../../../../../ressources/img/waiting.png';
+import accept from '../../../../../ressources/img/check-green.png';
+import reject from '../../../../../ressources/img/reject.png';
 
 const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
@@ -62,6 +66,7 @@ const MarkerView = ({ selected }) => {
                 user: {
                     id: currentUser.uid,
                     name: currentUser.displayName,
+                    photo: currentUser.photoURL
                 },
                 marker: selected,
                 status: 'active',
@@ -109,7 +114,17 @@ const MarkerView = ({ selected }) => {
                         <p className='info-time'>{formatRelative(new Date(trainingTime.seconds * 1000), new Date())}</p>
                     </div>
                 </div>
-                <p className='info-people'>People: {people.length}/{maxPeople + 1}</p>
+                <p className='info-people'>Participants: {people.length}/{maxPeople + 1}</p>
+                <div className="info-people-imgs">
+                    {selected.people.map((participant, index) => {
+                        const src = participant.photo ? participant.photo : defaultUserPhoto;
+                        console.log(src);
+                        if (index > 9) {
+                            return;
+                        }
+                        return (<img key={index} alt={participant.displayName} src={src} title={participant.name} className='info-people-img' />)
+                    })}
+                </div>
                 {(() => {
                     switch (requestStatus) {
                         case null:
@@ -123,15 +138,25 @@ const MarkerView = ({ selected }) => {
                         case 'view-only':
                             return <button className="btn btn-join">Join</button>;
                         case 'active':
-                            return <p>Thank you. Your request is waiting for confirmation</p>;
+                            return (<div className="info-status">
+                                <p className='info-message'>Thank you! Your request is waiting for confirmation</p>
+                                <img src={waiting} alt="waiting" className='info-status-img' />
+                            </div>);
                         case 'rejected':
-                            return <p>Sorry. Your request was rejected</p>;
+                            return (<div className="info-status">
+                                <p className='info-message'>Sorry, your request was rejected</p>
+                                <img src={reject} alt="reject" className='info-status-img' />
+                            </div>);
                         case 'confirmed':
-                            return <p>Nice! Your request was accepted</p>;
+                            return (<div className="info-status">
+                                <p className='info-message'>Nice! Your request was accepted</p>
+                                <img src={accept} alt="accept" className='info-status-img' />
+                            </div>);
                         case 'full':
-                            return <p>Unfortunatelly. The training is already full</p>;
-                        default:
-                            return null;
+                            return (<div className="info-status">
+                                <p className='info-message'>Unfortunatelly the training is already full</p>
+                                <img src={reject} alt="reject" className='info-status-img' />
+                            </div>);
                     }
                 })()}
 
