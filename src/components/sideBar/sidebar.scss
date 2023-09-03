@@ -3,9 +3,7 @@ body {
   }
   
 
-.sidebar {
-
-    
+.sidebar {    
     position: fixed;
     z-index: 3;
     background-color: rgb(255, 255, 255);
@@ -17,12 +15,16 @@ body {
 
     &.closed {
         width: 5%; /* Kleinere Breite, wenn die Sidebar geschlossen ist */
+    }   
+    
+    .notifications{
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
     }
-
-    
-    
-        
-    
 
     @media (max-width: 1427px) {
         padding-left: 0;
@@ -67,14 +69,6 @@ body {
     
 
     @media (min-width: 1428px) {
-    .notifications{
-        position: absolute;
-        top: 50px;
-        left: 50px;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-    }
 
     .user-photo {
         cursor: pointer;
@@ -133,7 +127,7 @@ body {
         z-index: 5;
         left: 50px;
         background-color: rgb(206, 206, 206);
-        width: 200px;
+        padding: 10px;
         height: 50px;
         border-radius: 15px;
         color: #000000;

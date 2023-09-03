@@ -35,11 +35,19 @@
     &__button.confirm {
         background-color: orange;
         color: #fff;
+
+        &:hover{
+            background-color: rgb(200, 131, 2);
+        }
     }
 
     &__button.cancel {
         background-color: grey;
         color: #fff;
+
+        &:hover{
+            background-color: rgb(100, 100, 100);
+        }
     }
 
     .btn-close {

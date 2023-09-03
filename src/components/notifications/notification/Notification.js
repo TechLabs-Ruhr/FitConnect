@@ -8,12 +8,12 @@ import {
     getDoc,
     Timestamp
 } from "firebase/firestore";
-import { db } from "../../../firebase";
+import { db } from "../../../Firebase";
 import { changeNewNotifications } from "../../../utils/notifications";
 
 const Notification = ({ request: { id, marker, time, user, status, isRequest } }) => {
     const [requestStatus, setRequestStatus] = useState(status);
-    const [notificationTime, setNotificationTime] = useState(time); 
+    const [notificationTime, setNotificationTime] = useState(time);
 
     const onAccept = () => {
         updateRequestInDB('confirmed');
@@ -22,7 +22,7 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
 
         setNotificationTime(new Timestamp(Math.floor(new Date().getTime() / 1000), 0));
         setRequestStatus('confirmed');
-        changeNewNotifications(1, user.id); 
+        changeNewNotifications(1, user.id);
     }
 
     const onDecline = () => {
@@ -30,7 +30,7 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
 
         setNotificationTime(new Timestamp(Math.floor(new Date().getTime() / 1000), 0));
         setRequestStatus('rejected');
-        changeNewNotifications(1, user.id); 
+        changeNewNotifications(1, user.id);
     }
 
     const updateRequestInDB = async (status) => {

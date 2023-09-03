@@ -1,15 +1,13 @@
 import React from 'react';
 import './optionWindow.scss';
 
-const OptionWindow = ({ onViewBtnClick, setConfirmationModal, setShowOptions, setForm, setSelected }) => {
+const OptionWindow = ({ onViewBtnClick, setSelected, setView }) => {
     const onDeleteBtn = () => {
-        setConfirmationModal(true);
-        setShowOptions(false);
+        setView('delete confirmation');
     }
 
     const onEditBtn = () => {
-        setForm(true);
-        setShowOptions(false);
+        setView('edit-form');
     }
 
     return (

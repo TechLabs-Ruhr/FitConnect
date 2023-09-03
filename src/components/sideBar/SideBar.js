@@ -7,7 +7,7 @@ import event from '../.././ressources/img/notificationBtn.png';
 import { changeNewNotifications } from '../../utils/notifications';
 import { AuthContext } from '../../context/AuthContext';
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../Firebase";
 import SideBarData from './SideBarData';
 import IconButton from '@mui/material/IconButton'; // Material-UI IconButton
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
@@ -67,7 +67,7 @@ import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
     const onNotificationsClick = () => {
         setShowNotifications(!showNotifications);
-        if(!showNotifications){
+        if (!showNotifications) {
             changeNewNotifications(0, currentUser.uid);
         }
     }
@@ -96,33 +96,31 @@ import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
                         <div className='new_notifications'>
                             <p className='new_notifications-value'>{newNotifications < 9 ? newNotifications : '9+'}</p>
                         </div>
-                    )}
-                    </div>
-                    <ul className="SideBarList">
-                        {SideBarData.map((val, key) => (
-                            <li
-                                key={key}
-                                className={`row ${window.location.pathname === val.link ? 'active' : ''}`}
-                                onClick={() => {
-                                    console.log(window.location.pathname)
-                                    console.log(val.link);
-                                    window.location.pathname = val.link;
-                                }}
-                            >
-                                <div id="icon">{val.icon}</div>
-                                <div id="title">{val.title}</div>
-                            </li>
-                        ))}
-                    </ul>
-                    <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Ausloggen</button>
+                        <ul className="SideBarList">
+                            {SideBarData.map((val, key) => (
+                                <li
+                                    key={key}
+                                    className={`row ${window.location.pathname === val.link ? 'active' : ''}`}
+                                    onClick={() => {
+                                        console.log(window.location.pathname)
+                                        console.log(val.link);
+                                        window.location.pathname = val.link;
+                                    }}
+                                >
+                                    <div id="icon">{val.icon}</div>
+                                    <div id="title">{val.title}</div>
+                                </li>
+                            ))}
+                        </ul>
+                        <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Ausloggen</button>
 
-                </>
-            )}
-        </div>
+                    </>
+                )}
+            </div>
 
 
-                
-            
+
+
         </>
     )
 }

@@ -8,21 +8,15 @@ import { AuthContext } from "../../../../context/AuthContext";
 
 
 const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
-    const [showView, setShowView] = useState(false);
-    const [showOptions, setShowOptions] = useState(true);
-    const [confirmationModal, setConfirmationModal] = useState(false);
-    const [form, setForm] = useState(false);
     const [showInfoWindow, setShowInfoWindow] = useState(false);
+    const [view, setView] = useState('options');
     const { currentUser } = useContext(AuthContext);
     const { lat, lng } = selected;
 
 
     useEffect(() => {
         if (selected !== null) {
-            setShowView(false);
-            setConfirmationModal(false);
-            setShowOptions(true);
-            setForm(false);
+            setView('options')
             setShowInfoWindow(true);
         } else {
             setShowInfoWindow(false);
@@ -30,8 +24,7 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     }, [selected]);
 
     const onViewBtnClick = () => {
-        setShowView(true);
-        setShowOptions(false);
+        setView('view-only');
     }
 
     return (
@@ -48,30 +41,27 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
                         ) : (
 
                             <>
-                                {showOptions && (
+                                {view === 'options' && (
                                     <OptionWindow
                                         onViewBtnClick={onViewBtnClick}
-                                        setConfirmationModal={setConfirmationModal}
-                                        setShowOptions={setShowOptions}
-                                        setForm={setForm}
+                                        setView={setView}
                                         setSelected={setSelected}
                                     />
                                 )}
     
-                                {showView && (<MarkerView selected={selected} />)}
+                                {view === 'view-only' && (<MarkerView selected={selected} />)}
     
-                                {confirmationModal && (
+                                {view === 'delete confirmation' && (
                                     <ConfirmationModal
                                         onDeleteBtnClick={deleteMarker}
                                         selected={selected}
                                         setSelected={setSelected}
-                                        setConfirmationModal={setConfirmationModal}
-                                        setShowOptions={setShowOptions} />
+                                        setView={setView}
+                                        type={'delete'} />
                                 )}
     
-                                {form && (
+                                {view === 'edit-form' && (
                                     <MapForm onSubmit={updateMarker}
-                                        onClose={() => setShowForm(false)}
                                         selected={selected}
                                         setSelected={setSelected}
                                     />
