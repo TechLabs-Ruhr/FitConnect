@@ -14,7 +14,7 @@ import {
     getDoc,
     setDoc
 } from "firebase/firestore";
-import { db } from '../../../../../Firebase';
+import { db } from '../../../../../firebase';
 import Spinner from '../../../../spinner/Spinner';
 import { AuthContext } from '../../../../../context/AuthContext';
 import { changeNewNotifications } from '../../../../../utils/notifications';

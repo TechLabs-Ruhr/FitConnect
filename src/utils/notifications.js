@@ -3,7 +3,7 @@ import {
     updateDoc,
     getDoc
 } from "firebase/firestore";
-import { db } from "../Firebase";
+import { db } from "../firebase";
 
 
 export const changeNewNotifications = async (notificationsNumber, userId) => {
