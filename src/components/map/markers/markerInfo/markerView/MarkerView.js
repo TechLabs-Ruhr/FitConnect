@@ -36,7 +36,11 @@ const MarkerView = ({ selected }) => {
                 if (existingRequest) {
                     setRequestStatus(existingRequest.status);
                 } else {
-                    setRequestStatus('classic');
+                    if (selected.people.length === selected.maxPeople + 1) {
+                        setRequestStatus('full');
+                    } else {
+                        setRequestStatus('classic');
+                    }
                 }
             }
             fetchRequestStatus();
@@ -84,53 +88,55 @@ const MarkerView = ({ selected }) => {
 
     return (
         showConfirmModal ? (<ConfirmationModal setShowConfirmModal={setShowConfirmModal} join={join} type={'join'} />) :
-    
-        <div className='marker-info'>
-            <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
-            <div className="info">
-                <div className="info__block-left">
-                    <p className='info-description'>{description}</p>
-                </div>
-                <div className="info__block-right">
-                    <CircularProgressbar
-                        className='info-progress'
-                        value={percentage}
-                        strokeWidth={50}
-                        styles={buildStyles({
-                            strokeLinecap: "butt",
-                            pathColor: "orange",
-                            trailColor: "grey",
-                        })}
-                    />
-                    <p className='info-time'>{formatRelative(new Date(trainingTime.seconds * 1000), new Date())}</p>
-                </div>
-            </div>
-            <p className='info-people'>People: {people.length}/{maxPeople + 1}</p>
-            {(() => {
-                switch (requestStatus) {
-                    case null:
-                        return (
-                            <div className="spinner-container">
-                                <Spinner />
-                            </div>
-                        );
-                    case 'classic':
-                        return <button className="btn btn-join" onClick={() => setShowConfirmModal(true)}>Join</button>;
-                    case 'view-only':
-                        return <button className="btn btn-join">Join</button>;
-                    case 'active':
-                        return <p>Thank you. Your request is waiting for confirmation</p>;
-                    case 'rejected':
-                        return <p>Sorry. Your request was rejected</p>;
-                    case 'confirmed':
-                        return <p>Nice! Your request was accepted</p>;
-                    default:
-                        return null;
-                }
-            })()}
 
-            <button className='btn btn-close'> &times;</button>
-        </div >
+            <div className='marker-info'>
+                <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
+                <div className="info">
+                    <div className="info__block-left">
+                        <p className='info-description'>{description}</p>
+                    </div>
+                    <div className="info__block-right">
+                        <CircularProgressbar
+                            className='info-progress'
+                            value={percentage}
+                            strokeWidth={50}
+                            styles={buildStyles({
+                                strokeLinecap: "butt",
+                                pathColor: "orange",
+                                trailColor: "grey",
+                            })}
+                        />
+                        <p className='info-time'>{formatRelative(new Date(trainingTime.seconds * 1000), new Date())}</p>
+                    </div>
+                </div>
+                <p className='info-people'>People: {people.length}/{maxPeople + 1}</p>
+                {(() => {
+                    switch (requestStatus) {
+                        case null:
+                            return (
+                                <div className="spinner-container">
+                                    <Spinner />
+                                </div>
+                            );
+                        case 'classic':
+                            return <button className="btn btn-join" onClick={() => setShowConfirmModal(true)}>Join</button>;
+                        case 'view-only':
+                            return <button className="btn btn-join">Join</button>;
+                        case 'active':
+                            return <p>Thank you. Your request is waiting for confirmation</p>;
+                        case 'rejected':
+                            return <p>Sorry. Your request was rejected</p>;
+                        case 'confirmed':
+                            return <p>Nice! Your request was accepted</p>;
+                        case 'full':
+                            return <p>Unfortunatelly. The training is already full</p>;
+                        default:
+                            return null;
+                    }
+                })()}
+
+                <button className='btn btn-close'> &times;</button>
+            </div >
     )
 
 }
