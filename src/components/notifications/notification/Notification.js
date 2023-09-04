@@ -9,7 +9,7 @@ import {
     Timestamp
 } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { changeNewNotifications } from "../../../utils/notifications";
+import { changeNewNotifications } from "../../../service/NotificationsService";
 
 const Notification = ({ request: { id, marker, time, user, status, isRequest } }) => {
     const [requestStatus, setRequestStatus] = useState(status);
@@ -80,11 +80,10 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
                     <>
                         <p className='request-title'>
                             <span className='exclamation-mark'>!</span>
-                            {` ${user.name} wants to join your ${marker.activityType} training ${formatRelative(new Date(marker.trainingTime.seconds * 1000), new Date())}`}
+                            {` ${user.name} wants to join your ${marker.activityType} training on ${formatRelative(new Date(marker.trainingTime.seconds * 1000), new Date())}`}
                         </p>
                         <button className='btn btn-accept' onClick={onAccept}>Accept</button>
                         <button className="btn btn-decline" onClick={onDecline}>Decline</button>
-                        <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
                     </>
                 )}
 
@@ -93,7 +92,6 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
                         <p className='request-title'>
                             {`You accepted ${user.name}´s request to join your ${marker.activityType} training`}
                         </p>
-                        <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
                     </>
                 )}
 
@@ -102,7 +100,6 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
                         <p className='request-title'>
                             {`You declined ${user.name}´s request to join your ${marker.activityType} training`}
                         </p>
-                        <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
                     </>
                 )}
 
@@ -111,7 +108,6 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
                         <p className='request-title'>
                             {`Your request for ${marker.activityType} training was accepted!`}
                         </p>
-                        <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
                     </>
                 )}
 
@@ -120,9 +116,9 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
                         <p className='request-title'>
                             {`Your request for ${marker.activityType} training was declined!`}
                         </p>
-                        <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
                     </>
                 )}
+                <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
             </div>
         </div>
     );

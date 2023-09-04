@@ -1,0 +1,15 @@
+.info-status{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+
+    &-img{
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.info-message {
+    font-size: 14px;
+    margin-right: 5px;
+}

@@ -36,7 +36,7 @@ export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
         : {
             trainingTime: '',
             activityType: '',
-            maxPeople: '',
+            maxPeople: 1,
             description: ''
         };
 

@@ -4,7 +4,7 @@ import { signOut, updateProfile } from "firebase/auth";
 import { auth, storage } from '../../firebase';
 import Notifications from '../notifications/Notifications';
 import event from '../.././ressources/img/notificationBtn.png';
-import { changeNewNotifications } from '../../utils/notifications';
+import { changeNewNotifications } from '../../service/NotificationsService';
 import { AuthContext } from '../../context/AuthContext';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
