@@ -96,6 +96,25 @@ export const load = async () => {
     return updatedMarker; 
   };
 
+  export const updateParticipants = async (marker, user) => {
+    const userMarkersRef = doc(db, "userMarkers", marker.owner.id);
+    const userRequestSnap = await getDoc(userMarkersRef);
+
+    const markers = userRequestSnap.data().markers;
+
+    const updatedMarkers = markers.map(trainingMarker => {
+        if (trainingMarker.id === marker.id) {
+            return {
+                ...trainingMarker,
+                people: [...trainingMarker.people, user]
+            };
+        }
+        return trainingMarker;
+    });
+
+    await updateDoc(userMarkersRef, { markers: updatedMarkers });
+}
+
  export const getParticipants = async (selected) => {
     const docSnap = await getDoc(doc(db, "userMarkers", selected.owner.id));
     const markers = docSnap.data().markers;

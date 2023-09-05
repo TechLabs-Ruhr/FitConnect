@@ -8,7 +8,12 @@ import { trainings, getSize } from '../../../utils/trainings';
 import '../map.scss';
 import { v4 as uuid } from "uuid";
 import { Timestamp } from "firebase/firestore";
-import { save, load, remove, update } from '../../../service/MarkerService'
+import {
+  save as saveMarkerToDatabase,
+  load as loadMarkersFromDatabase,
+  remove as removeMarkerFromDatabase,
+  update as updateMarkerInTheDataBase
+} from '../../../service/MarkerService'
 
 const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
   const [markers, setMarkers] = useState([]);
@@ -20,10 +25,10 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const allMarkers = await load(); 
+      const allMarkers = await loadMarkersFromDatabase();
       setMarkers(allMarkers);
     };
-  
+
     fetchData();
   }, []);
 
@@ -32,26 +37,26 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
   }, [mapClick]);
 
   const deleteMarker = async (markerId) => {
-    await remove(markerId, currentUser);
+    await removeMarkerFromDatabase(markerId, currentUser);
 
     setMarkers((markers) => markers.filter(marker => marker.id !== markerId));
     setShowPopup('delete');
   }
 
   const updateMarker = async (values, id) => {
-    const updatedMarker = await update(values, id, currentUser); 
+    const updatedMarker = await updateMarkerInTheDataBase(values, id, currentUser);
 
-    if(updatedMarker){
+    if (updatedMarker) {
       setMarkers(currentMarkers => {
         const updatedMarkers = [...currentMarkers];
         const indexToUpdate = updatedMarkers.findIndex(marker => marker.id === id);
         updatedMarkers[indexToUpdate] = updatedMarker;
         return updatedMarkers;
       });
-  
+
       setShowPopup('update');
     } else {
-      setShowForm(false); 
+      setShowForm(false);
     }
   }
 
@@ -78,7 +83,7 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
       ...current,
       newMarker
     ]);
-    save(newMarker, currentUser);
+    saveMarkerToDatabase(newMarker, currentUser);
     setShowForm(false);
     setPlusBtn(false);
     setShowPopup('create');

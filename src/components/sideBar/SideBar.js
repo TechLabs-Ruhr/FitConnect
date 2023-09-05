@@ -4,7 +4,7 @@ import { signOut, updateProfile } from "firebase/auth";
 import { auth, storage } from '../../firebase';
 import Notifications from '../notifications/Notifications';
 import event from '../.././ressources/img/notificationBtn.png';
-import { changeNewNotifications } from '../../service/NotificationsService';
+import { updateNotifications } from '../../service/NotificationsService';
 import { AuthContext } from '../../context/AuthContext';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -64,10 +64,9 @@ const SideBar = () => {
     const onNotificationsClick = () => {
         setShowNotifications(!showNotifications);
         if (!showNotifications) {
-            changeNewNotifications(0, currentUser.uid);
+            updateNotifications(0, currentUser.uid);
         }
     }
-
 
     return (
         <>

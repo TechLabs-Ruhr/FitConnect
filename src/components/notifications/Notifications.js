@@ -1,13 +1,9 @@
 import React, { useEffect, useContext, useState } from 'react';
 import './notifications.scss';
-import {
-    getDocs,
-    collection
-} from "firebase/firestore";
-import { db } from '../../firebase';
 import { AuthContext } from "../../context/AuthContext";
 import Notification from './notification/Notification';
 import Spinner from '../spinner/Spinner';
+import { getAllNotifications } from '../../service/NotificationsService';
 
 const Notifications = ({ onClose }) => {
     const [notifications, setNotifications] = useState([]);
@@ -20,19 +16,7 @@ const Notifications = ({ onClose }) => {
     const { currentUser } = useContext(AuthContext);
 
     const loadAllNotifications = async () => {
-        const notifications = [];
-        const querySnapshot = await getDocs(collection(db, "userRequests"));
-        querySnapshot.forEach((doc) => {
-            doc.data().requests.forEach((request) => {
-                if (request.marker.owner.id === currentUser.uid) {
-                    notifications.push({ ...request, isRequest: true });
-                }
-                if (request.user.id === currentUser.uid && request.status !== 'active') {
-                    notifications.push({ ...request, isRequest: false });
-                }
-            });
-        });
-        setNotifications(notifications);
+        setNotifications(await getAllNotifications(currentUser));
         setLoading(false);
     };
 

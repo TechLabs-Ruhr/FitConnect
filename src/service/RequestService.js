@@ -6,7 +6,7 @@ import {
 } from "firebase/firestore";
 import { db } from '../firebase';
 import { v4 as uuid } from 'uuid';
-import { changeNewNotifications } from './NotificationsService';
+import { updateNotifications } from './NotificationsService';
 
 export const save = async (selected, currentUser) => {
     updateDoc(doc(db, "userRequests", selected.id), {
@@ -23,7 +23,27 @@ export const save = async (selected, currentUser) => {
         }),
     });
 
-    changeNewNotifications(1, selected.owner.id);
+    updateNotifications(1, selected.owner.id);
+}
+
+export const update = async (status, marker, id) => {
+    const userRequestRef = doc(db, "userRequests", marker.id);
+    const userRequestSnap = await getDoc(userRequestRef);
+
+    const requests = userRequestSnap.data().requests;
+
+    const updatedRequests = requests.map(request => {
+        if (request.id === id) {
+            return {
+                ...request,
+                status,
+                time: new Date()
+            };
+        }
+        return request;
+    });
+
+    await updateDoc(userRequestRef, { requests: updatedRequests });
 }
 
 export const getRequest = async (selected, currentUser) => {

@@ -15,36 +15,41 @@ const ConfirmationModal = ({ onDeleteBtnClick, setSelected, selected, setView, t
 
     const onJoinConfirm = () => {
         join();
-        setShowConfirmModal(false); 
+        setShowConfirmModal(false);
     }
 
     const onJoinCancel = () => {
-        setShowConfirmModal(false); 
+        setShowConfirmModal(false);
     }
 
     return (
         <div className='confirmation-modal'>
             <button className='btn btn-close'> &times;</button>
             <div className="confirmation-modal__content">
-                {type === 'delete' && (
-                    <>
-                        <p className="confirmation-modal__text">Do you really want to delete the training</p>
-                        <div className="confirmation-modal__buttons">
-                            <button className="confirmation-modal__button cancel" onClick={onDeleteCancel}>Cancel</button>
-                            <button className="confirmation-modal__button confirm" onClick={onDeleteConfirm}>Confirm</button>
-                        </div>
-                    </>)}
-                    {type === 'join' && (
-                    <>
-                        <p className="confirmation-modal__text">Do you really want to join the training?</p>
-                        <div className="confirmation-modal__buttons">
-                            <button className="confirmation-modal__button cancel" onClick={onJoinCancel}>Cancel</button>
-                            <button className="confirmation-modal__button confirm" onClick={onJoinConfirm}>Confirm</button>
-                        </div>
-                    </>)}
+                {type === 'delete' &&
+                    <View
+                        onCancel={onDeleteCancel}
+                        onConfirm={onDeleteConfirm}
+                        message={"Do you really want to delete the training?"} />}
+                {type === 'join' &&
+                    <View
+                        onCancel={onJoinCancel}
+                        onConfirm={onJoinConfirm}
+                        message={"Do you really want to join the training?"} />}
             </div>
         </div>
     )
 };
+
+const View = ({ onCancel, onConfirm, message }) => {
+    return (
+        <>
+            <p className="confirmation-modal__text">{message}</p>
+            <div className="confirmation-modal__buttons">
+                <button className="confirmation-modal__button cancel" onClick={onCancel}>Cancel</button>
+                <button className="confirmation-modal__button confirm" onClick={onConfirm}>Confirm</button>
+            </div>
+        </>)
+}
 
 export default ConfirmationModal

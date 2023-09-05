@@ -2,74 +2,31 @@ import { formatRelative } from "date-fns";
 import './notification.scss';
 import requestImg from '../../../ressources/img/notification.png'
 import React, { useState } from 'react';
-import {
-    doc,
-    updateDoc,
-    getDoc,
-    Timestamp
-} from "firebase/firestore";
-import { db } from "../../../firebase";
-import { changeNewNotifications } from "../../../service/NotificationsService";
+import { Timestamp } from "firebase/firestore";
+import { updateNotifications } from "../../../service/NotificationsService";
+import { update as updateRequestInDB } from '../../../service/RequestService';
+import { updateParticipants as updateMarkerInDB } from "../../../service/MarkerService";
 
 const Notification = ({ request: { id, marker, time, user, status, isRequest } }) => {
     const [requestStatus, setRequestStatus] = useState(status);
     const [notificationTime, setNotificationTime] = useState(time);
 
     const onAccept = () => {
-        updateRequestInDB('confirmed');
+        updateRequestInDB('confirmed', marker, id);
 
-        updateMarkerInDB();
+        updateMarkerInDB(marker, user);
 
         setNotificationTime(new Timestamp(Math.floor(new Date().getTime() / 1000), 0));
         setRequestStatus('confirmed');
-        changeNewNotifications(1, user.id);
+        updateNotifications(1, user.id);
     }
 
     const onDecline = () => {
-        updateRequestInDB('rejected');
+        updateRequestInDB('rejected', marker, id);
 
         setNotificationTime(new Timestamp(Math.floor(new Date().getTime() / 1000), 0));
         setRequestStatus('rejected');
-        changeNewNotifications(1, user.id);
-    }
-
-    const updateRequestInDB = async (status) => {
-        const userRequestRef = doc(db, "userRequests", marker.id);
-        const userRequestSnap = await getDoc(userRequestRef);
-
-        const requests = userRequestSnap.data().requests;
-
-        const updatedRequests = requests.map(request => {
-            if (request.id === id) {
-                return {
-                    ...request,
-                    status,
-                    time: new Date()
-                };
-            }
-            return request;
-        });
-
-        await updateDoc(userRequestRef, { requests: updatedRequests });
-    }
-
-    const updateMarkerInDB = async () => {
-        const userMarkersRef = doc(db, "userMarkers", marker.owner.id);
-        const userRequestSnap = await getDoc(userMarkersRef);
-
-        const markers = userRequestSnap.data().markers;
-
-        const updatedMarkers = markers.map(trainingMarker => {
-            if (trainingMarker.id === marker.id) {
-                return {
-                    ...trainingMarker,
-                    people: [...trainingMarker.people, user]
-                };
-            }
-            return trainingMarker;
-        });
-
-        await updateDoc(userMarkersRef, { markers: updatedMarkers });
+        updateNotifications(1, user.id);
     }
 
     return (
@@ -86,37 +43,17 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
                         <button className="btn btn-decline" onClick={onDecline}>Decline</button>
                     </>
                 )}
-
                 {(requestStatus === 'confirmed' && isRequest) && (
-                    <>
-                        <p className='request-title'>
-                            {`You accepted ${user.name}´s request to join your ${marker.activityType} training`}
-                        </p>
-                    </>
+                    <p className='request-title'>{`You accepted ${user.name}´s request to join your ${marker.activityType} training`}</p>
                 )}
-
                 {(requestStatus === 'rejected' && isRequest) && (
-                    <>
-                        <p className='request-title'>
-                            {`You declined ${user.name}´s request to join your ${marker.activityType} training`}
-                        </p>
-                    </>
+                    <p className='request-title'>{`You declined ${user.name}´s request to join your ${marker.activityType} training`}</p>
                 )}
-
                 {(requestStatus === 'confirmed' && !isRequest) && (
-                    <>
-                        <p className='request-title'>
-                            {`Your request for ${marker.activityType} training was accepted!`}
-                        </p>
-                    </>
+                    <p className='request-title'>{`Your request for ${marker.activityType} training was accepted!`}</p>
                 )}
-
                 {(requestStatus === 'rejected' && !isRequest) && (
-                    <>
-                        <p className='request-title'>
-                            {`Your request for ${marker.activityType} training was declined!`}
-                        </p>
-                    </>
+                    <p className='request-title'>{`Your request for ${marker.activityType} training was declined!`}</p>
                 )}
                 <p className='request-time'>{formatRelative(new Date(notificationTime.seconds * 1000), new Date())}</p>
             </div>

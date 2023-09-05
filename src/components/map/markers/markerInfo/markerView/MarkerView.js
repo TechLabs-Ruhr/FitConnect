@@ -57,7 +57,9 @@ const MarkerView = ({ selected }) => {
     const content = getRequestStatusContent(() => setShowConfirmModal(true));
 
     return (
-        showConfirmModal ? (<ConfirmationModal setShowConfirmModal={setShowConfirmModal} join={onJoin} type={'join'} />) :
+        showConfirmModal ? (<ConfirmationModal setShowConfirmModal={setShowConfirmModal} join={onJoin} type={'join'} />)
+
+            :
 
             <div className='marker-info'>
                 <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
