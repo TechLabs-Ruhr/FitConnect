@@ -2,12 +2,13 @@ import ChatIcon from '@mui/icons-material/Chat';
 import SearchIcon from '@mui/icons-material/Search';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
+import MapIcon from '@mui/icons-material/Map';
 
 const SideBarData = [
     {
-        title: "Suchen",
-        icon: <SearchIcon />,
-        link: "/search"
+        title: "Map",
+        icon: <MapIcon />,
+        link: "/"
     },
     {
         title: "Chat",
