@@ -8,9 +8,13 @@ import { capitalizeFirstLetter } from '../../../utils/utils';
 export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
     const activityOptions = trainings.map(t => ({ label: capitalizeFirstLetter(t.activityType), value: t.activityType })).sort((a, b) => a.label.localeCompare(b.label));
 
+    const oneWeekFromNow = new Date();
+    oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7);
+
     const validationSchema = yup.object().shape({
         trainingTime: yup.date()
             .min(new Date(), 'The time cannot be in the past')
+            .max(oneWeekFromNow, 'The time cannot be more than a week from now')
             .required('Required field'),
         activityType: yup
             .string()
@@ -61,11 +65,11 @@ export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
 
     const customStyles = {
         option: (provided, state) => ({
-          ...provided,
-          color: state.isSelected ? 'white' : provided.color,
-          backgroundColor: state.isFocused ? 'orange' : provided.backgroundColor,
+            ...provided,
+            color: state.isSelected ? 'white' : provided.color,
+            backgroundColor: state.isFocused ? 'orange' : provided.backgroundColor,
         })
-      };
+    };
 
     return (
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
