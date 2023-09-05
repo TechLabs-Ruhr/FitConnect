@@ -1,0 +1,82 @@
+
+  .userphoto {
+    display: flex;
+    justify-content: center; /* Horizontal zentrieren */
+    align-items: center; /* Vertikal zentrieren */
+    flex: 1; /* Der Bereich zwischen Sidebar und Bild nimmt den verfügbaren Raum ein */
+  }
+  
+  .centered-image-container {
+    text-align: center; /* Zentriere den Inhalt horizontal */
+  }
+  
+  .user-photo-settings {
+    max-width: 200px; /* Maximalbreite des Bildes */
+    max-height: 200px; /* Maximale Höhe des Bildes */
+    width: 100%; /* Das Bild wird die Breite des Containers einnehmen */
+    height: auto; /* Das Bild passt die Höhe entsprechend der Breite an */
+    border-radius: 50%;
+    padding-top: 25px;
+  }
+
+  .profile-form {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Das Formular und seine Inhalte werden horizontal und vertikal zentriert */
+    margin-top: 20px; /* Abstand nach oben hinzufügen */
+
+  }
+  
+  /* Stil für das Formularfeld und den Button */
+  .profile-form form {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .profile-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .profile-form input[type="text"],
+.profile-form input[type="email"],
+.profile-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.profile-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.profile-form button:hover {
+  background-color: #0056b3;
+}
+
+.settings form{
+    align-items: center;
+    width: 100%;
+}
+  
+  

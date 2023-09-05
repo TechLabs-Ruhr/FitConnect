@@ -6,6 +6,9 @@ import Search from './pages/Search'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import Settings from './pages/Settings';
+import Chat from './pages/Chat';
+import Groups from './pages/Groups';
 
 function App() {
   const {currentUser} = useContext(AuthContext);
@@ -27,6 +30,11 @@ function App() {
                                 </ProtectedRoute>} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="groups" element={<Groups />} />
+
+
         </Route>
       </Routes>
     </BrowserRouter>
