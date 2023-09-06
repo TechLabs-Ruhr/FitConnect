@@ -37,7 +37,7 @@ const MarkerView = ({ selected }) => {
                     setRequestStatus(existingRequest.status);
                     setWindowHeight('205px');
                 } else {
-                    if (selected.people.length === selected.maxPeople + 1) {
+                    if (selected.people.length >= selected.maxPeople + 1) {
                         setRequestStatus('full');
                         setWindowHeight('205px');
                     } else {
