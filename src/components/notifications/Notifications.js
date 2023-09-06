@@ -3,7 +3,7 @@ import './notifications.scss';
 import { AuthContext } from "../../context/AuthContext";
 import Notification from './notification/Notification';
 import Spinner from '../spinner/Spinner';
-import { getAllNotifications } from '../../service/NotificationsService';
+import { getRequests } from '../../service/RequestService';
 
 const Notifications = ({ onClose }) => {
     const [notifications, setNotifications] = useState([]);
@@ -16,7 +16,7 @@ const Notifications = ({ onClose }) => {
     const { currentUser } = useContext(AuthContext);
 
     const loadAllNotifications = async () => {
-        setNotifications(await getAllNotifications(currentUser));
+        setNotifications(await getRequests(currentUser));
         setLoading(false);
     };
 
