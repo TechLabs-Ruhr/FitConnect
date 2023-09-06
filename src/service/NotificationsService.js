@@ -5,8 +5,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-
-export const changeNewNotifications = async (notificationsNumber, userId) => {
+export const updateNotifications = async (notificationsNumber, userId) => {
     if (notificationsNumber === 0) {
         await updateDoc(doc(db, "userNotifications", userId), {
             notifications: {
@@ -30,3 +29,4 @@ export const changeNewNotifications = async (notificationsNumber, userId) => {
         });
     }
 }
+

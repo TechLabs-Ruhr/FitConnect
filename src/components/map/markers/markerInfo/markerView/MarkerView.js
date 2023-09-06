@@ -5,91 +5,69 @@ import {
     buildStyles
 } from "react-circular-progressbar";
 import { formatRelative } from "date-fns";
-import { findPercentage } from '../../../../../utils/time';
-import { v4 as uuid } from 'uuid';
-import {
-    arrayUnion,
-    doc,
-    updateDoc,
-    getDoc,
-    setDoc
-} from "firebase/firestore";
-import { db } from '../../../../../firebase';
-import Spinner from '../../../../spinner/Spinner';
 import { AuthContext } from '../../../../../context/AuthContext';
-import { changeNewNotifications } from '../../../../../utils/notifications';
-import { capitalizeFirstLetter } from '../../../../../utils/utils';
+import { capitalizeFirstLetter, findPercentage } from '../../../../../utils/utils';
 import ConfirmationModal from '../../markerInfo/confirmationModal/ConfirmationModal';
+import ParticipantAvatars from './participantAvatars/ParticipantAvatars';
+import { getRequestStatusContent } from './markerStatus/MarkerStatus';
+import Spinner from '../../../../spinner/Spinner';
+import { getParticipants } from '../../../../../service/MarkerService';
+import { save, getRequest } from '../../../../././../service/RequestService'
 
 const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
+    const [participants, setParticipants] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [windowHeight, setWindowHeight] = useState('220px');
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
-        setRequestStatus(null);
-        if (currentUser.uid === selected.owner.id) {
-            setRequestStatus('view-only');
-        } else {
-            const fetchRequestStatus = async () => {
-                const existingRequest = await checkRequestExists();
+        const fetchData = async () => {
+            setRequestStatus(null);
+
+            if (currentUser.uid === selected.owner.id) {
+                setParticipants(await getParticipants(selected));
+                setRequestStatus('view');
+                setWindowHeight('220px');
+            } else {
+                const existingRequest = await getRequest(selected, currentUser);
+                setParticipants(await getParticipants(selected));
+
                 if (existingRequest) {
                     setRequestStatus(existingRequest.status);
+                    setWindowHeight('205px');
                 } else {
-                    if (selected.people.length === selected.maxPeople + 1) {
+                    if (selected.people.length >= selected.maxPeople + 1) {
                         setRequestStatus('full');
+                        setWindowHeight('205px');
                     } else {
                         setRequestStatus('classic');
+                        setWindowHeight('220px');
                     }
                 }
             }
-            fetchRequestStatus();
-        }
+        };
+
+        fetchData();
     }, [selected]);
 
-    const { people, activityType, maxPeople, description, time, trainingTime } = selected;
+    const { activityType, maxPeople, description, time, trainingTime } = selected;
     const percentage = findPercentage(time, trainingTime);
 
-    const join = async () => {
-        await addRequestToDB();
+    const onJoin = async () => {
+        await save(selected, currentUser);
         setRequestStatus('active');
+        setWindowHeight('205px');
     }
 
-    const addRequestToDB = async () => {
-        updateDoc(doc(db, "userRequests", selected.id), {
-            requests: arrayUnion({
-                id: uuid(),
-                user: {
-                    id: currentUser.uid,
-                    name: currentUser.displayName,
-                },
-                marker: selected,
-                status: 'active',
-                time: new Date()
-            }),
-        });
-
-        changeNewNotifications(1, selected.owner.id);
-    }
-
-    const checkRequestExists = async () => {
-        const docRef = doc(db, "userRequests", selected.id);
-        const docSnap = await getDoc(docRef);
-
-        if (!docSnap.exists()) {
-            return false;
-        }
-
-        const requests = docSnap.data().requests;
-        const matchingRequest = requests.find(request => request.user.id === currentUser.uid);
-
-        return matchingRequest || null;
-    }
+    const content = getRequestStatusContent(() => setShowConfirmModal(true));
 
     return (
-        showConfirmModal ? (<ConfirmationModal setShowConfirmModal={setShowConfirmModal} join={join} type={'join'} />) :
+        showConfirmModal ? (<ConfirmationModal setShowConfirmModal={setShowConfirmModal} join={onJoin} type={'join'} />)
 
-            <div className='marker-info'>
+            :
+
+            <div className='marker-info' style={{ height: windowHeight }}>
                 <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
                 <div className="info">
                     <div className="info__block-left">
@@ -109,31 +87,15 @@ const MarkerView = ({ selected }) => {
                         <p className='info-time'>{formatRelative(new Date(trainingTime.seconds * 1000), new Date())}</p>
                     </div>
                 </div>
-                <p className='info-people'>People: {people.length}/{maxPeople + 1}</p>
-                {(() => {
-                    switch (requestStatus) {
-                        case null:
-                            return (
-                                <div className="spinner-container">
-                                    <Spinner />
-                                </div>
-                            );
-                        case 'classic':
-                            return <button className="btn btn-join" onClick={() => setShowConfirmModal(true)}>Join</button>;
-                        case 'view-only':
-                            return <button className="btn btn-join">Join</button>;
-                        case 'active':
-                            return <p>Thank you. Your request is waiting for confirmation</p>;
-                        case 'rejected':
-                            return <p>Sorry. Your request was rejected</p>;
-                        case 'confirmed':
-                            return <p>Nice! Your request was accepted</p>;
-                        case 'full':
-                            return <p>Unfortunatelly. The training is already full</p>;
-                        default:
-                            return null;
-                    }
-                })()}
+
+                {requestStatus && participants ?
+                    <>
+                        <p className='info-people'>Participants: {participants.length}/{maxPeople + 1}</p>
+                        <ParticipantAvatars participants={participants} />
+                        {content[requestStatus]}
+                    </> :
+                    (<div className="spinner-container"><Spinner /></div>)
+                }
 
                 <button className='btn btn-close'> &times;</button>
             </div >

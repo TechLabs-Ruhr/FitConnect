@@ -56,3 +56,11 @@ export const trainings = [
     { activityType: "other", icon: other }
 ];
 
+export const getSize = (participants) => {
+    if (participants === 1){
+        return 34; 
+    } else if (participants > 5) {
+        return 50; 
+    } else return 34 + participants * 2;  
+}
+

@@ -7,6 +7,9 @@
 .request{
     display: flex;
     align-items: center;
+    font-family: Roboto;
+    font-size: 14px;
+    margin-bottom: 10px;
 
     &-img{
         width: 75px;
@@ -14,8 +17,10 @@
         margin-right: 20px;
     }
 
-    &-title{
+    &-text{
         margin-bottom: 10px;
+        display: flex;
+        align-items: center; 
     }
 
     &-time{
@@ -25,17 +30,23 @@
     }
 }
 
+.profile-photo{
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+
 .btn-accept {
-    background-color: rgb(159, 240, 89);
+    background-color: rgb(111, 173, 56);
     padding: 5px 20px;
     color: white;
-    font-size: 20px;
+    font-size: 14px;
     border-radius: 10px;
     cursor: pointer;
     margin-right: 20px;
 
     &:hover{
-        background-color: rgb(123, 191, 63);
+        background-color: rgb(89, 141, 44);
     }
 }
 
@@ -43,7 +54,7 @@
     background-color: rgb(255, 129, 83);
     padding: 5px 20px;
     color: white;
-    font-size: 20px;
+    font-size: 14px;
     border-radius: 10px;
     cursor: pointer;
     margin-right: 20px;
