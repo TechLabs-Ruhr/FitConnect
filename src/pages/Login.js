@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import './authentication.scss';
+import logo from '../ressources/img/logo.png'
 
 const Login = () => {
   const [err, setErr] = useState(false);
@@ -21,18 +22,23 @@ const Login = () => {
     }
   };
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">FitConnect</span>
-        <span className="title">Login</span>
+    <div className="fitconnect-wrapper">
+
+      <div className="fitconnect-form">
+        <span className="fitconnect-title">Login</span>
         <form onSubmit={handleSubmit}>
           <input type="email" placeholder="email" />
           <input type="password" placeholder="password" />
           <button>Sign in</button>
           {err && <span>Something went wrong</span>}
         </form>
-        <p>You don't have an account? <Link to="/register">Register</Link></p>
+        <p>You don't have an account? <Link className="underline" to="/register">Register</Link></p>
       </div>
+
+      <div className="fitconnect-logo">
+        <img src={logo} alt="logo" />
+      </div>
+
     </div>
   );
 };

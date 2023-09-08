@@ -4,6 +4,7 @@ import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import './authentication.scss';
+import logo from '../ressources/img/logo.png'
 
 const Register = () => {
   const [err, setErr] = useState(false);
@@ -42,20 +43,25 @@ const Register = () => {
   };
 
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">FitConnect</span>
-        <span className="title">Register</span>
+    <div className="fitconnect-wrapper">
+
+      <div className="fitconnect-form">
+        <span className="fitconnect-title">Register</span>
         <form onSubmit={handleSubmit}>
-          <input type="text" placeholder='name' />
+          <input type="text" placeholder='username' />
           <input type="em
           ail" placeholder='email' />
           <input type="password" placeholder='password' />
           <button>Sign up</button>
           {err && <span>Something went wrong!</span>}
         </form>
-        <p>Do you have an account? <Link to="/login">Login</Link></p>
+        <p>Do you have an account? <Link className="underline" to="/login">Login</Link></p>
       </div>
+
+      <div className="fitconnect-logo">
+        <img src={logo} alt="logo" />
+      </div>
+
     </div>
   )
 }
