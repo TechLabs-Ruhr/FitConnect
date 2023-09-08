@@ -1,30 +1,29 @@
+import { Formik, Form, Field } from 'formik';
+import * as yup from 'yup';
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import './authentication.scss';
+import logo from '../ressources/img/logo.png'
 
 const Register = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const displayName = e.target[0].value;
-    const email = e.target[1].value;
-    const password = e.target[2].value;
+  const handleFormSubmit = async (values, { setSubmitting }) => {
+    const { username, email, password } = values;
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
       updateProfile(res.user, {
-        displayName,
+        displayName: username,
       });
 
       await setDoc(doc(db, "users", res.user.uid), {
         uid: res.user.uid,
-        displayName,
+        displayName: username,
         email,
       });
 
@@ -34,6 +33,7 @@ const Register = () => {
           newNotifications: 0
         }
       });
+
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -41,20 +41,50 @@ const Register = () => {
     }
   };
 
+  const validationSchema = yup.object({
+    username: yup.string()
+      .min(5, 'Username must be at least 5 characters long')
+      .required('Username is required'),
+    email: yup.string()
+      .email('Invalid email format')
+      .required('Email is required'),
+    password: yup.string()
+      .min(6, 'Password must be at least 6 characters long')
+      .required('Password is required'),
+    confirmPassword: yup.string()
+      .oneOf([yup.ref('password')], 'Passwords must match')
+      .required('Confirm password is required')
+  });
+
   return (
-    <div className="formContainer">
-      <div className="formWrapper">
-        <span className="logo">FitConnect</span>
-        <span className="title">Register</span>
-        <form onSubmit={handleSubmit}>
-          <input type="text" placeholder='name' />
-          <input type="em
-          ail" placeholder='email' />
-          <input type="password" placeholder='password' />
-          <button>Sign up</button>
-          {err && <span>Something went wrong!</span>}
-        </form>
-        <p>Do you have an account? <Link to="/login">Login</Link></p>
+    <div className="fitconnect-wrapper">
+      <div className="fitconnect-form">
+        <span className="fitconnect-title">Register</span>
+        <Formik
+          initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
+          validationSchema={validationSchema}
+          onSubmit={handleFormSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form>
+              <Field name="username" type="text" placeholder="username" />
+              {errors.username && touched.username && <div className='fitconnect-error'>{errors.username}</div>}
+              <Field name="email" type="email" placeholder="email" />
+              {errors.email && touched.email && <div className='fitconnect-error'>{errors.email}</div>}
+              <Field name="password" type="password" placeholder="password" />
+              {errors.password && touched.password && <div className='fitconnect-error'>{errors.password}</div>}
+              <Field name="confirmPassword" type="password" placeholder="repeat your password" />
+              {errors.confirmPassword && touched.confirmPassword && <div className='fitconnect-error'>{errors.confirmPassword}</div>}
+              <button type="submit">Sign up</button>
+              {err && <span className='fitconnect-error'>Something went wrong!</span>}
+            </Form>
+          )}
+        </Formik>
+        <p>Do you have an account? <Link className="underline" to="/login">Login</Link></p>
+      </div>
+
+      <div className="fitconnect-logo">
+        <img src={logo} alt="logo" />
       </div>
     </div>
   )
