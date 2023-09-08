@@ -21,21 +21,15 @@
     form {
       display: flex;
       flex-direction: column;
-      gap: 15px;
   
       input {
         width: 250px;
         padding: 15px;
         margin: 5px 0;
-        border: 1px solid #ccc;
         border-radius: 10px;
         font-size: 16px;
         font-family: 'Roboto', sans-serif;
-        background-color: #c2bebe;
-  
-        &::placeholder {
-          color: rgb(255, 255, 255);
-        }
+        background-color: #ffffff;
       }
   
       button {
@@ -46,6 +40,7 @@
         font-weight: bold;
         border: none;
         cursor: pointer;
+        margin-top: 10px;
 
         &:hover{
           background-color: #d36804;
@@ -89,5 +84,11 @@
       width: 783px;
       height: 260px;
     }
+  }
+
+  &-error{
+    margin-top: 5px;
+    color: red; 
+    font-size: 12px;
   }
 }
