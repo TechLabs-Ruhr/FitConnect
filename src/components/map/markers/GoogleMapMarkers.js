@@ -24,12 +24,11 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const allMarkers = await loadMarkersFromDatabase();
-      setMarkers(allMarkers);
-    };
+    const unsubscribe = loadMarkersFromDatabase((updatedMarkers) => {
+      setMarkers(updatedMarkers);
+    });
 
-    fetchData();
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {

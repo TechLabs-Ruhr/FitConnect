@@ -65,7 +65,7 @@ const Register = () => {
           validationSchema={validationSchema}
           onSubmit={handleFormSubmit}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, isSubmitting }) => (
             <Form>
               <Field name="username" type="text" placeholder="username" />
               {errors.username && touched.username && <div className='fitconnect-error'>{errors.username}</div>}
@@ -75,7 +75,11 @@ const Register = () => {
               {errors.password && touched.password && <div className='fitconnect-error'>{errors.password}</div>}
               <Field name="confirmPassword" type="password" placeholder="repeat your password" />
               {errors.confirmPassword && touched.confirmPassword && <div className='fitconnect-error'>{errors.confirmPassword}</div>}
-              <button type="submit">Sign up</button>
+
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Sign up"}
+              </button>
+
               {err && <span className='fitconnect-error'>Something went wrong!</span>}
             </Form>
           )}

@@ -11,7 +11,7 @@ const Login = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     const { email, password } = values;
 
     try {
@@ -19,6 +19,8 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       setErr('User not found');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -36,7 +38,7 @@ const Login = () => {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {() => (
+          {({ isSubmitting }) => (
             <Form>
               <Field type="email" name="email" placeholder="email" />
               <ErrorMessage name="email" component="div" className="fitconnect-error" />
@@ -44,7 +46,9 @@ const Login = () => {
               <Field type="password" name="password" placeholder="password" />
               <ErrorMessage name="password" component="div" className="fitconnect-error" />
 
-              <button type="submit">Sign in</button>
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Sign in"}
+              </button>
             </Form>
           )}
         </Formik>

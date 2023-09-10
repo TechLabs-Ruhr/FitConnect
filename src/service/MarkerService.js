@@ -3,37 +3,35 @@ import {
   doc,
   updateDoc,
   collection,
-  getDocs,
   getDoc,
   setDoc,
   arrayRemove,
   deleteDoc,
-  Timestamp
+  Timestamp,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const load = async () => {
+export const load = (onUpdate) => {
+  return onSnapshot(collection(db, "userMarkers"), async (querySnapshot) => {
     const allMarkers = [];
     const now = Timestamp.now();
 
-    const querySnapshot = await getDocs(collection(db, "userMarkers"));
-    querySnapshot.forEach(async (document) => {
+    for (const document of querySnapshot.docs) {
       const markers = document.data().markers;
-
       const markersToDelete = [];
-
       const validMarkers = markers.filter(marker => {
-          const markerTime = marker?.trainingTime;
-          if (markerTime && markerTime.seconds < now.seconds) {
-            console.log(markerTime.seconds + ' ' + now.seconds);
-              markersToDelete.push(marker);
-              return false;
-          }
-          return true;
+        const markerTime = marker?.trainingTime;
+        if (markerTime && markerTime.seconds < now.seconds) {
+          console.log(markerTime.seconds + ' ' + now.seconds);
+          markersToDelete.push(marker);
+          return false;
+        }
+        return true;
       });
-      
+
       for (let marker of markersToDelete) {
-          await deleteDoc(doc(db, "userRequests", marker.id));
+        await deleteDoc(doc(db, "userRequests", marker.id));
       }
 
       if (validMarkers.length !== markers.length) {
@@ -43,10 +41,12 @@ export const load = async () => {
       }
 
       allMarkers.push(...validMarkers);
-    });
+    }
 
-    return allMarkers; 
-  };
+    onUpdate(allMarkers);
+  });
+};
+
 
   export const save = async (marker, currentUser) => {
     await updateDoc(doc(db, "userMarkers", currentUser.uid), {
