@@ -33,15 +33,17 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
     }
   ];
 
-   const pop = popups.find(popup => popup.id === id);
+  const pop = popups.find(popup => popup.id === id);
 
-  return isVisible ? ReactDOM.createPortal(
-    <div className={`popup ${isVisible ? '' : 'hidden'}`} onClick={() => setIsVisible(false)}>
-      <img src={pop.src} alt={pop.id} className='popup-img' />
-      <p className="popup-text">{pop.text}</p>
-    </div>,
-    document.getElementById('root')
-  ) : null;
+  return (
+    ReactDOM.createPortal(
+        <div className={`popup ${isVisible ? '' : 'hidden'}`} onClick={() => setIsVisible(false)}>
+          <img src={pop.src} alt={pop.id} className='popup-img' />
+          <p className="popup-text">{pop.text}</p>
+        </div>,
+      document.getElementById('root')
+    )
+  )
 }
 
- export default ConfirmationPopup
+export default ConfirmationPopup

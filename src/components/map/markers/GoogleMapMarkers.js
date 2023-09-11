@@ -13,7 +13,8 @@ import {
   load as loadMarkersFromDatabase,
   remove as removeMarkerFromDatabase,
   update as updateMarkerInTheDataBase
-} from '../../../service/MarkerService'
+} from '../../../service/MarkerService';
+import { CSSTransition } from 'react-transition-group';
 
 const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
   const [markers, setMarkers] = useState([]);
@@ -118,15 +119,22 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
         );
       })}
 
-      {selected && <MarkerInfo
-        selected={selected}
-        setSelected={setSelected}
-        deleteMarker={deleteMarker}
-        updateMarker={updateMarker}
-      />}
+      {selected && (
+        <MarkerInfo
+          selected={selected}
+          setSelected={setSelected}
+          deleteMarker={deleteMarker}
+          updateMarker={updateMarker}
+        />
+      )}
 
-      {showForm && <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />}
-      {showPopup ? <ConfirmationPopup id={showPopup} setShowPopup={setShowPopup} /> : null}
+      <CSSTransition in={showForm} timeout={500} classNames="list-transition" appear unmountOnExit>
+        <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />
+      </CSSTransition>
+
+      <CSSTransition in={showPopup} timeout={500} classNames="list-transition" appear unmountOnExit>
+        <ConfirmationPopup id={showPopup} setShowPopup={setShowPopup} />
+      </CSSTransition>
     </>
   )
 }
