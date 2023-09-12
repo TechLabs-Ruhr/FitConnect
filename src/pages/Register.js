@@ -5,8 +5,9 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
-import './authentication.scss';
 import logo from '../ressources/img/logo.png'
+import mediaLogo from '../ressources/img/logo768.png'
+import './authentication.scss';
 
 const Register = () => {
   const [err, setErr] = useState(false);
@@ -88,7 +89,8 @@ const Register = () => {
       </div>
 
       <div className="fitconnect-logo">
-        <img src={logo} alt="logo" />
+        <img src={logo} className="default-logo" alt="logo" />
+        <img src={mediaLogo} className="media-logo" alt="logo" />
       </div>
     </div>
   )

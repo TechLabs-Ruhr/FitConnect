@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import './authentication.scss';
 import logo from '../ressources/img/logo.png'
+import mediaLogo from '../ressources/img/logo768.png'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 
@@ -56,7 +57,8 @@ const Login = () => {
         <p>You don't have an account? <Link className="underline" to="/register">Register</Link></p>
       </div>
       <div className="fitconnect-logo">
-        <img src={logo} alt="logo" />
+        <img src={logo} className="default-logo" alt="logo" />
+        <img src={mediaLogo} className="media-logo" alt="logo" />
       </div>
     </div>
   );
