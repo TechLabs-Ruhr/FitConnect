@@ -18,7 +18,6 @@ const MarkerView = ({ selected }) => {
     const [requestStatus, setRequestStatus] = useState(null);
     const [participants, setParticipants] = useState(null);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [windowHeight, setWindowHeight] = useState('220px');
     const { currentUser } = useContext(AuthContext);
 
     useEffect(() => {
@@ -28,21 +27,17 @@ const MarkerView = ({ selected }) => {
             if (currentUser.uid === selected.owner.id) {
                 setParticipants(await getParticipants(selected));
                 setRequestStatus('view');
-                setWindowHeight('220px');
             } else {
                 const existingRequest = await getRequest(selected, currentUser);
                 setParticipants(await getParticipants(selected));
 
                 if (existingRequest) {
                     setRequestStatus(existingRequest.status);
-                    setWindowHeight('205px');
                 } else {
                     if (selected.people.length >= selected.maxPeople + 1) {
                         setRequestStatus('full');
-                        setWindowHeight('205px');
                     } else {
                         setRequestStatus('classic');
-                        setWindowHeight('220px');
                     }
                 }
             }
@@ -57,7 +52,6 @@ const MarkerView = ({ selected }) => {
     const onJoin = async () => {
         await save(selected, currentUser);
         setRequestStatus('active');
-        setWindowHeight('205px');
     }
 
     const content = getRequestStatusContent(() => setShowConfirmModal(true));
@@ -67,7 +61,7 @@ const MarkerView = ({ selected }) => {
 
             :
 
-            <div className='marker-info' style={{ height: windowHeight }}>
+            <div className='marker-info'>
                 <p className='info-activity'>{capitalizeFirstLetter(activityType)}</p>
                 <div className="info">
                     <div className="info__block-left">

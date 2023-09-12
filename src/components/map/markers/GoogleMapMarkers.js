@@ -132,9 +132,7 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
         <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />
       </CSSTransition>
 
-      <CSSTransition in={showPopup} timeout={500} classNames="list-transition" appear unmountOnExit>
-        <ConfirmationPopup id={showPopup} setShowPopup={setShowPopup} />
-      </CSSTransition>
+      {showPopup && <ConfirmationPopup id={showPopup} setShowPopup={setShowPopup} />}  
     </>
   )
 }

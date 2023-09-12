@@ -85,6 +85,7 @@ const Map = () => {
                     }}
                 />}
                 <button className={`btn btn-add ${plusBtn ? 'btn-active' : ''}`} onClick={() => setPlusBtn(!plusBtn)}>Add Training</button>
+                <button className={`btn btn-add-media ${plusBtn ? 'btn-active' : ''}`} onClick={() => setPlusBtn(!plusBtn)}>+</button>
             </GoogleMap>}
         </>
     );

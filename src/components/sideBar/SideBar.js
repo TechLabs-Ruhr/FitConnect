@@ -89,10 +89,12 @@ const SideBar = () => {
                 </IconButton>
                 {isSidebarOpen && (
                     <div className='sidebar-content'>
-                        <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
-                        <label id="lable" htmlFor="file">
-                            <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
-                        </label>
+                        <div className="sidebar-userImg">
+                            <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
+                            <label id="lable" htmlFor="file">
+                                <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
+                            </label>
+                        </div>
                         <p className="user-name">{currentUser.displayName}</p>
                         <div className="notifications">
                             <img className="notifications" src={event} onClick={onNotificationsClick} alt="notifications" />
