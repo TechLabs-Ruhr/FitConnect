@@ -6,7 +6,9 @@ const Search = () => {
   return (
     <>
       <SideBar />
-      <Map />
+      <div style={{ position: 'fixed' }}>
+        <Map />
+      </div>
     </>
   )
 }

@@ -164,6 +164,11 @@
             width: 25px;
             height: 25px;
         }
+
+        .new_notifications {
+            top: 36px;
+            left: 90%;
+        }
     }
 }
 
@@ -190,7 +195,7 @@
         bottom: 0;
         width: 100%;
 
-        &-userImg{
+        &-userImg {
             display: none;
         }
 
@@ -208,10 +213,15 @@
             display: none;
         }
 
-        .notifications{
+        .notifications {
             position: fixed;
             top: 15px;
             left: 10px;
+        }
+
+        .new_notifications {
+            top: -4px;
+            left: 12px;
         }
     }
 }

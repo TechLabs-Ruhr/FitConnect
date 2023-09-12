@@ -1,13 +1,6 @@
-
-.exclamation-mark{
-    color: red; 
-    font-size: 25px;
-}
-
 .request{
     display: flex;
     align-items: center;
-    font-family: Roboto;
     font-size: 14px;
     margin-bottom: 10px;
 
@@ -37,14 +30,17 @@
     border-radius: 100%;
 }
 
-.btn-accept {
-    background-color: rgb(111, 173, 56);
+.btn-accept, .btn-decline{
     padding: 5px 20px;
     color: white;
     font-size: 14px;
     border-radius: 10px;
     cursor: pointer;
     margin-right: 20px;
+}
+
+.btn-accept {
+    background-color: rgb(111, 173, 56);
 
     &:hover{
         background-color: rgb(89, 141, 44);
@@ -53,14 +49,33 @@
 
 .btn-decline {
     background-color: rgb(255, 129, 83);
-    padding: 5px 20px;
-    color: white;
-    font-size: 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-right: 20px;
 
     &:hover{
         background-color: rgb(236, 101, 42);
+    }
+}
+
+@media(max-width:590px) {
+    .request{
+        font-size: 12px;
+
+        &-img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .btn-accept, .btn-decline{
+            padding: 5px 15px;
+            font-size: 12px;
+        }
+
+        &-time{
+            font-size: 10px;
+        }
+    }
+
+    .profile-photo{
+        width: 20px;
+        height: 20px;
     }
 }
