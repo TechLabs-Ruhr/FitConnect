@@ -38,7 +38,7 @@ const Notifications = ({ onClose }) => {
                     <Notification key={index} request={request} />
                 ))
             }
-            <button className='btn btn-close' onClick={() => onClose()}> &times;</button>
+            <button className='btn notifications-close' onClick={() => onClose()}> &times;</button>
         </div>
     )
 

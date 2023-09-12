@@ -9,6 +9,10 @@
     background-color: black;
 }
 
+.gm-style-iw-d{
+    overflow: hidden !important;
+}
+
 .marker-info {
     color: white;
     width: 400px;
@@ -83,4 +87,19 @@
     align-items: center;
     height: 50px;
     width: 50px;
+}
+
+@media(max-width:590px) {
+    .marker-info {
+        width: 300px;
+        padding: 10px;
+    }
+
+    .info-time{
+        margin-top: 0;
+    }
+
+    .info-progress{
+        display: none;
+    }
 }

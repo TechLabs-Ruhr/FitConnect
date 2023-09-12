@@ -5,8 +5,9 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
-import './authentication.scss';
 import logo from '../ressources/img/logo.png'
+import mediaLogo from '../ressources/img/logo768.png'
+import './authentication.scss';
 
 const Register = () => {
   const [err, setErr] = useState(false);
@@ -65,7 +66,7 @@ const Register = () => {
           validationSchema={validationSchema}
           onSubmit={handleFormSubmit}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, isSubmitting }) => (
             <Form>
               <Field name="username" type="text" placeholder="username" />
               {errors.username && touched.username && <div className='fitconnect-error'>{errors.username}</div>}
@@ -75,7 +76,11 @@ const Register = () => {
               {errors.password && touched.password && <div className='fitconnect-error'>{errors.password}</div>}
               <Field name="confirmPassword" type="password" placeholder="repeat your password" />
               {errors.confirmPassword && touched.confirmPassword && <div className='fitconnect-error'>{errors.confirmPassword}</div>}
-              <button type="submit">Sign up</button>
+
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Loading..." : "Sign up"}
+              </button>
+
               {err && <span className='fitconnect-error'>Something went wrong!</span>}
             </Form>
           )}
@@ -84,7 +89,8 @@ const Register = () => {
       </div>
 
       <div className="fitconnect-logo">
-        <img src={logo} alt="logo" />
+        <img src={logo} className="default-logo" alt="logo" />
+        <img src={mediaLogo} className="media-logo" alt="logo" />
       </div>
     </div>
   )

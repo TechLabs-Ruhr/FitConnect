@@ -9,11 +9,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import SideBarData from './SideBarData';
-import IconButton from '@mui/material/IconButton'; // Material-UI IconButton
+import IconButton from '@mui/material/IconButton';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 import { ref } from "firebase/storage";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import userPhoto from '../../ressources/img/user.png'
+import userPhoto from '../../ressources/img/user.png';
+import { CSSTransition } from 'react-transition-group';
 
 
 const SideBar = () => {
@@ -36,7 +37,6 @@ const SideBar = () => {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
-
 
     useEffect(() => {
         if (currentUser && currentUser.uid) {
@@ -70,7 +70,16 @@ const SideBar = () => {
 
     return (
         <>
-            {showNotifications && <Notifications onClose={onClose} />}
+            <CSSTransition
+                in={showNotifications}
+                timeout={500}
+                classNames="list-transition"
+                unmountOnExit
+                appear
+            >
+                <Notifications onClose={onClose} />
+            </CSSTransition>
+
             <div className={`sidebar ${isSidebarOpen ? '' : 'closed'}`}>
                 <IconButton
                     className={`toggle-button ${isSidebarOpen ? '' : 'closed'}`}
@@ -79,11 +88,13 @@ const SideBar = () => {
                     <ViewSidebarIcon />
                 </IconButton>
                 {isSidebarOpen && (
-                    <>
-                        <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
-                        <label id="lable" htmlFor="file">
-                            <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
-                        </label>
+                    <div className='sidebar-content'>
+                        <div className="sidebar-userImg">
+                            <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
+                            <label id="lable" htmlFor="file">
+                                <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
+                            </label>
+                        </div>
                         <p className="user-name">{currentUser.displayName}</p>
                         <div className="notifications">
                             <img className="notifications" src={event} onClick={onNotificationsClick} alt="notifications" />
@@ -109,8 +120,8 @@ const SideBar = () => {
                                 </li>
                             ))}
                         </ul>
-                        <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Ausloggen</button>
-                    </>
+                        <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Log out</button>
+                    </div>
                 )}
             </div>
         </>

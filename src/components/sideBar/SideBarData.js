@@ -1,5 +1,4 @@
 import ChatIcon from '@mui/icons-material/Chat';
-import SearchIcon from '@mui/icons-material/Search';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MapIcon from '@mui/icons-material/Map';
@@ -16,12 +15,12 @@ const SideBarData = [
         link: "/chat"
     },
     {
-        title: "Gruppen",
+        title: "Groups",
         icon: <GroupsIcon />,
         link: "/groups"
     },
     {
-        title: "Einstellungen",
+        title: "Settings",
         icon: <SettingsIcon />,
         link: "/settings"
     }

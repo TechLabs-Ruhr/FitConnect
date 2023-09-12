@@ -1,16 +1,16 @@
-.requests{
+.requests {
     position: absolute;
     z-index: 20;
-    left: 0;
+    left: 15%;
     top: 0;
-    background: black; 
-    color: white; 
+    background: black;
+    color: white;
     padding: 20px;
-    margin-left: 15%;
     border-radius: 10px;
+    transition: opacity 300ms ease-in-out;
 }
 
-.notifications-spinner{
+.notifications-spinner {
     position: absolute;
     z-index: 25;
     left: 0;
@@ -18,4 +18,34 @@
     margin-left: 15%;
     width: 30px;
     height: 30px;
+    transition: opacity 300ms ease-in-out;
+}
+
+.notifications-close {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media(max-width:590px) {
+    .requests {
+        position: fixed;
+        z-index: 20;
+        left: 0;
+        width: 92vw;
+        background: black;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        transition: opacity 300ms ease-in-out;
+    }
+
+    .notifications-close {
+        position: absolute;
+        top: 0;
+        right: 20px;
+    }
 }

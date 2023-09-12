@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@300;500;700;900&display=swap');
+@import './utils/animation.scss'; 
 
 h1,
 h2,
@@ -44,3 +45,4 @@ textarea {
 body {
     font-family: 'Roboto', sans-serif;
 }
+  
