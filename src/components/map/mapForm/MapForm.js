@@ -14,7 +14,7 @@ export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
     const validationSchema = yup.object().shape({
         trainingTime: yup.date()
             .min(new Date(), 'The time cannot be in the past')
-            .max(oneWeekFromNow, 'The time cannot be more than a week from now')
+           // .max(oneWeekFromNow, 'The time cannot be more than a week from now')
             .required('Required field'),
         activityType: yup
             .string()
