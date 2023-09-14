@@ -89,11 +89,12 @@
 }
 
 .signout{
-    justify-content: center;
         z-index: 5;
-        margin: auto; /* Horizontal zentrieren */
+        margin: 20px auto 20px auto; /* Horizontal zentrieren */
         background-color: rgb(206, 206, 206);
+        padding: 20px;
         height: 50px;
+        display: block;
         border-radius: 15px;
         color: #000000;
         font-size: 18px;
