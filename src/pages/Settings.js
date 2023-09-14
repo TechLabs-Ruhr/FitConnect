@@ -98,11 +98,8 @@ const Settings = () => {
     return (
         
         <div className="settings">
-            <h2>Profil bearbeiten</h2>
 
-            <div className="sidebar">
             <SideBar />
-            </div>
             <div className="userphoto">
             <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
                         <label id="lable" htmlFor="file">
