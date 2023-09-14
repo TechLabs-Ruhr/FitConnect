@@ -3,9 +3,12 @@ import SideBar from "../components/sideBar/SideBar";
 import React, { useState, useEffect, useContext } from 'react';
 import userPhoto from '../ressources/img/user.png'
 import { AuthContext } from '../context/AuthContext';
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import './settings.scss';
+import { updateProfile } from "firebase/auth";
+
+
 
 
 
@@ -18,6 +21,8 @@ const Settings = () => {
   const [newDisplayName, setNewDisplayName] = useState(currentUser.displayName || '');
   const [newEmail, setNewEmail] = useState(currentUser.email || '');
   const [newPassword, setNewPassword] = useState('');
+  const [err, setErr] = useState(false);
+
 
   const handleDisplayNameChange = (e) => {
     setNewDisplayName(e.target.value);
@@ -33,27 +38,33 @@ const Settings = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const firstName = e.target[0].value;
+    const lastName = e.target[1].value;
+    const displayName = e.target[2].value;
+    const email = e.target[3].value;
 
-    // Update the display name if it's changed
-    if (newDisplayName !== currentUser.displayName) {
-      await updateProfile(auth.currentUser, {
-        displayName: newDisplayName,
+    try {
+      const user = currentUser;
+
+      updateProfile(user, {
+        displayName,
       });
-    }
+      
 
-    // Update the email address if it's changed
-    if (newEmail !== currentUser.email) {
-        await updateEmail(auth.currentUser, newEmail);
-      }
-  
-      // Update the password if it's provided
-      if (newPassword) {
-        await updatePassword(auth.currentUser, newPassword);
-      }
-  
-      // Display a success message or handle errors
-      console.log('Änderungen gespeichert');
-    };
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        displayName,
+        email,
+        firstName,
+        lastName
+      });
+
+      
+    } catch (err) {
+      console.log(err);
+      setErr(true);
+    }
+  };
 
 
     const handleImageChange = async (e) => {
