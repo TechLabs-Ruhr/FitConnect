@@ -18,19 +18,16 @@ import { updateProfile } from "firebase/auth";
 const Settings = () => {
     const [imageUrl, setImageUrl] = useState(userPhoto);
     const { currentUser, auth } = useContext(AuthContext);
-  const [newDisplayName, setNewDisplayName] = useState(currentUser.displayName || '');
-  const [newEmail, setNewEmail] = useState(currentUser.email || '');
+  const [DisplayName, setDisplayName] = useState(currentUser.displayName || '');
+  const [Email, setEmail] = useState(currentUser.email || '');
   const [newPassword, setNewPassword] = useState('');
   const [err, setErr] = useState(false);
+  const [firstName, setFirstName] = useState(currentUser.firstName || '');
+  const [lastName, setLastName] = useState(currentUser.lastName || '');
 
 
-  const handleDisplayNameChange = (e) => {
-    setNewDisplayName(e.target.value);
-  };
 
-  const handleEmailChange = (e) => {
-    setNewEmail(e.target.value);
-  };
+
 
   const handlePasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -79,10 +76,12 @@ const Settings = () => {
 
     useEffect(() => {
         if (currentUser && currentUser.uid) {
-            const docRef = doc(db, "userNotifications", currentUser.uid);
+            const docRef = doc(db, "users", currentUser.uid);
             const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
                 if (docSnapshot.exists()) {
                     const data = docSnapshot.data();
+                    setFirstName(data.firstName || ''); // Updating firstName
+                    setLastName(data.lastName || ''); // Updating lastName
                 }
             });
 
@@ -90,7 +89,9 @@ const Settings = () => {
                 setImageUrl(currentUser.photoURL);
             }
 
-            return () => { };
+            return () => { 
+              unsubscribe();
+             };
         }
 
     }, [currentUser]);
@@ -110,19 +111,19 @@ const Settings = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="firstName">firstName</label>
-            <input type="text" id="firstName" name="firstName" placeholder="Neuer Vorname" value={currentUser.firstName}/>
+            <input type="text" id="firstName" name="firstName" placeholder="Neuer Vorname" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="lastName">lastName</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Neuer Nachname" value={currentUser.lastName}/>
+            <input type="text" id="lastName" name="lastName" placeholder="Neuer Nachname" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="username">displayName</label>
-            <input type="text" placeholder="Neuer Benutzername" id="username" name="username" value={currentUser.displayName}/>
+            <input type="text" placeholder="Neuer Benutzername" id="username" name="username" value={DisplayName} onChange={(e) => setDisplayName(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="email">E-Mail</label>
-            <input type="email" id="email" name="email" placeholder="Neue Email" value={currentUser.email}/>
+            <input type="email" id="email" name="email" placeholder="Neue Email" value={Email} onChange={(e) => setEmail(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="password">Passwort</label>
