@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .locate {
     position: absolute;
     top: 1rem;
@@ -23,7 +25,7 @@
 .btn-add-media {
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: $white;
     color: black;
     border: none;
     z-index: 5;
@@ -45,8 +47,7 @@
 
 .btn-add.btn-active,
 .btn-add-media.btn-active {
-    background-color: orange;
-    color: white;
+    background-color: $secondary-color;
 }
 
 .map-cursor {

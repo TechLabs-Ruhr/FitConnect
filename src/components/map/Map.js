@@ -2,7 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import GeoLocation from './geoLocation/GeoLocation';
 import Spinner from '../spinner/Spinner'
-import { GOOGLE_MAPS_API_KEY, libraries, mapContainerStyle, options } from '../../config';
+import { GOOGLE_MAPS_API_KEY} from '../../config/config';
+import { libraries, mapContainerStyle, options } from '../../config/mapConfig'; 
 import './map.scss';
 import GoogleMapMarkers from "./markers/GoogleMapMarkers";
 

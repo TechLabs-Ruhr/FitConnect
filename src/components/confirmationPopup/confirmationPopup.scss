@@ -1,3 +1,5 @@
+@import '../../styles/variables.scss';
+
 .popup {
     position: absolute;
     z-index: 10;
@@ -5,10 +7,10 @@
     height: 50px;
     left: 50%;
     top: 50%;
-    background-color: black;
+    background-color: $main-color;
     display: flex;
     padding: 10px 20px;
-    color: white;
+    color: $white;
     align-items: center;
     justify-content: space-between;
     font-size: 20px;

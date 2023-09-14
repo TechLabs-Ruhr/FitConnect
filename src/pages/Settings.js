@@ -4,7 +4,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import userPhoto from '../ressources/img/user.png'
 import { AuthContext } from '../context/AuthContext';
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../config/firebase";
 import './settings.scss';
 import { updateProfile } from "firebase/auth";
 

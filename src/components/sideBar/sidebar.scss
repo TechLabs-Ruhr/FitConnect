@@ -1,7 +1,9 @@
+@import '../../styles/variables.scss';
+
 .sidebar {
     position: fixed;
     z-index: 3;
-    background-color: rgb(255, 255, 255);
+    background-color:  $white;
     width: 15%;
     height: 100vh;
     font-weight: bold;
@@ -67,7 +69,7 @@
         flex-direction: column;
 
         .active {
-            background-color: orange;
+            background-color: $secondary-color;
 
         }
 
@@ -98,11 +100,11 @@
 
     .new_notifications {
         position: absolute;
-        background: rgb(250, 46, 46);
+        background: $red;
         width: 18px;
         height: 18px;
         text-align: center;
-        color: white;
+        color:  $white;
         border-radius: 100%;
         display: flex;
         justify-content: center;
@@ -118,16 +120,16 @@
         bottom: 30px;
         z-index: 5;
         left: 50px;
-        background-color: rgb(255 168 48);
+        background-color: $secondary-color;
         padding: 5px 15px;
         border-radius: 15px;
-        color: black;
+        color: $main-color;
         font-size: 18px;
         font-weight: bold;
         cursor: pointer;
 
         &:hover {
-            background-color: rgb(217, 147, 48);
+            background-color: $orange-hover;
         }
     }
 }

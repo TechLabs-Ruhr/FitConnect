@@ -1,5 +1,7 @@
+@import '../../../styles/variables.scss';
+
 .map-form {
-    background-color: rgb(0, 0, 0);
+    background-color: $main-color;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 360px;
@@ -24,10 +26,10 @@
     display: block;
     width: 300px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid $gray;
     border-radius: 5px;
     font-size: 16px;
-    background-color: white;
+    background-color: $white;
 }
 
 .form-date,
@@ -42,7 +44,7 @@
 
 label {
     font-size: 16px;
-    color: white;
+    color: $white;
 }
 
 #trainingTime {
@@ -73,8 +75,8 @@ label {
     display: block;
     width: 320px;
     padding: 10px;
-    background-color: #f3ae2d;
-    color: white;
+    background-color: $secondary-color;
+    color: $white;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -83,7 +85,7 @@ label {
 }
 
 .addTrainingBtn:hover {
-    background-color: #da8910;
+    background-color: $orange-hover;
 }
 
 .close-button {
@@ -94,13 +96,13 @@ label {
     border: none;
     font-size: 20px;
     line-height: 1;
-    color: #ffffff;
+    color: $white;
     cursor: pointer;
     z-index: 14;
 }
 
 .close-button:hover {
-    color: #999;
+    color: $gray;
 }
 
 .error-message {

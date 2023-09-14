@@ -1,6 +1,8 @@
+@import '../../../../../styles/variables.scss';
+
 .confirmation-modal {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
+    background-color: $main-color;
+    color: $white;
     width: 300px;
     height: 80px;
     padding: 20px;
@@ -33,20 +35,20 @@
     }
 
     &__button.confirm {
-        background-color: orange;
-        color: #fff;
+        background-color: $secondary-color;
+        color: $white;
 
         &:hover{
-            background-color: rgb(200, 131, 2);
+            background-color: $orange-hover;
         }
     }
 
     &__button.cancel {
-        background-color: grey;
-        color: #fff;
+        background-color: $gray;
+        color: $white;
 
         &:hover{
-            background-color: rgb(100, 100, 100);
+            background-color: $gray-hover;
         }
     }
 
@@ -58,10 +60,10 @@
         border: none;
         cursor: pointer;
         font-size: 20px;
-        color: white;
+        color: $white;
     }
     
     .btn-close:hover {
-        color: #999;
+        color: $gray-hover;
     }
 }

@@ -1,5 +1,3 @@
-import './style.scss';
-import 'normalize.css';
 import Register from './pages/Register';
 import Login from './pages/Login'
 import Search from './pages/Search'
@@ -9,6 +7,8 @@ import { AuthContext } from './context/AuthContext';
 import Settings from './pages/Settings';
 import Chat from './pages/Chat';
 import Groups from './pages/Groups';
+import './styles/style.scss';
+import 'normalize.css';
 
 function App() {
   const {currentUser} = useContext(AuthContext);

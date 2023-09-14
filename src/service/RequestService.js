@@ -6,7 +6,7 @@ import {
     getDocs, 
     collection
 } from "firebase/firestore";
-import { db } from '../firebase';
+import { db } from '../config/firebase';
 import { v4 as uuid } from 'uuid';
 import { updateNotifications } from './NotificationsService';
 
