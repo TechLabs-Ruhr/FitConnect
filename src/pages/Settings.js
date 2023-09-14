@@ -7,6 +7,7 @@ import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import './settings.scss';
 import { updateProfile } from "firebase/auth";
+import { updatePassword } from "firebase/auth";
 
 
 
@@ -29,9 +30,16 @@ const Settings = () => {
 
 
 
-  const handlePasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
+  // const handlePasswordChange = async () => {
+  //   try {
+  //     const newPasswordValue = newPassword;
+  //     await updatePassword(auth.currentUser, newPasswordValue);
+  //     console.log("Passwort erfolgreich geändert!");
+  //   } catch (error) {
+  //     console.error("Fehler beim Ändern des Passworts:", error);
+  //   }
+  // };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,6 +90,9 @@ const Settings = () => {
                     const data = docSnapshot.data();
                     setFirstName(data.firstName || ''); // Updating firstName
                     setLastName(data.lastName || ''); // Updating lastName
+                    setEmail(data.email || ''); // Updating lastName
+                    setDisplayName(data.displayName || ''); // Updating lastName
+
                 }
             });
 
