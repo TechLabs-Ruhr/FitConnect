@@ -1,3 +1,5 @@
+@import '../../../../../styles/variables.scss'; 
+
 .gm-style .gm-style-iw-c {
     z-index: 10;
     border-radius: 10px;
@@ -6,7 +8,7 @@
 
 .gm-style .gm-style-iw-tc::after,
 .gm-style .gm-style-iw-c {
-    background-color: black;
+    background-color: $main-color;
 }
 
 .gm-style-iw-d{
@@ -14,15 +16,15 @@
 }
 
 .marker-info {
-    color: white;
+    color: $white;
     width: 400px;
     padding: 20px;
 }
 
 .btn-join {
-    background-color: orange;
+    background-color: $secondary-color;
     padding: 5px 20px;
-    color: white;
+    color: $white;
     font-size: 20px;
     border-radius: 10px;
     margin-top: 15px;
@@ -74,11 +76,11 @@
     border: none;
     cursor: pointer;
     font-size: 20px;
-    color: white;
+    color: $white;
 }
 
 .btn-close:hover {
-    color: #999;
+    color: $gray;
 }
 
 .spinner-container {

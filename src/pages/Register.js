@@ -2,7 +2,7 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../firebase";
+import { auth, db } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import logo from '../ressources/img/logo.png'

@@ -10,7 +10,7 @@ import {
   Timestamp,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../config/firebase";
 
 export const load = (onUpdate) => {
   return onSnapshot(collection(db, "userMarkers"), async (querySnapshot) => {

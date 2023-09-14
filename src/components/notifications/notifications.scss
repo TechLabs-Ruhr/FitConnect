@@ -1,10 +1,12 @@
+@import '../../styles/variables.scss'; 
+
 .requests {
-    position: absolute;
+    position: fixed;
     z-index: 20;
     left: 15%;
     top: 0;
-    background: black;
-    color: white;
+    background: $main-color;
+    color:  $white;
     padding: 20px;
     border-radius: 10px;
     transition: opacity 300ms ease-in-out;
@@ -25,22 +27,15 @@
     position: absolute;
     top: 5px;
     right: 20px;
-    color: white;
+    color: $white;
     font-size: 24px;
     cursor: pointer;
 }
 
 @media(max-width:590px) {
     .requests {
-        position: fixed;
-        z-index: 20;
         left: 0;
         width: 92vw;
-        background: black;
-        color: white;
-        padding: 20px;
-        border-radius: 10px;
-        transition: opacity 300ms ease-in-out;
     }
 
     .notifications-close {

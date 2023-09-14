@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './sidebar.scss';
 import { signOut, updateProfile } from "firebase/auth";
-import { auth, storage } from '../../firebase';
+import { auth, storage, db } from '../../config/firebase';
 import Notifications from '../notifications/Notifications';
 import event from '../.././ressources/img/notificationBtn.png';
 import { updateNotifications } from '../../service/NotificationsService';
 import { AuthContext } from '../../context/AuthContext';
 import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
 import SideBarData from './SideBarData';
 import IconButton from '@mui/material/IconButton';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
