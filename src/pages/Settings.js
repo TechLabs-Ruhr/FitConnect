@@ -7,6 +7,7 @@ import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import './settings.scss';
 import { updateProfile } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { updatePassword } from "firebase/auth";
 
 
@@ -143,7 +144,13 @@ const Settings = () => {
           <button type="submit">Änderungen speichern</button>
         </form>
         </div>
-        <button className="signout" onClick={() => signOut(auth)}>Ausloggen</button>
+        <button className="signout" onClick={async () => {
+        if (auth.currentUser) {
+          await signOut(auth);
+        } else {
+          console.error("Benutzer ist nicht angemeldet.");
+        }
+      }}>Ausloggen</button>
 
         </div>
       
