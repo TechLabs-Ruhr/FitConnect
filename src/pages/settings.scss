@@ -52,6 +52,7 @@
     text-align: center;
     padding-top: 25px;
     font-weight: bold;
+    
 
     
   }
@@ -67,6 +68,14 @@
   outline: none;
 }
 
+
+
+
+/* Hintergrundfarbe, wenn der Toggle aktiv ist */
+.toggle.active {
+  background-color: lightblue;
+}
+
 .profile-form button {
   width: 95%;
   padding: 10px;
@@ -78,6 +87,8 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
+
 
 .profile-form button:hover {
   background-color: #0056b3;
@@ -91,15 +102,20 @@
 .signout{
         z-index: 5;
         margin: 20px auto 20px auto; /* Horizontal zentrieren */
-        background-color: rgb(206, 206, 206);
-        padding: 20px;
+        background-color: rgb(255, 0, 0);
+        font-weight: bold;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
         height: 50px;
         display: block;
         border-radius: 15px;
-        color: #000000;
+        color: #ffffff;
         font-size: 18px;
         cursor: pointer;
     
 }
+
+
   
   

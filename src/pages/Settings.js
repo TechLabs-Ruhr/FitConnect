@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SideBar from "../components/sideBar/SideBar";
 import React, { useState, useEffect, useContext } from 'react';
 import userPhoto from '../ressources/img/user.png'
@@ -6,7 +6,13 @@ import { AuthContext } from '../context/AuthContext';
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
 import './settings.scss';
-import { updateProfile } from "firebase/auth";
+import { updateProfile, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { auth, storage } from '../firebase';
+import { updatePassword } from "firebase/auth";
+import 'firebase/auth';
+import 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 
@@ -17,24 +23,46 @@ import { updateProfile } from "firebase/auth";
 
 const Settings = () => {
     const [imageUrl, setImageUrl] = useState(userPhoto);
-    const { currentUser, auth } = useContext(AuthContext);
-  const [newDisplayName, setNewDisplayName] = useState(currentUser.displayName || '');
-  const [newEmail, setNewEmail] = useState(currentUser.email || '');
-  const [newPassword, setNewPassword] = useState('');
+    const { currentUser } = useContext(AuthContext);
+  const [DisplayName, setDisplayName] = useState(currentUser?.displayName || '');
+  const [Email, setEmail] = useState(currentUser?.email || '');
   const [err, setErr] = useState(false);
+  const [firstName, setFirstName] = useState(currentUser?.firstName || '');
+  const [lastName, setLastName] = useState(currentUser?.lastName || '');
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [passwordChangeError, setPasswordChangeError] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
+  const handleUpdatePassword = async () => {
+    try {
+      // Reauthentifiziere den Benutzer mit dem aktuellen Passwort
+      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
 
-  const handleDisplayNameChange = (e) => {
-    setNewDisplayName(e.target.value);
+      // Ändere das Passwort auf das neue Passwort
+      await updatePassword(user, newPassword);
+
+      // Erfolgsmeldung anzeigen und Passwort-Felder zurücksetzen
+      alert('Passwort erfolgreich geändert!');
+      setCurrentPassword('');
+      setNewPassword('');
+
+      // Optional: Hier kannst du den Benutzer ausloggen
+    } catch (error) {
+      console.error('Fehler beim Ändern des Passworts:', error);
+      setPasswordChangeError('Fehler beim Ändern des Passworts. Stellen Sie sicher, dass das aktuelle Passwort korrekt ist.');
+    }
   };
 
-  const handleEmailChange = (e) => {
-    setNewEmail(e.target.value);
-  };
+  
 
-  const handlePasswordChange = (e) => {
-    setNewPassword(e.target.value);
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,6 +86,7 @@ const Settings = () => {
         firstName,
         lastName
       });
+      
 
       
     } catch (err) {
@@ -65,6 +94,7 @@ const Settings = () => {
       setErr(true);
     }
   };
+  
 
 
     const handleImageChange = async (e) => {
@@ -79,10 +109,15 @@ const Settings = () => {
 
     useEffect(() => {
         if (currentUser && currentUser.uid) {
-            const docRef = doc(db, "userNotifications", currentUser.uid);
+            const docRef = doc(db, "users", currentUser.uid);
             const unsubscribe = onSnapshot(docRef, (docSnapshot) => {
                 if (docSnapshot.exists()) {
                     const data = docSnapshot.data();
+                    setFirstName(data.firstName || ''); // Updating firstName
+                    setLastName(data.lastName || ''); // Updating lastName
+                    setEmail(data.email || ''); // Updating lastName
+                    setDisplayName(data.displayName || ''); // Updating lastName
+
                 }
             });
 
@@ -90,7 +125,9 @@ const Settings = () => {
                 setImageUrl(currentUser.photoURL);
             }
 
-            return () => { };
+            return () => { 
+              unsubscribe();
+             };
         }
 
     }, [currentUser]);
@@ -98,11 +135,8 @@ const Settings = () => {
     return (
         
         <div className="settings">
-            <h2>Profil bearbeiten</h2>
 
-            <div className="sidebar">
             <SideBar />
-            </div>
             <div className="userphoto">
             <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
                         <label id="lable" htmlFor="file">
@@ -113,29 +147,34 @@ const Settings = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="firstName">firstName</label>
-            <input type="text" id="firstName" name="firstName" placeholder="Neuer Vorname" value={currentUser.firstName}/>
+            <input type="text" id="firstName" name="firstName" placeholder="Neuer Vorname" value={firstName} onChange={(e) => setFirstName(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="lastName">lastName</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Neuer Nachname" value={currentUser.lastName}/>
+            <input type="text" id="lastName" name="lastName" placeholder="Neuer Nachname" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="username">displayName</label>
-            <input type="text" placeholder="Neuer Benutzername" id="username" name="username" value={currentUser.displayName}/>
+            <input type="text" placeholder="Neuer Benutzername" id="username" name="username" value={DisplayName} onChange={(e) => setDisplayName(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="email">E-Mail</label>
-            <input type="email" id="email" name="email" placeholder="Neue Email" value={currentUser.email}/>
+            <input type="email" id="email" name="email" placeholder="Neue Email" value={Email} onChange={(e) => setEmail(e.target.value)}/>
           </div>
           <div className="form-group">
-            <label htmlFor="password">Passwort</label>
-            <input type="password" id="password" name="password" placeholder="Neues Passwort" />
+            <label htmlFor="currentPassword">Aktuelles Passwort</label>
+            <input type={showPassword ? 'text' : 'password'} id="currentPassword" name="currentPassword" placeholder="Aktuelles Passwort" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
+            <label htmlFor="newPassword">Neues Passwort</label>
+            <input type={showPassword ? 'text' : 'password'} id="password" name="password" placeholder="Neues Passwort" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
+            <button className="toggle" onClick={handleTogglePassword}>
+              {showPassword ? 'Hide' : 'Show'} Password
+            </button>
+            <button className="button-updatepassword" onClick={handleUpdatePassword}>Passwort ändern</button>
           </div>
           <button type="submit">Änderungen speichern</button>
         </form>
         </div>
-        <button className="signout" onClick={() => signOut(auth)}>Ausloggen</button>
-
+        <button className="signout"onClick={() => {signOut(auth); navigate("/");}}>Ausloggen</button>
         </div>
       
             
