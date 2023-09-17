@@ -120,7 +120,7 @@ const SideBar = () => {
                                 </li>
                             ))}
                         </ul>
-                        <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Log out</button>
+                        {/* <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Log out</button> */}
                     </div>
                 )}
             </div>
