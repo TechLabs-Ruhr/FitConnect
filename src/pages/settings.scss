@@ -68,6 +68,14 @@
   outline: none;
 }
 
+
+
+
+/* Hintergrundfarbe, wenn der Toggle aktiv ist */
+.toggle.active {
+  background-color: lightblue;
+}
+
 .profile-form button {
   width: 95%;
   padding: 10px;
@@ -79,6 +87,8 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
+
 
 .profile-form button:hover {
   background-color: #0056b3;
@@ -105,5 +115,7 @@
         cursor: pointer;
     
 }
+
+
   
   
