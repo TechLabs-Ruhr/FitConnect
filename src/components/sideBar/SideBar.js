@@ -95,7 +95,7 @@ const SideBar = () => {
                                 <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
                             </label>
                         </div>
-                        <p className="user-name">{currentUser.displayName}</p>
+                        <p className="user-name">{currentUser?.displayName}</p>
                         <div className="notifications">
                             <img className="notifications" src={event} onClick={onNotificationsClick} alt="notifications" />
                             {(newNotifications !== null && newNotifications > 0) && (

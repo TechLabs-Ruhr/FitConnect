@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SideBar from "../components/sideBar/SideBar";
 import React, { useState, useEffect, useContext } from 'react';
 import userPhoto from '../ressources/img/user.png'
@@ -8,7 +8,11 @@ import { db } from "../firebase";
 import './settings.scss';
 import { updateProfile } from "firebase/auth";
 import { signOut } from "firebase/auth";
+import { auth, storage } from '../firebase';
 import { updatePassword } from "firebase/auth";
+import 'firebase/auth';
+import 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 
@@ -19,13 +23,14 @@ import { updatePassword } from "firebase/auth";
 
 const Settings = () => {
     const [imageUrl, setImageUrl] = useState(userPhoto);
-    const { currentUser, auth } = useContext(AuthContext);
-  const [DisplayName, setDisplayName] = useState(currentUser.displayName || '');
-  const [Email, setEmail] = useState(currentUser.email || '');
+    const { currentUser } = useContext(AuthContext);
+  const [DisplayName, setDisplayName] = useState(currentUser?.displayName || '');
+  const [Email, setEmail] = useState(currentUser?.email || '');
   const [newPassword, setNewPassword] = useState('');
   const [err, setErr] = useState(false);
-  const [firstName, setFirstName] = useState(currentUser.firstName || '');
-  const [lastName, setLastName] = useState(currentUser.lastName || '');
+  const [firstName, setFirstName] = useState(currentUser?.firstName || '');
+  const [lastName, setLastName] = useState(currentUser?.lastName || '');
+  const navigate = useNavigate();
 
 
 
@@ -38,6 +43,20 @@ const Settings = () => {
   //     console.log("Passwort erfolgreich geändert!");
   //   } catch (error) {
   //     console.error("Fehler beim Ändern des Passworts:", error);
+  //   }
+  // };
+
+  // const handleSignout = async () => {
+  //   if (auth) {
+  //   try {
+  //     await signOut(auth); // Verwenden Sie die Firebase signOut-Funktion, um sich abzumelden.
+  //     navigate("/");
+  //     console.log('Erfolgreich abgemeldet'); // Optional: Zeigen Sie eine Erfolgsmeldung an oder leiten Sie den Benutzer weiter.
+  //   } catch (error) {
+  //     console.error('Fehler beim Abmelden', error);
+  //   }
+  // } else {
+  //   console.error('Auth object is undefinded');
   //   }
   // };
   
@@ -144,14 +163,7 @@ const Settings = () => {
           <button type="submit">Änderungen speichern</button>
         </form>
         </div>
-        <button className="signout" onClick={async () => {
-        if (auth.currentUser) {
-          await signOut(auth);
-        } else {
-          console.error("Benutzer ist nicht angemeldet.");
-        }
-      }}>Ausloggen</button>
-
+        <button className="signout"onClick={() => {signOut(auth); navigate("/");}}>Ausloggen</button>
         </div>
       
             
