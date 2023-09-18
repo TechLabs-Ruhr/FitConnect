@@ -4,11 +4,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import userPhoto from '../ressources/img/user.png'
 import { AuthContext } from '../context/AuthContext';
 import { doc, onSnapshot, setDoc } from "firebase/firestore";
-import { db } from "../config/firebase";
 import './settings.scss';
 import { updateProfile, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { signOut } from "firebase/auth";
-import { auth, storage } from '../firebase';
+import { auth, storage, db } from '../config/firebase';
 import { updatePassword } from "firebase/auth";
 import 'firebase/auth';
 import 'firebase/storage';
