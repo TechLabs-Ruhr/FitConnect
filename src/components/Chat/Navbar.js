@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../context/AuthContext'
 
 export const Navbar = () => {
+  const {currentUser} = useContext(AuthContext)
+
+
+
   return (
     <div className='navbar'>
         <span className="logo">FitConnect</span>
         <div className="user">
-           <img src="https://img.welt.de/img/sport/fitness/mobile246350898/8501626877-ci23x11-w1136/Athletic-man-doing-pushups-exercise-at-gym.jpg" alt="" />
-           <span>John</span>
+           <img src={currentUser.photoURL} alt="" />
+           <span>{currentUser.displayName}</span>
         </div>
     </div>
   )
