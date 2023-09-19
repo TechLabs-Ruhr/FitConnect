@@ -34,6 +34,8 @@ const Register = () => {
           newNotifications: 0
         }
       });
+      await setDoc(doc(db, "userChats", res.user.uid), {});
+
 
       navigate("/");
     } catch (err) {
