@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import Settings from './pages/Settings';
-import Chat from './pages/Chat';
+import ChatPage from './pages/ChatPage';
 import Groups from './pages/Groups';
 import './styles/style.scss';
 import 'normalize.css';
@@ -31,7 +31,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="chat" element={<Chat />} />
+          <Route path="chat" element={<ChatPage />} />
           <Route path="groups" element={<Groups />} />
 
 
