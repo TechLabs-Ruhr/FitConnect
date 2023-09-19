@@ -51,7 +51,7 @@ label {
     width: 70%;
 }
 
-#activityType{
+#activityType {
     width: 77%;
 }
 
@@ -109,4 +109,33 @@ label {
     color: red;
     font-size: 12px;
     margin-bottom: 5px;
+}
+
+@media(max-width:590px) {
+    .map-form {
+        width: 300px;
+    }
+
+    .form-activity{
+        margin-bottom: 0;
+    }
+
+    .form-date,
+    .form-people,
+    .form-activity {
+        width: 280px;
+        flex-direction: column;
+        
+        & > :first-child{
+            margin-bottom: 5px;
+        }
+    }
+
+    .addTrainingBtn{
+        width: 280px;
+    }
+
+    #description{
+        width: 260px;
+    }
 }

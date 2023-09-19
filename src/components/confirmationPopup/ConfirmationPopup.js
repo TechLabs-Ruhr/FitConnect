@@ -10,7 +10,7 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
     const timer = setTimeout(() => {
       setIsVisible(false);
       setShowPopup(false);
-    }, 1500);
+    }, 200000);
 
     return () => clearTimeout(timer);
   }, [isVisible]);

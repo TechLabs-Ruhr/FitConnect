@@ -1,4 +1,4 @@
-@import '../../../../../styles/variables.scss'; 
+@import '../../../../../styles/variables.scss';
 
 .gm-style .gm-style-iw-c {
     z-index: 10;
@@ -11,7 +11,7 @@
     background-color: $main-color;
 }
 
-.gm-style-iw-d{
+.gm-style-iw-d {
     overflow: hidden !important;
 }
 
@@ -97,11 +97,73 @@
         padding: 10px;
     }
 
-    .info-time{
+    .info-time {
         margin-top: 0;
     }
 
-    .info-progress{
+    .info-progress {
         display: none;
+    }
+}
+
+@media(max-width:450px) {
+    .marker-info {
+        width: 150px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info {
+        flex-direction: column;
+
+        &__block-right,
+        &__block-left {
+            width: 100%;
+        }
+
+        &__block-right {
+            margin-top: 5px;
+        }
+    }
+
+    .gm-style-iw.gm-style-iw-c .map-form {
+        width: 170px;
+    
+        .form-date,
+        .form-people,
+        .form-activity {
+            width: 150px;
+
+            label {
+                font-size: 12px;
+            }
+        }
+    
+        .addTrainingBtn{
+            width: 150px;
+        }
+    
+        #description{
+            width: 130px;
+        }
+    }
+
+    .gm-style-iw.gm-style-iw-c .confirmation-modal {
+        width: 170px;
+        padding: 10px;
+        
+        p{
+            width: 150px;
+            text-align: center;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+
+        .confirmation-modal__button{
+            font-size: 12px;
+            padding: 5px 10px;
+        }
     }
 }
