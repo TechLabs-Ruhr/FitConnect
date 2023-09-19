@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+@import '../../styles/fonts.scss'; 
 
 .locate {
     position: absolute;
@@ -30,9 +31,8 @@
     border: none;
     z-index: 5;
     position: fixed;
-    font-weight: bold;
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Signika Negative', sans-serif;
 }
 
 .btn-add {

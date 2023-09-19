@@ -1,4 +1,10 @@
 @import '../../../../../styles/variables.scss';
+@import '../../../../../styles/fonts.scss';
+
+.gm-style {
+    font-family: "Signika Negative", sans-serif;
+    font-weight: 500;
+}
 
 .gm-style .gm-style-iw-c {
     z-index: 10;
@@ -130,7 +136,7 @@
 
     .gm-style-iw.gm-style-iw-c .map-form {
         width: 170px;
-    
+
         .form-date,
         .form-people,
         .form-activity {
@@ -140,12 +146,12 @@
                 font-size: 12px;
             }
         }
-    
-        .addTrainingBtn{
+
+        .addTrainingBtn {
             width: 150px;
         }
-    
-        #description{
+
+        #description {
             width: 130px;
         }
     }
@@ -153,15 +159,15 @@
     .gm-style-iw.gm-style-iw-c .confirmation-modal {
         width: 170px;
         padding: 10px;
-        
-        p{
+
+        p {
             width: 150px;
             text-align: center;
             font-size: 12px;
             margin: 10px 0;
         }
 
-        .confirmation-modal__button{
+        .confirmation-modal__button {
             font-size: 12px;
             padding: 5px 10px;
         }

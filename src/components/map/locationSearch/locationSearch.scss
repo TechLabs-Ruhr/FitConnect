@@ -25,14 +25,10 @@
     background-color: $white;
     color: $main-color; 
     font-size: 16px;
-    font-family: Roboto sans-serif;
-    font-weight: bold;
 
     &::placeholder{
         font-size: 16px;
-        font-weight: bold;
         color: $gray;
-        font-family: Roboto sans-serif;
     }
 }
 
