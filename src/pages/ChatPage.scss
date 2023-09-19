@@ -82,8 +82,38 @@
                     border-radius: 50%;
                     object-fit: cover;
                 }
+
+                .userChatInfo {
+                    span{font-size: 18px; font-weight: 500;}
+                    p{font-size: 14px; color: rgb(167, 131, 131)}
+                }
             }
         }
-        .chat-chat{flex: 2;}
+        .chat-chat{
+            flex: 2;
+
+            .chatInfo {
+                display: flex;
+                height: 50px;
+                background-color: brown;
+                align-items: center;
+                padding: 10px;
+                color: lightcyan
+            }
+
+            .messages{
+                background-color: aqua;
+                padding: 10px;
+                height: calc(100% - 160px);
+            }
+
+            .input{
+                background-color: white;
+                height: 50px;
+                padding: 10px;
+            }
+
+            
+        }
     }
 }
