@@ -90,7 +90,7 @@ const SideBar = () => {
                     <div className='sidebar-content'>
                         <div className="sidebar-userImg">
                             <label id="lable" htmlFor="file">
-                                <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
+                                <img src={currentUser?.photoURL} alt="userPhoto" type="file" className="user-photo" />
                             </label>
                         </div>
                         <p className="user-name">{currentUser?.displayName}</p>
