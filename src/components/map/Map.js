@@ -32,7 +32,7 @@ const Map = () => {
     useEffect(() => {
         getGeoLocation();
     }, []);
-    useEffect(() => {
+    useEffect(() => {console.log('1')
         if (userLocation) {
             setMapReady(true);
         }
