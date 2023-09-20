@@ -28,13 +28,15 @@
     }
 
     .user-photo {
-        cursor: pointer;
         width: 70px;
         height: 70px;
         text-align: center;
         border-radius: 100%;
         margin: 0 auto;
         display: block;
+        object-fit: cover;
+
+
     }
 
     .user-name {
