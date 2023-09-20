@@ -11,7 +11,7 @@ export const ChatSearch = () => {
 
   const handleSearch = async () => {
     const q = query(collection(db, "users"),
-    where("displayName", "users", username)
+    where("displayName", "==", username)
     );
 
     try{
@@ -21,10 +21,10 @@ export const ChatSearch = () => {
     setUser(doc.data())
 });
     }catch(err){
-      setErr(true)
+      setErr(true);
     }
   };
-  const handleKey = e=>{
+  const handleKey = (e) =>{
     e.code === "Enter" && handleSearch();
   };
   return (
