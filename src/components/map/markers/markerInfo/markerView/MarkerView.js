@@ -74,7 +74,7 @@ const MarkerView = ({ selected }) => {
                             strokeWidth={50}
                             styles={buildStyles({
                                 strokeLinecap: "butt",
-                                pathColor: "orange",
+                                pathColor: "rgb(247, 149, 58)",
                                 trailColor: "grey",
                             })}
                         />

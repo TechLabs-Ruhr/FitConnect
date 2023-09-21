@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './sidebar.scss';
-import { signOut, updateProfile } from "firebase/auth";
+import { updateProfile } from "firebase/auth";
 import { auth, storage, db } from '../../config/firebase';
 import Notifications from '../notifications/Notifications';
 import event from '../.././ressources/img/notificationBtn.png';
@@ -13,7 +13,6 @@ import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
 import { ref } from "firebase/storage";
 import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import userPhoto from '../../ressources/img/user.png';
-import { CSSTransition } from 'react-transition-group';
 
 
 const SideBar = () => {
@@ -22,6 +21,7 @@ const SideBar = () => {
     const { currentUser } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [imageUrl, setImageUrl] = useState(userPhoto);
+    const [notificationsAnimation, setNotificationsAnimation] = useState(false); 
 
     const handleImageChange = async (e) => {
         if (e.target.files[0]) {
@@ -56,12 +56,15 @@ const SideBar = () => {
 
     }, [currentUser]);
 
-    const onClose = () => {
-        setShowNotifications(false);
-    }
-
     const onNotificationsClick = () => {
-        setShowNotifications(!showNotifications);
+        if(showNotifications){
+            setNotificationsAnimation(false); 
+            setTimeout(() => {
+                setShowNotifications(false); 
+            }, 500)
+        } else {
+            setShowNotifications(true);
+        }
         if (!showNotifications) {
             updateNotifications(0, currentUser.uid);
         }
@@ -69,15 +72,12 @@ const SideBar = () => {
 
     return (
         <>
-            <CSSTransition
-                in={showNotifications}
-                timeout={500}
-                classNames="list-transition"
-                unmountOnExit
-                appear
-            >
-                <Notifications onClose={onClose} />
-            </CSSTransition>
+            {showNotifications &&
+                <Notifications
+                    setShowNotifications={setShowNotifications}
+                    notificationsAnimation={notificationsAnimation}
+                    setNotificationsAnimation={setNotificationsAnimation}
+                />}
 
             <div className={`sidebar ${isSidebarOpen ? '' : 'closed'}`}>
                 <IconButton
@@ -119,7 +119,6 @@ const SideBar = () => {
                                 </li>
                             ))}
                         </ul>
-                        {/* <button className="btn btn-red log-out" onClick={() => signOut(auth)}>Log out</button> */}
                     </div>
                 )}
             </div>

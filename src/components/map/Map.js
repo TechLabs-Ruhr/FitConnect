@@ -86,6 +86,7 @@ const Map = () => {
                         scaledSize: new window.google.maps.Size(30, 30)
                     }}
                 />}
+
                 <LocationSearch panTo={panTo} />
                 <button className={`btn btn-add ${plusBtn ? 'btn-active' : ''}`} onClick={() => setPlusBtn(!plusBtn)}>Add Training</button>
                 <button className={`btn btn-add-media ${plusBtn ? 'btn-active' : ''}`} onClick={() => setPlusBtn(!plusBtn)}>+</button>
