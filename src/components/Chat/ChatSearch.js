@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { collection, query, where, getDocs, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, setDoc, serverTimestamp, updateDoc, doc } from "firebase/firestore";
 import {db} from "../../config/firebase"
 import { AuthContext } from '../../context/AuthContext';
 
 export const ChatSearch = () => {
-  const [username, setUsername] = useState("")
-  const [user, setUser] = useState(null)
-  const [err, setErr] = useState(false)
+  const [username, setUsername] = useState("");
+  const [user, setUser] = useState(null);
+  const [err, setErr] = useState(false);
 
-  const {currentUser} = useContext(AuthContext)
+  const {currentUser} = useContext(AuthContext);
   
 
 
@@ -32,6 +32,7 @@ export const ChatSearch = () => {
   };
 
   const handleSelect = async () => {
+    
     // check wether the group(chats in firestore) exists, if not create
     const combinedId = 
       currentUser.uid > user.uid 
@@ -43,31 +44,35 @@ export const ChatSearch = () => {
        
 
     if(!res.exists()){
+      console.log("1");
         //create a chat in chats collection
         await setDoc(doc(db,"chats",combinedId),{messages: [] });
 
         //create user chats
         await updateDoc(doc(db, "userChats", currentUser.uid),{
-          [combinedId+".userInfo"]: {
-            uid:user.uid,
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
             displayName: user.displayName,
-            photoURL: user.photoURL
+            photoURL: user.photoURL,
           },
-          [combinedId+".date"]: serverTimestamp()
+          [combinedId+".date"]: serverTimestamp(),
         });
 
 
-        await updateDoc(doc(db, "userChats", user.uid),{
-          [combinedId+".userInfo"]: {
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
             uid:currentUser.uid,
             displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL
+            photoURL: currentUser.photoURL,
           },
-          [combinedId+".date"]: serverTimestamp()
+          [combinedId + ".date"]: serverTimestamp(),
         });
     }
   }catch (err) {}
     // create user chats
+
+    setUser(null);
+    setUsername("")
 
   };
   return (
