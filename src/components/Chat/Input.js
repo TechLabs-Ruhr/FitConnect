@@ -1,10 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { ChatContext } from '../../context/ChatContext';
 import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+import { db, storage } from '../../config/firebase';
 import { v4 as uuid } from 'uuid';
 import { updateCurrentUser } from 'firebase/auth';
 import { AuthContext } from '../../context/AuthContext';
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+
 
 
 export const Input = () => {
