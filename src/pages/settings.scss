@@ -9,6 +9,10 @@
   .centered-image-container {
     text-align: center; /* Zentriere den Inhalt horizontal */
   }
+
+  .userphoto label{
+    cursor: pointer;
+  }
   
   .user-photo-settings {
     max-width: 200px; /* Maximalbreite des Bildes */
@@ -46,6 +50,7 @@
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
+    color: #ffffff;
   }
 
   h2{

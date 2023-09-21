@@ -3,7 +3,7 @@ import SideBar from "../components/sideBar/SideBar";
 import React, { useState, useEffect, useContext } from 'react';
 import userPhoto from '../ressources/img/user.png'
 import { AuthContext } from '../context/AuthContext';
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 import './settings.scss';
 import { updateProfile, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { signOut } from "firebase/auth";
@@ -96,15 +96,33 @@ const Settings = () => {
   
 
 
-    const handleImageChange = async (e) => {
-        if (e.target.files[0]) {
-            const storageRef = ref(storage, `avatars/${currentUser.uid}`);
-            const uploadTask = await uploadBytesResumable(storageRef, e.target.files[0]);
-            const downloadURL = await getDownloadURL(uploadTask.ref);
-            await updateProfile(auth.currentUser, { photoURL: downloadURL });
-            setImageUrl(downloadURL);
-        }
+  const handleImageChange = async (e) => {
+    console.log('10')
+    if (e.target.files[0]) {
+      
+        const storageRef = ref(storage, `avatars/${currentUser.uid}`);
+        const uploadTask = await uploadBytesResumable(storageRef, e.target.files[0]);
+        const downloadURL = await getDownloadURL(uploadTask.ref);
+
+        console.log('1')
+        
+        // Aktualisieren Sie die Firestore-Daten des Benutzers, einschließlich 'photoURL'
+        const userDocRef = doc(db, "users", currentUser.uid);
+        await updateDoc(userDocRef, {
+          photoURL: downloadURL
+
+        });
+        console.log('2')
+  
+        // Aktualisieren Sie das Benutzerprofil in Firebase Authentication
+        await updateProfile(auth.currentUser, { photoURL: downloadURL });
+  
+        // Aktualisieren Sie das Bild-URL im State oder wo auch immer Sie es verwenden
+        setImageUrl(downloadURL);
+     
     }
+  };
+  
 
     useEffect(() => {
         if (currentUser && currentUser.uid) {
@@ -137,8 +155,8 @@ const Settings = () => {
 
             <SideBar />
             <div className="userphoto">
-            <input style={{ display: "none" }} type="file" id="file" onChange={handleImageChange} />
-                        <label id="lable" htmlFor="file">
+            <input style={{ display: "none" }} type="file" id="cs" onChange={(e) => handleImageChange(e)} />
+                        <label id="cs" htmlFor="cs">
                             <img src={imageUrl} alt="userPhoto" type="file" className="user-photo-settings" />
                         </label>
             </div>
