@@ -37,9 +37,10 @@ export const ChatSearch = () => {
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
-    try {
+    
       const res = await getDoc(doc(db, "chats", combinedId));
 
+      console.log(res.exists());
       if (!res.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
@@ -63,7 +64,6 @@ export const ChatSearch = () => {
           [combinedId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (err) {}
 
     setUser(null);
     setUsername("")
