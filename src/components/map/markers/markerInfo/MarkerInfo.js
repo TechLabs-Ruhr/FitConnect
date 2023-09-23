@@ -5,8 +5,6 @@ import OptionWindow from './optionWindow/OptionWindow';
 import ConfirmationModal from './confirmationModal/ConfirmationModal';
 import MarkerView from './markerView/MarkerView';
 import { AuthContext } from "../../../../context/AuthContext";
-import { CSSTransition } from 'react-transition-group';
-
 
 const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     const [showInfoWindow, setShowInfoWindow] = useState(false);
@@ -29,49 +27,48 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     }
 
     return (
-        <CSSTransition in={showInfoWindow} timeout={500} classNames="list-transition" appear unmountOnExit>
-            <InfoWindow
-                position={{ lat, lng }}
-                onCloseClick={() => { setSelected(null) }}>
-                <>
-                    {currentUser.uid !== selected.owner.id ? (
-                        <MarkerView selected={selected} />
-                    ) : (
-                        <>
-                            {view === 'options' && (
-                                <OptionWindow
-                                    onViewBtnClick={onViewBtnClick}
-                                    setView={setView}
-                                    setSelected={setSelected}
-                                />
-                            )}
+        showInfoWindow &&
+        <InfoWindow
+            position={{ lat, lng }}
+            onCloseClick={() => { setSelected(null) }}>
+            <>
+                {currentUser.uid !== selected.owner.id ? (
+                    <MarkerView selected={selected} />
+                ) : (
+                    <>
+                        {view === 'options' && (
+                            <OptionWindow
+                                onViewBtnClick={onViewBtnClick}
+                                setView={setView}
+                                setSelected={setSelected}
+                            />
+                        )}
 
-                            {view === 'view-only' && (
-                                <MarkerView selected={selected} />
-                            )}
+                        {view === 'view-only' && (
+                            <MarkerView selected={selected} />
+                        )}
 
-                            {view === 'delete confirmation' && (
-                                <ConfirmationModal
-                                    onDeleteBtnClick={deleteMarker}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                    setView={setView}
-                                    type={'delete'}
-                                />
-                            )}
+                        {view === 'delete confirmation' && (
+                            <ConfirmationModal
+                                onDeleteBtnClick={deleteMarker}
+                                selected={selected}
+                                setSelected={setSelected}
+                                setView={setView}
+                                type={'delete'}
+                            />
+                        )}
 
-                            {view === 'edit-form' && (
-                                <MapForm
-                                    onSubmit={updateMarker}
-                                    selected={selected}
-                                    setSelected={setSelected}
-                                />
-                            )}
-                        </>
-                    )}
-                </>
-            </InfoWindow>
-        </CSSTransition>
+                        {view === 'edit-form' && (
+                            <MapForm
+                                onSubmit={updateMarker}
+                                selected={selected}
+                                setSelected={setSelected}
+                            />
+                        )}
+                    </>
+                )}
+            </>
+        </InfoWindow>
     );
 }
 

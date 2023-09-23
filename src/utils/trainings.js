@@ -59,8 +59,8 @@ export const trainings = [
 export const getSize = (participants) => {
     if (participants === 1){
         return 34; 
-    } else if (participants > 5) {
-        return 50; 
-    } else return 34 + participants * 2;  
+    } else if (participants > 7) {
+        return 55; 
+    } else return 34 + participants * 3;  
 }
 

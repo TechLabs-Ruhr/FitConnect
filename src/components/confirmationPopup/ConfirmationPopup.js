@@ -9,11 +9,14 @@ const ConfirmationPopup = ({ id, setShowPopup }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setShowPopup(false);
-    }, 1500);
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 500);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [isVisible]);
+
 
   const popups = [
     {

@@ -29,3 +29,19 @@
     opacity: 0;
     pointer-events: none;
 }
+
+@media(max-width:450px) {
+    .popup{
+        width: 250px;
+        padding: 5px 10px;
+
+        p{
+            font-size: 12px;
+        }
+
+        &-img{
+            height: 30px;
+            width: 30px;
+        }
+    }
+}

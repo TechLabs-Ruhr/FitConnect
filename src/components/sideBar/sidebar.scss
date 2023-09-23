@@ -2,11 +2,10 @@
 
 .sidebar {
     position: fixed;
-    z-index: 3;
+    z-index: 30;
     background-color:  $white;
     width: 15%;
     height: 100vh;
-    font-weight: bold;
     transition: left 0.5s ease;
     left: 0;
     padding-top: 50px;
@@ -41,7 +40,6 @@
 
     .user-name {
         font-size: 20px;
-        font-weight: bold;
         margin-top: 10px;
         margin-bottom: 60px;
         text-align: center;
@@ -176,16 +174,18 @@
 }
 
 @media(max-width:768px) {
-    .sidebar .btn-red {
-        padding: 5px 10px;
-        font-size: 14px;
-    }
+    .sidebar {
+        .btn-red {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
 
-    .sidebar .new_notifications {
-        width: 14px;
-        height: 14px;
-        font-size: 12px;
-        top: 40px;
+        .new_notifications {
+            width: 14px;
+            height: 14px;
+            font-size: 12px;
+            top: 40px;
+        }
     }
 }
 

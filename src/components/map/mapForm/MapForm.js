@@ -14,7 +14,6 @@ export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
     const validationSchema = yup.object().shape({
         trainingTime: yup.date()
             .min(new Date(), 'The time cannot be in the past')
-           // .max(oneWeekFromNow, 'The time cannot be more than a week from now')
             .required('Required field'),
         activityType: yup
             .string()
@@ -68,6 +67,9 @@ export const MapForm = ({ onSubmit, onClose, selected, setSelected }) => {
             ...provided,
             color: state.isSelected ? 'white' : provided.color,
             backgroundColor: state.isFocused ? 'orange' : provided.backgroundColor,
+            backgroundColor: state.isSelected ? 'gray' : (state.isFocused ? 'orange' : provided.backgroundColor),
+            fontSize: '16px',
+            fontWeight: '500'
         })
     };
 

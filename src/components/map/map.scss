@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+@import '../../styles/fonts.scss'; 
 
 .locate {
     position: absolute;
@@ -15,10 +16,10 @@
 }
 
 .spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
 }
 
 .btn-add,
@@ -30,9 +31,8 @@
     border: none;
     z-index: 5;
     position: fixed;
-    font-weight: bold;
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Signika Negative', sans-serif;
 }
 
 .btn-add {

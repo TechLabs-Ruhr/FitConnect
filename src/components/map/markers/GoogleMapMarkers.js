@@ -14,7 +14,8 @@ import {
   remove as removeMarkerFromDatabase,
   update as updateMarkerInTheDataBase
 } from '../../../service/MarkerService';
-import { CSSTransition } from 'react-transition-group';
+import { useTransition, animated} from 'react-spring';
+import {animation} from '../../../utils/utils'; 
 
 const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
   const [markers, setMarkers] = useState([]);
@@ -23,6 +24,7 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
   const { currentUser } = useContext(AuthContext);
   const [tempMarker, setTempMarker] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const formTransition = useTransition(showForm, animation);
 
   useEffect(() => {
     const unsubscribe = loadMarkersFromDatabase((updatedMarkers) => {
@@ -128,11 +130,22 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
         />
       )}
 
-      <CSSTransition in={showForm} timeout={500} classNames="list-transition" appear unmountOnExit>
-        <MapForm onSubmit={onFormSubmit} onClose={() => setShowForm(false)} />
-      </CSSTransition>
+      {formTransition((style, item) =>
+        item &&
+        <animated.div style={style}>
+          <MapForm
+            onSubmit={onFormSubmit}
+            onClose={() => setShowForm(false)}
+            className='element'
+          />
+        </animated.div>
+      )}
 
-      {showPopup && <ConfirmationPopup id={showPopup} setShowPopup={setShowPopup} />}  
+      {showPopup &&
+        <ConfirmationPopup
+          id={showPopup}
+          setShowPopup={setShowPopup}
+        />}
     </>
   )
 }

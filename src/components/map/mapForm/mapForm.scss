@@ -10,8 +10,6 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 0;
-    font-family: Roboto;
-    font-weight: 500;
 }
 
 .new-training-form {
@@ -30,6 +28,16 @@
     border-radius: 5px;
     font-size: 16px;
     background-color: $white;
+}
+
+.css-13cymwt-control, .css-t3ipsp-control {
+    font-size: 16px;
+    font-weight: 500;
+
+    .css-qbdosj-Input input::after {
+        font-size: 16px;
+        font-weight: 500;
+    }
 }
 
 .form-date,
@@ -51,7 +59,7 @@ label {
     width: 70%;
 }
 
-#activityType{
+#activityType {
     width: 77%;
 }
 
@@ -109,4 +117,33 @@ label {
     color: red;
     font-size: 12px;
     margin-bottom: 5px;
+}
+
+@media(max-width:590px) {
+    .map-form {
+        width: 300px;
+    }
+
+    .form-activity {
+        margin-bottom: 0;
+    }
+
+    .form-date,
+    .form-people,
+    .form-activity {
+        width: 280px;
+        flex-direction: column;
+
+        &> :first-child {
+            margin-bottom: 5px;
+        }
+    }
+
+    .addTrainingBtn {
+        width: 280px;
+    }
+
+    #description {
+        width: 260px;
+    }
 }
