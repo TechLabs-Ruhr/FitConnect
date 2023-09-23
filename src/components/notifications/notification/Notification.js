@@ -1,6 +1,9 @@
 import { formatRelative } from "date-fns";
 import './notification.scss';
-import requestImg from '../../../ressources/img/notification.png'
+import notificationImg from '../../../ressources/img/notification.png'; 
+import acceptNotificationImg from '../../../ressources/img/acceptNotification.png'; 
+import declineNotificationImg from '../../../ressources/img/declineNotification.png'; 
+
 import React, { useState } from 'react';
 import { Timestamp } from "firebase/firestore";
 import { updateNotifications } from "../../../service/NotificationsService";
@@ -35,7 +38,7 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
 
     return (
         <div className='request'>
-            <img src={requestImg} alt="" className="request-img" />
+            <img src={getImg(requestStatus)} alt={requestStatus} className="request-img" />
             <div className="request-info">
                 {requestStatus === 'active' && (
                     <>
@@ -73,3 +76,13 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
 }
 
 export default Notification; 
+
+const getImg = (requestStatus) => {
+    if(requestStatus === 'confirmed'){
+        return acceptNotificationImg; 
+    } else if(requestStatus === 'rejected'){
+        return declineNotificationImg; 
+    } else {
+        return notificationImg; 
+    }  
+}

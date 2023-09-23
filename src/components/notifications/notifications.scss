@@ -2,7 +2,7 @@
 
 .requests {
     position: fixed;
-    z-index: 2;
+    z-index: 15;
     left: 15%;
     top: 0;
     background: $main-color;
@@ -25,6 +25,7 @@
     .requests {
         left: 0;
         width: 92vw;
+        padding: 10px;
     }
 
     .notifications-close {
