@@ -14,8 +14,8 @@
 
 .notifications-close {
     position: absolute;
-    top: 5px;
-    right: 20px;
+    top: 0px;
+    right: 5px;
     color: $white;
     font-size: 24px;
     cursor: pointer;
@@ -26,12 +26,6 @@
         left: 0;
         width: 92vw;
         padding: 10px;
-    }
-
-    .notifications-close {
-        position: absolute;
-        top: 0;
-        right: 20px;
     }
 }
 
