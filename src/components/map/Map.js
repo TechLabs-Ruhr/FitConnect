@@ -30,11 +30,12 @@ const Map = () => {
         mapRef.current.panTo({ lat, lng });
         mapRef.current.setZoom(14);
     }, [])
+
     useEffect(() => {
         getGeoLocation();
     }, []);
+    
     useEffect(() => {
-        console.log('1')
         if (userLocation) {
             setMapReady(true);
         }

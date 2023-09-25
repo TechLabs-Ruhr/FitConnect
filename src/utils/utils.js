@@ -18,4 +18,4 @@ export const animation = {
     enter: { opacity: 1 },
     leave: { opacity: 0 },
     config: config.stiff
-  }; 
+};
