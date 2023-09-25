@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth } from "../../config/firebase";
 import './authentication.scss';
-import logo from '../ressources/img/logo.png'
-import mediaLogo from '../ressources/img/logo768.png'
+import logo from '../../ressources/img/logo.png'
+import mediaLogo from '../../ressources/img/logo768.png'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 
