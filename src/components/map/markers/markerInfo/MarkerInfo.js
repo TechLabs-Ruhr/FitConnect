@@ -12,7 +12,6 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     const { currentUser } = useContext(AuthContext);
     const { lat, lng } = selected;
 
-
     useEffect(() => {
         if (selected !== null) {
             setView('options')
@@ -29,7 +28,7 @@ const MarkerInfo = ({ selected, setSelected, deleteMarker, updateMarker }) => {
     return (
         showInfoWindow &&
         <InfoWindow
-            position={{ lat, lng }}
+            position={{ lat, lng}}
             onCloseClick={() => { setSelected(null) }}>
             <>
                 {currentUser.uid !== selected.owner.id ? (

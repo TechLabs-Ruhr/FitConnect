@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import './sidebar.scss';
-import { updateProfile } from "firebase/auth";
-import { auth, storage, db } from '../../config/firebase';
 import Notifications from '../notifications/Notifications';
 import event from '../.././ressources/img/notificationBtn.png';
 import { updateNotifications } from '../../service/NotificationsService';
@@ -10,9 +8,8 @@ import { doc, onSnapshot } from "firebase/firestore";
 import SideBarData from './SideBarData';
 import IconButton from '@mui/material/IconButton';
 import ViewSidebarIcon from '@mui/icons-material/ViewSidebar';
-import { ref } from "firebase/storage";
-import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import userPhoto from '../../ressources/img/user.png';
+import { db } from "../../config/firebase";
 
 
 const SideBar = () => {
@@ -21,17 +18,7 @@ const SideBar = () => {
     const { currentUser } = useContext(AuthContext);
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [imageUrl, setImageUrl] = useState(userPhoto);
-    const [notificationsAnimation, setNotificationsAnimation] = useState(false); 
-
-    const handleImageChange = async (e) => {
-        if (e.target.files[0]) {
-            const storageRef = ref(storage, `avatars/${currentUser.uid}`);
-            const uploadTask = await uploadBytesResumable(storageRef, e.target.files[0]);
-            const downloadURL = await getDownloadURL(uploadTask.ref);
-            await updateProfile(auth.currentUser, { photoURL: downloadURL });
-            setImageUrl(downloadURL);
-        }
-    }
+    const [notificationsAnimation, setNotificationsAnimation] = useState(false);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -57,10 +44,10 @@ const SideBar = () => {
     }, [currentUser]);
 
     const onNotificationsClick = () => {
-        if(showNotifications){
-            setNotificationsAnimation(false); 
+        if (showNotifications) {
+            setNotificationsAnimation(false);
             setTimeout(() => {
-                setShowNotifications(false); 
+                setShowNotifications(false);
             }, 500)
         } else {
             setShowNotifications(true);
@@ -90,7 +77,7 @@ const SideBar = () => {
                     <div className='sidebar-content'>
                         <div className="sidebar-userImg">
                             <label id="lable" htmlFor="file">
-                                <img src={currentUser?.photoURL} alt="userPhoto" type="file" className="user-photo" />
+                                <img src={currentUser.photoURL ? currentUser.photoURL : imageUrl} alt="userPhoto" type="file" className="user-photo" />
                             </label>
                         </div>
                         <p className="user-name">{currentUser?.displayName}</p>

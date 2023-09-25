@@ -30,10 +30,12 @@ const Map = () => {
         mapRef.current.panTo({ lat, lng });
         mapRef.current.setZoom(14);
     }, [])
+
     useEffect(() => {
         getGeoLocation();
     }, []);
-    useEffect(() => {console.log('1')
+    
+    useEffect(() => {
         if (userLocation) {
             setMapReady(true);
         }
@@ -61,7 +63,12 @@ const Map = () => {
         }
     }
 
-    if (loadError) return "Error loading maps";   // TODO: error
+    const dynamicOptions = {
+        ...options,
+        draggableCursor: plusBtn ? 'pointer' : 'grab'
+    };
+
+    if (loadError) return "Error loading maps";
     if (!isLoaded || isLoading)
         return (<div className="spinner-container">
             <Spinner />
@@ -73,7 +80,7 @@ const Map = () => {
                 mapContainerStyle={mapContainerStyle}
                 zoom={14}
                 center={center}
-                options={options}
+                options={dynamicOptions}
                 onClick={(event) => { setMapClick(event) }}
                 onLoad={onMapLoad}
             >

@@ -1,8 +1,8 @@
 import React from 'react'
-import Map from "../components/map/Map";
-import SideBar from "../components/sideBar/SideBar";
-import Spinner from '../components/spinner/Spinner';
-import { AuthContext } from "../context/AuthContext";
+import Map from "../../components/map/Map";
+import SideBar from "../../components/sideBar/SideBar";
+import Spinner from '../../components/spinner/Spinner';
+import { AuthContext } from "../../context/AuthContext";
 import { useContext } from 'react';
 
 const Search = () => {

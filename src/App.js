@@ -1,12 +1,12 @@
-import Register from './pages/Register';
-import Login from './pages/Login'
-import Search from './pages/Search'
+import Register from './pages/login&register/Register';
+import Login from './pages/login&register/Login'
+import Search from './pages/search/Search'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 import Settings from './pages/Settings';
 import ChatPage from './pages/ChatPage';
-import Groups from './pages/Groups';
+import Groups from './pages/groups/Groups';
 import './styles/style.scss';
 import 'normalize.css';
 

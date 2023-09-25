@@ -110,7 +110,7 @@ const GoogleMapMarkers = ({ mapClick, plusBtn, setPlusBtn }) => {
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
               url: iconUrl,
-              scaledSize: new window.google.maps.Size(getSize(marker.people.length), getSize(marker.people.length)),
+              scaledSize: new window.google.maps.Size(34, 34),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15)
             }}
