@@ -16,7 +16,7 @@
     "react-router-dom": "^6.14.2",
     "react-scripts": "^5.0.1",
     "react-select": "^5.7.4",
-    "react-spring": "^9.7.2",
+    "react-spring": "^9.7.3",
     "sass": "^1.64.2",
     "use-places-autocomplete": "^4.0.0",
     "uuid": "^9.0.1",
