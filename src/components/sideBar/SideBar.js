@@ -34,9 +34,15 @@ const SideBar = () => {
                 }
             });
 
-            if (currentUser?.photoURL) {
-                setImageUrl(currentUser.photoURL);
-            }
+            const userDocRef = doc(db, "users", currentUser.uid);
+            const userUnsubscribe = onSnapshot(userDocRef, (docSnapshot) => {
+                if (docSnapshot.exists()) {
+                    const userData = docSnapshot.data();
+                    if (userData.photoURL) {
+                        setImageUrl(userData.photoURL);
+                    }
+                }
+            });
 
             return () => { };
         }
@@ -77,7 +83,7 @@ const SideBar = () => {
                     <div className='sidebar-content'>
                         <div className="sidebar-userImg">
                             <label id="lable" htmlFor="file">
-                                <img src={currentUser.photoURL ? currentUser.photoURL : imageUrl} alt="userPhoto" type="file" className="user-photo" />
+                                <img src={imageUrl} alt="userPhoto" type="file" className="user-photo" />
                             </label>
                         </div>
                         <p className="user-name">{currentUser?.displayName}</p>

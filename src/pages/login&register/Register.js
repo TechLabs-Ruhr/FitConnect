@@ -2,12 +2,14 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../../config/firebase";
+import { auth, db, storage } from "../config/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from "react-router-dom";
 import logo from '../../ressources/img/logo.png'
 import mediaLogo from '../../ressources/img/logo768.png'
 import './authentication.scss';
+import user from '../ressources/img/user.png'
+import { uploadBytes, ref as storageRef } from "firebase/storage";
 
 const Register = () => {
   const [err, setErr] = useState(false);
@@ -22,10 +24,15 @@ const Register = () => {
         displayName: username,
       });
 
+      // const defaultImageURL = user; // Hier den URL des Standardbilds einfügen
+      // const storage = storageRef(storage, `avatars/${res.user.uid}`);
+      // await uploadBytes(storage, defaultImageURL);
+
       await setDoc(doc(db, "users", res.user.uid), {
         uid: res.user.uid,
         displayName: username,
         email,
+        photoURL: user,
       });
 
       await setDoc(doc(db, "userMarkers", res.user.uid), { markers: [] });
