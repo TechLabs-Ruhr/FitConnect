@@ -14,7 +14,7 @@
         right: 0;
         height: 100%;
         display: flex;
-        // overflow: hidden;
+       // overflow: hidden;
         transition: width 0.5s ease;
 
         .container.wide {
@@ -24,12 +24,12 @@
 
         .chatsidebar{
             flex: 1;
-            background-color: #d6bbbb;
+            background-color: #142850;
 
             .navbar {
                 display: flex;
                 align-items: center;
-                background-color: #753838;
+                background-color: #142850;
                 height: 50px;
                 padding: 10px;
                 justify-content: space-between;
@@ -100,17 +100,17 @@
             .chatInfo {
                 display: flex;
                 height: 50px;
-                background-color: brown;
+                background-color: #142850;
                 align-items: center;
                 padding: 10px;
                 color: lightcyan
             }
 
             .messages{
-                background-color: aqua;
+                background-color: #27496D;
                 padding: 10px;
                 height: calc(100% - 160px);
-                overflow: scroll;
+                overflow-y: scroll;
 
                 .message{
                     display: flex;
@@ -140,6 +140,7 @@
                             background-color: white;
                             padding: 10px 20px;
                             border-radius: 0px 10px 10px 10px;
+                            color: #0C7B93;
                         }
                         img{
                             width: 50%;
@@ -164,17 +165,19 @@
             }
 
             .input{
-                background-color: white;
+                background-color: #0C7B93;
                 height: 50px;
                 padding: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                color: white;
 
                 input{
                     width: 100%;
                     border: none;
                     outline: none;
+                    color: white;
 
                     &::placeholder{
                         color: lightgrey;
@@ -185,7 +188,7 @@
                     border: none;
                     padding: 10px 15px;
                     color: white;
-                    background-color: orange;
+                    background-color: #00A8CC;
                 }
             }
 
