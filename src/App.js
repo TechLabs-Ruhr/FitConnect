@@ -9,6 +9,8 @@ import ChatPage from './pages/ChatPage';
 import Groups from './pages/groups/Groups';
 import './styles/style.scss';
 import 'normalize.css';
+import { AppProvider } from './context/AppContext';
+import SideBar from './components/sideBar/SideBar';
 
 function App() {
   const {currentUser} = useContext(AuthContext);
@@ -22,6 +24,7 @@ function App() {
   }
 
   return (
+    <AppProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/">
@@ -38,6 +41,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </AppProvider>
   );
 }
 

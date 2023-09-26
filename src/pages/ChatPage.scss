@@ -10,11 +10,16 @@
     .container {
         border: 1px solid white;
         border-radius: 10px;
-        width: 65%;
+        width: 85%;
         right: 0;
         height: 100%;
         display: flex;
-        overflow: hidden;
+        // overflow: hidden;
+        transition: width 0.5s ease;
+
+        .container.wide {
+            width: 95%;
+        }
 
 
         .chatsidebar{

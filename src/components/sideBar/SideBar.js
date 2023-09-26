@@ -19,6 +19,7 @@ const SideBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [imageUrl, setImageUrl] = useState(userPhoto);
     const [notificationsAnimation, setNotificationsAnimation] = useState(false);
+    
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
