@@ -6,6 +6,7 @@ const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
+  console.log(message);
   const ref = useRef();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const Message = ({ message }) => {
           }
           alt=""
         />
-        <span>just now</span>
+        <span></span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>

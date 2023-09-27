@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { updateCurrentUser } from 'firebase/auth';
 import { AuthContext } from '../../context/AuthContext';
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-
+import sendImg from '../../ressources/img/send.png'; 
 
 
 export const Input = () => {
@@ -73,8 +73,7 @@ export const Input = () => {
     <div className='input'>
         <input type="text" placeholder='Type something...' onChange={e=>setText(e.target.value)} value={text} />
         <div className="send">
-            <img src="" alt="" />
-            <button onClick={handleSend}>Send</button>
+            <img src={sendImg} alt="send" className="send-btn" onClick={handleSend}/>
         </div>
     </div>
   )

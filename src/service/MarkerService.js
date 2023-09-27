@@ -23,7 +23,6 @@ export const load = (onUpdate) => {
       const validMarkers = markers.filter(marker => {
         const markerTime = marker?.trainingTime;
         if (markerTime && markerTime.seconds < now.seconds) {
-          console.log(markerTime.seconds + ' ' + now.seconds);
           markersToDelete.push(marker);
           return false;
         }
