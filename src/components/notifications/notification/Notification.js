@@ -3,17 +3,19 @@ import './notification.scss';
 import notificationImg from '../../../ressources/img/notification.png'; 
 import acceptNotificationImg from '../../../ressources/img/acceptNotification.png'; 
 import declineNotificationImg from '../../../ressources/img/declineNotification.png'; 
-
-import React, { useState } from 'react';
+import { AuthContext } from "../../../context/AuthContext";
+import React, { useState, useContext } from 'react';
 import { Timestamp } from "firebase/firestore";
 import { updateNotifications } from "../../../service/NotificationsService";
 import { update as updateRequestInDB } from '../../../service/RequestService';
 import { updateParticipants as updateMarkerInDB } from "../../../service/MarkerService";
-import defaultPhoto from '../../../ressources/img/user.png'
+import defaultPhoto from '../../../ressources/img/user.png'; 
+import { createChat } from "../../../service/ChatService";
 
 const Notification = ({ request: { id, marker, time, user, status, isRequest } }) => {
     const [requestStatus, setRequestStatus] = useState(status);
     const [notificationTime, setNotificationTime] = useState(time);
+    const { currentUser } = useContext(AuthContext);
 
     const onAccept = () => {
         updateRequestInDB('confirmed', marker, id);
@@ -23,6 +25,8 @@ const Notification = ({ request: { id, marker, time, user, status, isRequest } }
         setNotificationTime(new Timestamp(Math.floor(new Date().getTime() / 1000), 0));
         setRequestStatus('confirmed');
         updateNotifications(1, user.id);
+
+        createChat(currentUser, user);
     }
 
     const onDecline = () => {

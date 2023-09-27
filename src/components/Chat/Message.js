@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
 import { fromUnixTime, format, isToday } from 'date-fns';
+import userImg from '../../ressources/img/user.png';
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Message = ({ message }) => {
   }, [message]);
 
   const formattedDate = formatChatTimestamp(message.date);
+  const profileImg = (message.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL) || userImg; 
 
   return (
     <div
@@ -21,14 +23,7 @@ const Message = ({ message }) => {
       className={`message ${message.senderId === currentUser.uid && "owner"}`}
     >
       <div className="messageInfo">
-        <img
-          src={
-            message.senderId === currentUser.uid
-              ? currentUser.photoURL
-              : data.user.photoURL
-          }
-          alt="profile img"
-        />
+        <img src={profileImg} alt="profile img"/>
         <span className="message-date">{formattedDate}</span>
       </div>
       <div className="messageContent">
@@ -43,9 +38,9 @@ const formatChatTimestamp = (timestamp) => {
   const date = fromUnixTime(timestamp.seconds);
 
   if (isToday(date)) {
-      return format(date, 'HH:mm');
+    return format(date, 'HH:mm');
   } else {
-      return format(date, 'yyyy-MM-dd');
+    return format(date, 'yyyy-MM-dd');
   }
 };
 

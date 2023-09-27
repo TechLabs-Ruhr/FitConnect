@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext';
 import {db} from '../../config/firebase'
 import { ChatContext } from '../../context/ChatContext';
+import userImg from '../../ressources/img/user.png'; 
 
 export const Chats = () => {
 
@@ -34,7 +35,7 @@ export const Chats = () => {
     <div className='chats'>
         {Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date).map((chat) => (
         <div className="userChat" key={chat[0]} onClick={()=>handleSelect(chat[1].userInfo)}>
-            <img src={chat[1].userInfo.photoURL} alt="" />
+            <img src={chat[1].userInfo.photoURL ? chat[1].userInfo.photoURL : userImg  } alt="user-photo" />
             <div className="userChatInfo">
                 <span>{chat[1].userInfo.displayName}</span>
                 <p>{chat[1].lastMessage?.text}</p>
