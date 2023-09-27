@@ -4,13 +4,12 @@ import Search from './pages/search/Search'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
-import Settings from './pages/Settings';
-import ChatPage from './pages/ChatPage';
+import Settings from './pages/settings/Settings';
+import ChatPage from './pages/chat/ChatPage';
 import Groups from './pages/groups/Groups';
 import './styles/style.scss';
 import 'normalize.css';
 import { AppProvider } from './context/AppContext';
-import SideBar from './components/sideBar/SideBar';
 
 function App() {
   const {currentUser} = useContext(AuthContext);

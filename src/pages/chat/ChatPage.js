@@ -1,10 +1,8 @@
-import { ChatSideBar } from "../components/Chat/ChatSideBar";
-import SideBar from "../components/sideBar/SideBar";
-import { Chat } from "../components/Chat/Chat";
+import { ChatSideBar } from "../../components/Chat/ChatSideBar";
+import SideBar from "../../components/sideBar/SideBar";
+import { Chat } from "../../components/Chat/Chat";
 import './ChatPage.scss';
 import { useState } from "react";
-
-
 
 
 const ChatPage = () => {

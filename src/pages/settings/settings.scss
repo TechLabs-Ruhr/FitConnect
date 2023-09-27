@@ -1,3 +1,4 @@
+@import '../../styles/variables.scss'; 
 
   .userphoto {
     display: flex;
@@ -57,9 +58,6 @@
     text-align: center;
     padding-top: 25px;
     font-weight: bold;
-    
-
-    
   }
 
   .profile-form input[type="text"],
@@ -73,9 +71,6 @@
   outline: none;
 }
 
-
-
-
 /* Hintergrundfarbe, wenn der Toggle aktiv ist */
 .toggle.active {
   background-color: lightblue;
@@ -85,7 +80,7 @@
   width: 95%;
   padding: 10px;
   margin-top: 20px;
-  background-color: #007bff;
+  background-color: rgb(235 154 80);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -93,10 +88,8 @@
   transition: background-color 0.3s;
 }
 
-
-
 .profile-form button:hover {
-  background-color: #0056b3;
+  background-color: $orange-hover;
 }
 
 .settings form{
@@ -107,19 +100,22 @@
 .signout{
         z-index: 5;
         margin: 20px auto 20px auto; /* Horizontal zentrieren */
-        background-color: rgb(255, 0, 0);
+        background-color: $gray;
         font-weight: bold;
-        padding: 5px;
+        padding: 7px 10px;
         padding-left: 10px;
         padding-right: 10px;
-        height: 50px;
         display: block;
         border-radius: 15px;
         color: #ffffff;
         font-size: 18px;
         cursor: pointer;
-    
+        
+        &:hover{
+          background-color: rgb(108, 108, 108); 
+        }
 }
+
 label {
   color: #ffffff;
 }
