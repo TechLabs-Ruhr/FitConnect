@@ -5,19 +5,24 @@ import { ChatContext } from '../../context/ChatContext';
 
 export const Chat = () => {
 
-  const {data} = useContext(ChatContext);
+  const { data } = useContext(ChatContext);
 
   return (
     <div className='chat-chat'>
-        <div className="chatInfo">
-            <span>{data.user?.displayName}</span>
-            <div className="chatIcons">
-                
-            </div>
-            
+      <div className="chatInfo">
+        <span>{data.user?.displayName}</span>
+        <div className="chatIcons">
+
         </div>
-        <Messages/>
-        <Input/>
+
+      </div>
+      <Messages />
+
+      {data.user.displayName ?
+          <Input />
+          : 
+          <div className='chat-choose'>Choose chat to write a message</div>
+      }
     </div>
   )
 }

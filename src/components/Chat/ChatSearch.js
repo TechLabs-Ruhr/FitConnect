@@ -68,6 +68,7 @@ export const ChatSearch = () => {
     setUser(null);
     setUsername("")
   };
+  
   return (
     <div className='chatsearch'>
         <div className="searchForm">

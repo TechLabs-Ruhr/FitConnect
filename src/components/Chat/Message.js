@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
+import { fromUnixTime, format, isToday } from 'date-fns';
 
 const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
-  console.log(message);
   const ref = useRef();
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
+
+  const formattedDate = formatChatTimestamp(message.date);
 
   return (
     <div
@@ -25,9 +27,9 @@ const Message = ({ message }) => {
               ? currentUser.photoURL
               : data.user.photoURL
           }
-          alt=""
+          alt="profile img"
         />
-        <span></span>
+        <span className="message-date">{formattedDate}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
@@ -35,6 +37,16 @@ const Message = ({ message }) => {
       </div>
     </div>
   );
+};
+
+const formatChatTimestamp = (timestamp) => {
+  const date = fromUnixTime(timestamp.seconds);
+
+  if (isToday(date)) {
+      return format(date, 'HH:mm');
+  } else {
+      return format(date, 'yyyy-MM-dd');
+  }
 };
 
 export default Message;
