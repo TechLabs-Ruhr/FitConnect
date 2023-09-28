@@ -1,44 +1,45 @@
 # FitConnect
 
-Description: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+Description: Web application where fitness enthusiasts can find workout partners and schedule sessions together. 
 
 
 ## How to Setup and Run
 
 In order to setup the project, please proceed as follows:
 
+1. clone the repository on your pc
+
+open git bash and use the following command: 
+
 ```bash
-  npm install my-project
+  git clone https://github.com/TechLabs-Dortmund/FitConnect.git
 ```
+
+2. open the project in Visual Studio Code or any other programm 
+open the terminal and use the following command to install dependencies 
+
+```bash
+  npm install
+```
+
+3. Start the project : 
 
 After successful installation use the following command to run the project:
 
 ```bash
-  npm run
+  npm start
 ```
-## Examples
-
-You can see a brief overview of how to use the main functionality below
-
-```javascript
-import Component from 'my-project'
-
-function App() {
-  return <Component />
-}
-```
-
   
 ## Roadmap
 
-- Additional browser support
-- Add more integrations
+- improve chat and settings pages
+- create groups and profiles 
 
   
 ## Authors
 
-- [@bob](https://www.github.com/bob)
-- [@alice](https://www.github.com/alice)
+- [@wladyDE](https://github.com/wladyDE)
+- [@Daniel33970](https://github.com/Daniel33970)
 
   
 

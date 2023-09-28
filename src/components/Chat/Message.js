@@ -40,7 +40,7 @@ const formatChatTimestamp = (timestamp) => {
   if (isToday(date)) {
     return format(date, 'HH:mm');
   } else {
-    return format(date, 'yyyy-MM-dd');
+    return format(date, 'dd-MM');
   }
 };
 
